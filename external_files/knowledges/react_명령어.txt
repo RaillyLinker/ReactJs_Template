@@ -1,0 +1,5 @@
+- 리엑트 프로젝트 생성
+    >> npx create-react-app ${프로젝트 폴더 이름} --template typescript
+
+- 리엑트 프로젝트 실행 (리엑트 프로젝트 폴더 경로로 이동 후)
+    >> npm start
