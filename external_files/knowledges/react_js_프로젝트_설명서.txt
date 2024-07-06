@@ -1,4 +1,5 @@
-[기본 생성 파일/폴더 설명]
+[ReactJs 프로젝트 설명서]
+(기본 생성 파일/폴더 설명)
 - tsconfig.json 파일은,
     TypeScript 프로젝트의 구성 파일입니다. 
     React 프로젝트에서 TypeScript를 사용할 때 이 파일은 중요한 역할을 합니다. 
