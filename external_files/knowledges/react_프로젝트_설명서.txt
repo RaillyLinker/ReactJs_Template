@@ -1,4 +1,80 @@
 [기본 생성 파일/폴더 설명]
+- tsconfig.json 파일은,
+    TypeScript 프로젝트의 구성 파일입니다. 
+    React 프로젝트에서 TypeScript를 사용할 때 이 파일은 중요한 역할을 합니다. 
+    tsconfig.json 파일은 TypeScript 컴파일러(tsc)에게 컴파일 옵션과 프로젝트 설정을 알려줍니다. 
+    
+    compilerOptions : 컴파일러 옵션을 모아둔 목록입니다.
+
+        target : TypeScript 문서를 빌드할 때 어떤 버전의 JavaScript로 변환할지 설정합니다. 예를 들어, "es5", "es6".
+
+        lib : TypeScript 컴파일러가 어떤 라이브러리 파일들을 포함할지 지정하는 설정입니다. 
+            이 라이브러리 파일들은 프로젝트의 타입 정의를 제공하며, 어떤 API들이 사용 가능한지 결정합니다. 
+            예를 들어, JavaScript 표준 라이브러리의 타입 정의나 브라우저의 DOM API 등이 포함될 수 있습니다.
+
+        allowJs : 프로젝트에 JavaScript 파일을 포함할 수 있도록 허용할지 여부입니다.
+            이것이 true 라면 import 할 때 js 파일을 입력해도 에러가 나지 않습니다.
+
+        skipLibCheck : 타입 정의 파일(.d.ts)의 타입 검사를 건너뛸지 여부입니다. true 로 설정한다면 컴파일 시간을 줄일 수 있습니다.
+
+        esModuleInterop : true 로 설정한다면 CommonJS 모듈을 ES6 모듈처럼 가져올 수 있게 해줍니다. 
+            예를들어 import * as fs from 'fs' 대신 import fs from 'fs'를 사용할 수 있습니다.
+
+        allowSyntheticDefaultImports : true 로 설정한다면 ES6 모듈을 사용할 때, 기본 내보내기(default export)가 없는 모듈을 default import로 가져올 수 있습니다.
+
+        strict : true 로 설정한다면 TypeScript의 엄격 모드를 활성화합니다. 이는 여러 엄격한 타입 검사를 포함하여 코드 품질을 향상시킵니다.
+
+        forceConsistentCasingInFileNames : true 로 설정한다면 파일 이름의 대소문자를 정확하게 작성하도록 강제합니다. 다른 운영 체제에서 발생할 수 있는 파일 경로 문제를 방지합니다.
+
+        noFallthroughCasesInSwitch : true 로 설정한다면 switch case 문에서 break 를 입력하지 않았을 때 에러가 발생하도록 합니다.
+            즉 switch 문에서 비어 있지 않은 Case라면 반드시 break 문이나 return 문으로 해당 Case를 종료시키도록 강제한다.
+
+        module : TypeScript 컴파일러가 모듈을 어떻게 처리할지 설정하는 옵션입니다. 
+            이는 프로젝트에서 사용할 모듈 시스템을 지정하며, 컴파일된 JavaScript 파일이 어떻게 모듈을 로드하고 사용할지를 결정합니다.
+
+        moduleResolution : TypeScript 컴파일러가 모듈을 어떻게 해석하고 찾을지를 설정하는 옵션입니다. 
+            이는 모듈을 어떻게 찾아서 불러올지를 정의하며, 특정 환경에서 올바르게 모듈을 해석할 수 있도록 도와줍니다.
+            classic 을 입력한다면, TypeScript 1.6 이전의 모듈 해석 방식입니다. 이 방식은 주로 기존의 JavaScript 프로젝트와의 호환성을 위해 사용됩니다.
+                상대적 경로(./, ../)로 모듈을 찾고, 같은 디렉터리 또는 부모 디렉터리에서 모듈을 찾습니다.
+                파일 확장자를 자동으로 추가하지 않으며, index.ts나 index.js 파일을 자동으로 찾지 않습니다.
+            node 를 입력한다면, Node.js 모듈 해석 방식을 따릅니다. 이 방식은 Node.js와 호환되며, 주로 Node.js 환경에서 TypeScript를 사용할 때 유용합니다.
+                상대적 경로(./, ../)뿐만 아니라, Node.js의 모듈 검색 방식(node_modules 폴더 등)을 사용하여 모듈을 찾습니다.
+                파일 확장자를 자동으로 추가하고, 디렉터리를 모듈로 해석할 때 index.ts나 index.js 파일을 자동으로 찾습니다.
+                
+        resolveJsonModule : TypeScript 컴파일러가 JSON 파일을 모듈로 해석하고 가져올 수 있도록 해주는 설정입니다. 
+            이 옵션을 활성화하면, JSON 파일을 TypeScript 코드 내에서 마치 JavaScript 모듈처럼 import할 수 있게 됩니다.
+            예를들자면,
+
+            {
+            "name": "example",
+            "version": "1.0.0"
+            }
+
+            위와 같은 json 이 config.json 파일로 저장되어 있다고 할 때,
+
+            import * as config from './config.json';
+            console.log(config.name); // "example"
+            console.log(config.version); // "1.0.0"
+
+            이렇게 가져와 사용할 수 있는 것입니다.
+
+        isolatedModules : TypeScript 컴파일러가 각 TypeScript 파일을 개별적으로 변환하도록 설정하는 옵션입니다. 
+            이 옵션은 주로 Babel과 같은 트랜스파일러와 함께 사용될 때 유용하며, 
+            TypeScript의 전체 프로젝트 분석 없이 파일 단위로 변환하기에 빠른 빌드와 변환을 가능하게 합니다.
+
+        noEmit : 컴파일러가 JavaScript 파일 등의 출력 파일들을 만들어 내지 않도록 하는 설정입니다. 
+            이는 Babel이나 swc와 같은 또 다른 도구가 TypeScript 파일을 JavaScript 환경에서 실행될 수 있는 파일로 변환하는 작업을 담당할 수 있도록 합니다. 
+            이러한 경우에는 TypeScript를 에디터 통합 기능을 제공하기 위한 도구 혹은 소스 코드 타입 체커로만 사용하게 됩니다.
+
+        jsx : JSX 코드를 어떻게 컴파일할지 결정합니다. 이는 오직 .tsx 확장자의 컴파일 결과에만 영향을 줍니다.
+            react : .js 파일로 컴파일 됩니다. (JSX 코드는 React.createElement() 함수의 호출로 변환됨)
+            react-jsx : .js 파일로 컴파일 됩니다. (JSX 코드는 _jsx() 함수의 호출로 변환됨)
+            react-jsxdev : .js 파일로 컴파일 됩니다. (JSX 코드는 _jsx() 함수의 호출로 변환됨)
+            preserve : .jsx 파일로 컴파일 됩니다. (JSX 코드가 그대로 유지됨)
+            react-native : .js 파일로 컴파일 됩니다. (JSX 코드가 그대로 유지됨)
+
+    include : TypeScript 컴파일러가 포함할 파일이나 디렉터리 목록입니다.
+
 - package.json 파일은,
     Node.js 프로젝트의 필수 파일로, 프로젝트에 대한 메타데이터와 프로젝트에서 사용하는 패키지들의 의존성을 정의합니다. 
 
@@ -28,6 +104,15 @@
             즉, 개발 중에는 Chrome, Firefox, Safari의 각각 최신 버전만을 지원합니다.
 
 - package-lock.json 파일은,
+    package-lock.json은 npm이 node_lock 트리 또는 package.json을 수정하는 모든 작업에 대해 자동으로 생성됩니다.
+    package-lock.json 파일에서 의존성 설정을 할 때에 특정 버전을 확정하는 것이 아니라 버전 범위를 지정하므로,
+    개발자가 개발시에 이상 없이 빌드 완료 후 사용한 정보를 이 파일에 저장하는 것입니다.
+
+
+
+
+
+
 
 - node_modules 폴더는,
     Node.js 프로젝트에서 의존성 모듈들이 설치되는 디렉토리입니다. 
