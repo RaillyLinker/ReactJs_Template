@@ -3,6 +3,7 @@ import styles from './main_view.module.css';
 import MainBusiness, { PageState, PageProps } from './main_business';
 import GcHeader from '../../global_components/gc_header/main_view';
 import GcFooter from '../../global_components/gc_footer/main_view';
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 
 // [페이지 뷰 클래스]
 class MainView extends Component<{}, PageState> {
@@ -30,12 +31,24 @@ class MainView extends Component<{}, PageState> {
   //----------------------------------------------------------------------------
   // (페이지 화면 반환 함수)
   render(): JSX.Element {
+    const Row = ({ index, style }: ListChildComponentProps) => (
+      <div style={style} onClick={this.mainBusiness.items[index].onItemClicked}>
+        {this.mainBusiness.items[index].itemTitle}
+      </div>
+    );
+
     return (
       <div className={styles.MainView}>
         <GcHeader headerTitle='홈' />
 
-        <div>{this.state.counter}</div>
-        <button onClick={this.mainBusiness.onCntUpBtnClick}>Click me</button>
+        <List
+          height={400}
+          itemCount={this.mainBusiness.items.length}
+          itemSize={35}
+          width={300}
+        >
+          {Row}
+        </List>
 
         <GcFooter footerMsg='by Railly' />
       </div>

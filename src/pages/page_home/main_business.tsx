@@ -9,6 +9,112 @@ class MainBusiness {
   // (페이지 Props 객체)
   private pageProps: PageProps;
 
+  items: {
+    itemTitle: string;
+    itemDescription: string;
+    onItemClicked: () => void;
+  }[] =
+    [
+      {
+        itemTitle: "페이지 / 라우터 샘플 리스트",
+        itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("페이지 / 라우터 샘플 리스트")
+        }
+      },
+      {
+        itemTitle: "다이얼로그 샘플 리스트",
+        itemDescription: "다이얼로그 호출 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("다이얼로그 호출 샘플 리스트")
+        }
+      },
+      {
+        itemTitle: "네트워크 요청 샘플 리스트",
+        itemDescription: "네트워크 요청 및 응답 처리 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("네트워크 요청 및 응답 처리 샘플 리스트")
+        }
+      },
+      {
+        itemTitle: "계정 샘플",
+        itemDescription: "계정 관련 기능 샘플",
+        onItemClicked: (): void => {
+          console.log("계정 관련 기능 샘플")
+        }
+      },
+      {
+        itemTitle: "기타 샘플 리스트",
+        itemDescription: "기타 테스트 샘플을 모아둔 리스트",
+        onItemClicked: (): void => {
+          console.log("기타 테스트 샘플을 모아둔 리스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트")
+        }
+      }
+    ];
+
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
