@@ -20,7 +20,7 @@ class MainView extends Component<{}, PageState> {
   render(): JSX.Element {
     return (
       <div className={styles.MainView}>
-        <GcHeader headerTitle='홈'/>
+        <GcHeader headerTitle='State 변경 테스트'/>
 
         <div>{this.state.counter}</div>
         <button onClick={this.mainBusiness.onCntUpBtnClick}>Click me</button>
