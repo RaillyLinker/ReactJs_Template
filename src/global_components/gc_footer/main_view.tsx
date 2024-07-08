@@ -13,6 +13,18 @@ class MainView extends Component<PageProps, PageState> {
     this.mainBusiness = new MainBusiness(this, props);
   }
 
+  // (컴포넌트 생명주기 함수들)
+  // 그외 생명주기 : https://ko.legacy.reactjs.org/docs/react-component.html
+  componentDidMount() {
+    this.mainBusiness.componentDidMount();
+  }
+  componentDidUpdate() {
+    this.mainBusiness.componentDidUpdate();
+  }
+  componentWillUnmount() {
+    this.mainBusiness.componentWillUnmount();
+  }
+
   //----------------------------------------------------------------------------
   // (페이지 화면 반환 함수)
   render(): JSX.Element {

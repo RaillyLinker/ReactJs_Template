@@ -1,6 +1,5 @@
 [TODO]
 - 상태 유지
-- 생명주기
 - SharedPreferences
 - Network
 - Database
