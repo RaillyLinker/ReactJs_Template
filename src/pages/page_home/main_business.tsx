@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import Home from './Home';
+import MainView from './main_view';
 
 // [비즈니스 클래스]
-class HomeBusiness {
+class MainBusiness {
   // (페이지 View 객체)
-  private view: Home;
+  private mainView: MainView;
 
   // (비즈니스 클래스 생성자)
-  constructor(view: Home) {
-    this.view = view;
+  constructor(mainView: MainView) {
+    this.mainView = mainView;
 
     // 페이지 State 초기화
-    this.view.state = {
+    this.mainView.state = {
       counter: 0,
     };
   }
@@ -19,7 +19,7 @@ class HomeBusiness {
   //----------------------------------------------------------------------------
   // [public 함수]
   onCntUpBtnClick = (): void => {
-    this.view.setState((prevState) => ({ counter: prevState.counter + 1 }));
+    this.mainView.setState((prevState) => ({ counter: prevState.counter + 1 }));
   };
 
   //----------------------------------------------------------------------------
@@ -32,4 +32,4 @@ export interface PageState {
   counter: number;
 }
 
-export default HomeBusiness;
+export default MainBusiness;
