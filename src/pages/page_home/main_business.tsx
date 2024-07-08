@@ -19,98 +19,98 @@ class MainBusiness {
         itemTitle: "페이지 / 라우터 샘플 리스트",
         itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
         onItemClicked: (): void => {
-          console.log("페이지 / 라우터 샘플 리스트")
+          console.log("페이지 / 라우터 샘플 리스트");
         }
       },
       {
         itemTitle: "다이얼로그 샘플 리스트",
         itemDescription: "다이얼로그 호출 샘플 리스트",
         onItemClicked: (): void => {
-          console.log("다이얼로그 호출 샘플 리스트")
+          console.log("다이얼로그 호출 샘플 리스트");
         }
       },
       {
         itemTitle: "네트워크 요청 샘플 리스트",
         itemDescription: "네트워크 요청 및 응답 처리 샘플 리스트",
         onItemClicked: (): void => {
-          console.log("네트워크 요청 및 응답 처리 샘플 리스트")
+          console.log("네트워크 요청 및 응답 처리 샘플 리스트");
         }
       },
       {
         itemTitle: "계정 샘플",
         itemDescription: "계정 관련 기능 샘플",
         onItemClicked: (): void => {
-          console.log("계정 관련 기능 샘플")
+          console.log("계정 관련 기능 샘플");
         }
       },
       {
         itemTitle: "기타 샘플 리스트",
         itemDescription: "기타 테스트 샘플을 모아둔 리스트",
         onItemClicked: (): void => {
-          console.log("기타 테스트 샘플을 모아둔 리스트")
+          console.log("기타 테스트 샘플을 모아둔 리스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       },
       {
         itemTitle: "테스트",
         itemDescription: "테스트",
         onItemClicked: (): void => {
-          console.log("테스트")
+          console.log("테스트");
         }
       }
     ];
