@@ -1,4 +1,5 @@
 [TODO]
+- view 를 함수형 컴포넌트로 바꾸고 import { useNavigate } from 'react-router-dom'; 를 사용해보기
 - 상태 유지
 - SharedPreferences
 - Network
