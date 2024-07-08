@@ -1,3 +1,8 @@
 [TODO]
 - 상태 유지
 - 생명주기
+- SharedPreferences
+- Network
+- Database
+- 다이얼로그
+- 계정 샘플
