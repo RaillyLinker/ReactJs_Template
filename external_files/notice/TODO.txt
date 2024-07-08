@@ -5,3 +5,47 @@
 - Database
 - 다이얼로그
 - 계정 샘플
+- 리사이클 리스트 (react-window)
+- 스크롤 위치 유지
+
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, useLocation } from "react-router-dom";
+import AppRouter from "./app_router";
+
+// (이전 히스토리의 스크롤 위치 유지)
+const ScrollRestoration = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const savedScrollPosition = sessionStorage.getItem(`scrollPosition-${pathname}`);
+    if (savedScrollPosition) {
+      window.scrollTo(0, parseInt(savedScrollPosition, 10));
+    }
+
+    const handleScroll = () => {
+      sessionStorage.setItem(`scrollPosition-${pathname}`, String(window.scrollY));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
+  return null;
+};
+
+const root: ReactDOM.Root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <ScrollRestoration />
+      <AppRouter />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
+reportWebVitals();
