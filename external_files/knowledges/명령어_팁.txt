@@ -7,3 +7,10 @@
 
 - 리엑트 프로젝트 실행 (리엑트 프로젝트 폴더 경로로 이동 후)
     >> npm start
+
+
+[VsCode 단축키]
+- 코드 자동정렬
+    mac : Shift + Option + F
+    windows : Shift + Alt + F
+    Linux : Ctrl + Shift + I
