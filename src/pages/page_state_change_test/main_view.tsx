@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './main_view.css';
-import MainBusiness, { PageState } from './main_business';
+import MainBusiness, { PageState, PageProps } from './main_business';
+import GcHeader from '../../global_components/gc_header/main_view';
+import GcFooter from '../../global_components/gc_footer/main_view';
 
 // [페이지 뷰 클래스]
 class MainView extends Component<{}, PageState> {
@@ -8,9 +10,9 @@ class MainView extends Component<{}, PageState> {
   private mainBusiness: MainBusiness;
 
   // (뷰 클래스 생성자)
-  constructor(props: {}) {
+  constructor(props: PageProps) {
     super(props);
-    this.mainBusiness = new MainBusiness(this);
+    this.mainBusiness = new MainBusiness(this, props);
   }
 
   //----------------------------------------------------------------------------
@@ -18,8 +20,12 @@ class MainView extends Component<{}, PageState> {
   render(): JSX.Element {
     return (
       <div className="MainView">
+        <GcHeader headerTitle='홈'/>
+
         <h1>{this.state.counter}</h1>
         <button onClick={this.mainBusiness.onCntUpBtnClick}>Click me</button>
+        
+        <GcFooter footerMsg='by Railly'/>
       </div>
     );
   }
