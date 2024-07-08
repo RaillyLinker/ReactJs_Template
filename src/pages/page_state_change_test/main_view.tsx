@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './main_view.css';
+import styles from './main_view.module.css';
 import MainBusiness, { PageState, PageProps } from './main_business';
 import GcHeader from '../../global_components/gc_header/main_view';
 import GcFooter from '../../global_components/gc_footer/main_view';
@@ -19,7 +19,7 @@ class MainView extends Component<{}, PageState> {
   // (페이지 화면 반환 함수)
   render(): JSX.Element {
     return (
-      <div className="PageStateChangeTest_MainView">
+      <div className={styles.MainView}>
         <GcHeader headerTitle='홈'/>
 
         <div>{this.state.counter}</div>
