@@ -19,10 +19,10 @@ class MainView extends Component<{}, PageState> {
   // (페이지 화면 반환 함수)
   render(): JSX.Element {
     return (
-      <div className="MainView">
+      <div className="PageStateChangeTest_MainView">
         <GcHeader headerTitle='홈'/>
 
-        <h1>{this.state.counter}</h1>
+        <div>{this.state.counter}</div>
         <button onClick={this.mainBusiness.onCntUpBtnClick}>Click me</button>
         
         <GcFooter footerMsg='by Railly'/>

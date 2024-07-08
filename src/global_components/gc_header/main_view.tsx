@@ -17,7 +17,7 @@ class MainView extends Component<PageProps, PageState> {
   // (페이지 화면 반환 함수)
   render(): JSX.Element {
     return (
-      <div className="MainView">
+      <div className="GcHeader_MainView">
         <header>
           <h1>{this.mainBusiness.pageProps.headerTitle}</h1>
         </header>
