@@ -1,23 +1,16 @@
 import React from 'react';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [counter, setCounter] = useState(0);
+  function onClick() {
+    setCounter(counter + 1);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <div className="App-logo" >안녕하세요.</div>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{counter}</h1>
+      <button onClick={onClick}>Click me</button>
     </div>
   );
 }
