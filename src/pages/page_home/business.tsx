@@ -14,7 +14,7 @@ class Business {
   setMainState: React.Dispatch<React.SetStateAction<State>> = () => { };
 
   // (Navigate 객체)
-  navigate: NavigateFunction = () => { }
+  navigate: NavigateFunction = () => { };
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
