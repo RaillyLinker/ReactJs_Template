@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
+import { BusinessBasic, StateBasic, PropsBasic } from '../../global_classes/gc_ancestor_classes';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
 import GcFooterBusiness from '../../global_components/gc_footer/business';
 
 // [비즈니스 클래스]
-class Business {
+class Business implements BusinessBasic {
   // (컴포넌트 Props 객체)
   mainProps?: Props;
 
@@ -166,7 +167,7 @@ class Business {
 //----------------------------------------------------------------------------
 // [컴포넌트 State 인터페이스]
 // 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
-export interface State {
+export interface State extends StateBasic {
   gcHeaderBusiness: GcHeaderBusiness,
   gcFooterBusiness: GcFooterBusiness,
   items: {
@@ -177,7 +178,7 @@ export interface State {
 }
 
 // [컴포넌트 Props 인터페이스]
-export interface Props {
+export interface Props extends PropsBasic {
 }
 
 export default Business;
