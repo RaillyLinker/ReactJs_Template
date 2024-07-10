@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import Business, { State, Props } from './business';
 import { useNavigate } from 'react-router-dom';
@@ -11,10 +11,8 @@ import GcFooter from '../../global_components/gc_footer/view';
 const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체
-  const mainBusiness: Business = React.useState(props.business || new Business())[0];
-  if (props.business == null || props.business.mainState == null) {
-    mainBusiness.initMainState();
-  }
+  const mainBusiness: Business = React.useState(new Business())[0];
+  mainBusiness.initMainState();
 
   // 컴포넌트 State 생성 및 mainBusiness 에 컴포넌트 생성 변수 할당
   mainBusiness.setMainState = React.useState<State>(mainBusiness.mainState!)[1];
