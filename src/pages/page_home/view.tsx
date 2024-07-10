@@ -29,11 +29,12 @@ const View: React.FC<Props> = (props) => {
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
-  const Row = ({ index, style }: ListChildComponentProps) => (
-    <div style={style} onClick={mainBusiness.mainState!.items[index].onItemClicked}>
-      {mainBusiness.mainState!.items[index].itemTitle}
-    </div>
-  );
+  const Row: ({ index, style }: ListChildComponentProps) => JSX.Element =
+    ({ index, style }: ListChildComponentProps) => (
+      <div style={style} onClick={mainBusiness.mainState!.items[index].onItemClicked}>
+        {mainBusiness.mainState!.items[index].itemTitle}
+      </div>
+    );
 
   return (
     <div className={styles.MainView}>
