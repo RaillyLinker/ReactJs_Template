@@ -1,12 +1,10 @@
 [TODO]
-- view 를 함수형 컴포넌트로 바꾸고 import { useNavigate } from 'react-router-dom'; 를 사용해보기
 - 상태 유지
 - SharedPreferences
 - Network
 - Database
 - 다이얼로그
 - 계정 샘플
-- 리사이클 리스트 (react-window)
 - 스크롤 위치 유지
 
 import React, { useEffect } from 'react';
