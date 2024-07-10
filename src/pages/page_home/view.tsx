@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import Business, { State, Props } from './business';
 import { useNavigate } from 'react-router-dom';
-import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 
+import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import GcHeader from '../../global_components/gc_header/view';
 import GcFooter from '../../global_components/gc_footer/view';
 
@@ -12,10 +12,13 @@ const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체
   const mainBusiness: Business = React.useState(new Business())[0];
-  mainBusiness.initMainState();
 
-  // 컴포넌트 State 생성 및 mainBusiness 에 컴포넌트 생성 변수 할당
-  mainBusiness.setMainState = React.useState<State>(mainBusiness.mainState!)[1];
+  // State 할당
+  const mainState: State = mainBusiness.initMainState();
+
+  // mainBusiness 에 컴포넌트 생성 변수 할당
+  mainBusiness.setMainState = React.useState<State>(mainState)[1];
+  mainBusiness.mainState = mainState;
   mainBusiness.mainProps = props;
   mainBusiness.navigate = useNavigate();
 
@@ -31,20 +34,20 @@ const View: React.FC<Props> = (props) => {
   // (컴포넌트 화면 구성 코드)
   const Row: ({ index, style }: ListChildComponentProps) => JSX.Element =
     ({ index, style }: ListChildComponentProps) => (
-      <div style={style} onClick={mainBusiness.mainState!.items[index].onItemClicked}>
-        {mainBusiness.mainState!.items[index].itemTitle}
+      <div style={style} onClick={mainState.items[index].onItemClicked}>
+        {mainState.items[index].itemTitle}
       </div>
     );
 
   return (
     <div className={styles.MainView}>
-      <GcHeader headerTitle='홈' business={mainBusiness.mainState!.gcHeaderBusiness} />
+      <GcHeader headerTitle='홈' business={mainState.gcHeaderBusiness} />
 
-      <List height={400} itemCount={mainBusiness.mainState!.items.length} itemSize={35} width={300} >
+      <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
         {Row}
       </List>
 
-      <GcFooter footerMsg='by Railly' business={mainBusiness.mainState!.gcFooterBusiness} />
+      <GcFooter footerMsg='by Railly' business={mainState.gcFooterBusiness} />
     </div>
   );
 };

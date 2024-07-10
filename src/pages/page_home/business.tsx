@@ -19,8 +19,8 @@ class Business {
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
-  initMainState() {
-    this.mainState = {
+  initMainState(): State {
+    return {
       items: [
         {
           itemTitle: "페이지 / 라우터 샘플 리스트",
@@ -147,12 +147,16 @@ class Business {
   // [public 함수]
   // (페이지 뒤로가기)
   goBack() {
-    this.navigate!(-1);
+    if (this.navigate != null) {
+      this.navigate(-1);
+    }
   }
 
   // (페이지 이동)
   goTo(path: string) {
-    this.navigate!(path);
+    if (this.navigate != null) {
+      this.navigate(path);
+    }
   }
 
   //----------------------------------------------------------------------------
