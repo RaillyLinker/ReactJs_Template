@@ -119,7 +119,7 @@ class Business {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
-            this.goTo("/state-change-test");
+            this.goTo("/");
           }
         }
       ],
