@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './view.module.css';
 import Business, { State, Props } from './business';
-import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
-
-import GcHeader from '../../global_components/gc_header/view';
-import GcFooter from '../../global_components/gc_footer/view';
 
 // [함수형 컴포넌트 뷰]
 const View: React.FC<Props> = (props) => {
@@ -28,21 +24,12 @@ const View: React.FC<Props> = (props) => {
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
-  const Row = ({ index, style }: ListChildComponentProps) => (
-    <div style={style} onClick={mainState.items[index].onItemClicked}>
-      {mainState.items[index].itemTitle}
-    </div>
-  );
 
   return (
     <div className={styles.MainView}>
-      <GcHeader headerTitle='홈' business={mainState.gcHeaderBusiness} />
-
-      <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
-        {Row}
-      </List>
-
-      <GcFooter footerMsg='by Railly' business={mainState.gcFooterBusiness} />
+      <header>
+        <h1>{mainBusiness.mainProps.headerTitle}</h1>
+      </header>
     </div>
   );
 };

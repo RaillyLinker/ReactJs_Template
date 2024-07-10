@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styles from './main_view.module.css';
 import MainBusiness, { PageState, PageProps } from './main_business';
-import GcHeader from '../../global_components/gc_header/main_view';
-import GcFooter from '../../global_components/gc_footer/main_view';
+import GcHeader from '../../global_components/gc_header/view';
+import GcFooter from '../../global_components/gc_footer/view';
 
 // [페이지 뷰 클래스]
 class MainView extends Component<{}, PageState> {

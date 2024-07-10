@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
+import GcHeaderBusiness from '../../global_components/gc_header/business';
+import GcFooterBusiness from '../../global_components/gc_footer/business';
+
 // [비즈니스 클래스]
 class Business {
   // (컴포넌트 Props 객체)
-  mainProps: Props = {};
+  mainProps?: Props;
 
   // (컴포넌트 State 및 State 갱신자)
-  mainState: MainState = this.initMainState();
-  setMainState: React.Dispatch<React.SetStateAction<MainState>> = () => { };
+  mainState: State = this.initMainState();
+  setMainState: React.Dispatch<React.SetStateAction<State>> = () => { };
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -16,7 +19,7 @@ class Business {
   }
 
   // (컴포넌트 State 초기화)
-  private initMainState(): MainState {
+  private initMainState(): State {
     return {
       items: [
         {
@@ -117,7 +120,9 @@ class Business {
             console.log("테스트");
           }
         }
-      ]
+      ],
+      gcHeaderBusiness: new GcHeaderBusiness(),
+      gcFooterBusiness: new GcFooterBusiness()
     };
   }
 
@@ -146,19 +151,21 @@ class Business {
 //----------------------------------------------------------------------------
 // [컴포넌트 State 인터페이스]
 // 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
-export interface MainState {
+export interface State {
   items: {
     itemTitle: string;
     itemDescription: string;
     onItemClicked: () => void;
-  }[]
+  }[],
+  gcHeaderBusiness: GcHeaderBusiness,
+  gcFooterBusiness: GcFooterBusiness
 }
 
 // [컴포넌트 Props 인터페이스]
 export interface Props {
   // (view 와 연결되는 Business 객체)
   // 외부에서 주입받는다면 외부의 Business 객체를 사용하고, 아니라면 내부에서 만들어서 사용합니다.
-  mainBusiness?: Business;
+  business?: Business;
 }
 
 export default Business;

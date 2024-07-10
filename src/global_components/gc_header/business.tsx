@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
-import MainView from './main_view';
 
 // [비즈니스 클래스]
-class MainBusiness {
-  // (페이지 View 객체)
-  private mainView: MainView;
+class Business {
+  // (컴포넌트 Props 객체)
+  mainProps?: Props;
 
-  // (페이지 Props 객체)
-  pageProps: PageProps;
+  // (컴포넌트 State 및 State 갱신자)
+  mainState: State = this.initMainState();
+  setMainState: React.Dispatch<React.SetStateAction<State>> = () => { };
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
-  constructor(mainView: MainView, pageProps: PageProps) {
-    this.mainView = mainView;
-    this.pageProps = pageProps;
+  constructor() {
+  }
 
-    // 페이지 State 초기화
-    this.mainView.state = {
-    };
+  // (컴포넌트 State 초기화)
+  private initMainState(): State {
+    return {};
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -26,16 +25,6 @@ class MainBusiness {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   componentDidMount() {
-
-  }
-
-  // (갱신이 일어난 직후)
-  // 갱신이 일어난 직후에 호출됩니다. 최초 랜더링에서는 호출되지 않습니다.
-  // 컴포넌트가 갱신되었을 때 DOM을 조작하기 위하여 이 메서드를 활용하면 좋습니다. 
-  // 또한, 이전과 현재의 props를 비교하여 네트워크 요청을 보내는 작업도 이 메서드에서 이루어지면 됩니다.
-  // (가령, props가 변하지 않았다면 네트워크 요청을 보낼 필요가 없습니다).
-  componentDidUpdate() {
-
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -44,7 +33,6 @@ class MainBusiness {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   componentWillUnmount() {
-
   }
 
   //----------------------------------------------------------------------------
@@ -55,13 +43,18 @@ class MainBusiness {
 }
 
 //----------------------------------------------------------------------------
-// [페이지 State 인터페이스]
-export interface PageState {
+// [컴포넌트 State 인터페이스]
+// 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
+export interface State {
 }
 
-// [페이지 Props 인터페이스]
-export interface PageProps {
-  footerMsg: string;
+// [컴포넌트 Props 인터페이스]
+export interface Props {
+  // (view 와 연결되는 Business 객체)
+  // 외부에서 주입받는다면 외부의 Business 객체를 사용하고, 아니라면 내부에서 만들어서 사용합니다.
+  business?: Business;
+
+  headerTitle: string;
 }
 
-export default MainBusiness;
+export default Business;
