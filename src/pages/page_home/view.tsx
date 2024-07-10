@@ -11,11 +11,12 @@ import GcFooter from '../../global_components/gc_footer/view';
 const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체
-  const [mainBusiness] = useState(() => props.business || new Business());
+  const mainBusiness: Business = useState(() => props.business || new Business())[0];
   mainBusiness.mainProps = props;
 
   // 컴포넌트 State 생성 및 mainBusiness 에 할당
-  const [mainState, setMainState] = React.useState<State>(mainBusiness.mainState);
+  const [mainState, setMainState]: [State, React.Dispatch<React.SetStateAction<State>>] =
+    React.useState<State>(mainBusiness.mainState);
   mainBusiness.mainState = mainState;
   mainBusiness.setMainState = setMainState;
 

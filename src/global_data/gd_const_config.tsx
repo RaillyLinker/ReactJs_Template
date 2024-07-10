@@ -5,4 +5,4 @@
 
 // -----------------------------------------------------------------------------
 // (프로그램을 디버그 모드로 실행할지 여부)
-export const isDebugMode : boolean = true;
+export const isDebugMode: boolean = true;
