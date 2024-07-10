@@ -1,4 +1,6 @@
 [TODO]
+- recoil 적용 검토
+- context api 적용 검토
 - 상태 유지
 - SharedPreferences
 - Network
