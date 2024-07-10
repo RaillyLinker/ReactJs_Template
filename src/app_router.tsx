@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Routes } from "react-router-dom";
-import PageHome from './pages/page_home/main_view';
+import PageHome from './pages/page_home/view';
 import PageStateChangeTest from './pages/page_state_change_test/main_view';
 
 // [프로그램 라우터 설정 파일]

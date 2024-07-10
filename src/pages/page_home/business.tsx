@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 // [비즈니스 클래스]
-class MainBusiness {
-  // (페이지 Props 객체)
-  pageProps: PageProps = {};
+class Business {
+  // (컴포넌트 Props 객체)
+  mainProps: Props = {};
 
-  // (페이지 State 및 State 갱신자)
-  pageState: PageState = this.initPageState();
-  setPageState: React.Dispatch<React.SetStateAction<PageState>> = () => { };
+  // (컴포넌트 State 및 State 갱신자)
+  mainState: MainState = this.initMainState();
+  setMainState: React.Dispatch<React.SetStateAction<MainState>> = () => { };
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -15,8 +15,8 @@ class MainBusiness {
   constructor() {
   }
 
-  // (페이지 State 초기화)
-  private initPageState(): PageState {
+  // (컴포넌트 State 초기화)
+  private initMainState(): MainState {
     return {
       items: [
         {
@@ -144,9 +144,9 @@ class MainBusiness {
 }
 
 //----------------------------------------------------------------------------
-// [페이지 State 인터페이스]
-// 페이지에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
-export interface PageState {
+// [컴포넌트 State 인터페이스]
+// 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
+export interface MainState {
   items: {
     itemTitle: string;
     itemDescription: string;
@@ -154,11 +154,11 @@ export interface PageState {
   }[]
 }
 
-// [페이지 Props 인터페이스]
-export interface PageProps {
+// [컴포넌트 Props 인터페이스]
+export interface Props {
   // (view 와 연결되는 Business 객체)
   // 외부에서 주입받는다면 외부의 Business 객체를 사용하고, 아니라면 내부에서 만들어서 사용합니다.
-  mainBusiness?: MainBusiness;
+  mainBusiness?: Business;
 }
 
-export default MainBusiness;
+export default Business;

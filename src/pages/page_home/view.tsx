@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import styles from './main_view.module.css';
-import MainBusiness, { PageState, PageProps } from './main_business';
-import GcHeader from '../../global_components/gc_header/main_view';
-import GcFooter from '../../global_components/gc_footer/main_view';
+import styles from './view.module.css';
+import Business, { MainState, Props } from './business';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 
-const MainView: React.FC<PageProps> = (props) => {
+import GcHeader from '../../global_components/gc_header/main_view';
+import GcFooter from '../../global_components/gc_footer/main_view';
+
+const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
-  // 페이지 Business 객체
-  const [mainBusiness] = useState(() => props.mainBusiness || new MainBusiness());
-  mainBusiness.pageProps = props;
+  // 컴포넌트 Business 객체
+  const [mainBusiness] = useState(() => props.mainBusiness || new Business());
+  mainBusiness.mainProps = props;
 
-  // 페이지 State 생성 및 mainBusiness 에 할당
-  const [pageState, setPageState] =
-    React.useState<PageState>(mainBusiness.pageState);
-  mainBusiness.pageState = pageState;
-  mainBusiness.setPageState = setPageState;
+  // 컴포넌트 State 생성 및 mainBusiness 에 할당
+  const [pageState, setPageState] = React.useState<MainState>(mainBusiness.mainState);
+  mainBusiness.mainState = pageState;
+  mainBusiness.setMainState = setPageState;
 
-  // 페이지 생명주기를 mainBusiness 로 전달
+  // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
     mainBusiness.componentDidMount();
     return () => {
@@ -26,7 +26,7 @@ const MainView: React.FC<PageProps> = (props) => {
   }, []);
 
   //----------------------------------------------------------------------------
-  // (페이지 화면 구성 코드)
+  // (컴포넌트 화면 구성 코드)
   const Row = ({ index, style }: ListChildComponentProps) => (
     <div style={style} onClick={pageState.items[index].onItemClicked}>
       {pageState.items[index].itemTitle}
@@ -46,4 +46,4 @@ const MainView: React.FC<PageProps> = (props) => {
   );
 };
 
-export default MainView;
+export default View;
