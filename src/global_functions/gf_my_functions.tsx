@@ -4,12 +4,11 @@
 // -----------------------------------------------------------------------------
 // (영문, 숫자 랜덤 String 을 length 만큼의 길이로 반환)
 export function generateRandomString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    const charactersLength = characters.length;
+    const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result: string = '';
 
     for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charactersLength);
+        const randomIndex: number = Math.floor(Math.random() * characters.length);
         result += characters[randomIndex];
     }
 
