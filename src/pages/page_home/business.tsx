@@ -7,20 +7,20 @@ import GcFooterBusiness from '../../global_components/gc_footer/business';
 // [비즈니스 클래스]
 class Business {
   // (컴포넌트 Props 객체)
-  mainProps: Props = {};
+  mainProps?: Props;
 
   // (컴포넌트 State 및 State 갱신자)
-  mainState: State = this.initMainState();
-  setMainState: React.Dispatch<React.SetStateAction<State>> = () => { };
+  mainState?: State;
+  setMainState?: React.Dispatch<React.SetStateAction<State>>;
 
   // (Navigate 객체)
-  navigate: NavigateFunction = () => { };
+  navigate?: NavigateFunction;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
-  private initMainState(): State {
-    return {
+  initMainState() {
+    this.mainState = {
       items: [
         {
           itemTitle: "페이지 / 라우터 샘플 리스트",
@@ -149,12 +149,12 @@ class Business {
   // [public 함수]
   // (페이지 뒤로가기)
   goBack() {
-    this.navigate(-1);
+    this.navigate!(-1);
   }
 
   // (페이지 이동)
   goTo(path: string) {
-    this.navigate(path);
+    this.navigate!(path);
   }
 
   //----------------------------------------------------------------------------
