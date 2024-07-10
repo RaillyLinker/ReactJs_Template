@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // [비즈니스 클래스]
 class Business {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './view.module.css';
 import Business, { State, Props } from './business';
+import { useNavigate } from 'react-router-dom';
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 
 import GcHeader from '../../global_components/gc_header/view';
@@ -25,6 +26,9 @@ const View: React.FC<Props> = (props) => {
       mainBusiness.componentWillUnmount();
     }
   }, []);
+
+  // navigate 객체를 mainBusiness 로 전달
+  mainBusiness.navigate = useNavigate();
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)

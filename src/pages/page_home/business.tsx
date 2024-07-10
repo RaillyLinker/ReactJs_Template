@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { NavigateFunction } from 'react-router-dom';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
 import GcFooterBusiness from '../../global_components/gc_footer/business';
@@ -11,6 +12,9 @@ class Business {
   // (컴포넌트 State 및 State 갱신자)
   mainState: State = this.initMainState();
   setMainState: React.Dispatch<React.SetStateAction<State>> = () => { };
+
+  // (Navigate 객체)
+  navigate: NavigateFunction = () => { }
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -27,6 +31,7 @@ class Business {
           itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
           onItemClicked: (): void => {
             console.log("페이지 / 라우터 샘플 리스트");
+            this.goBack();
           }
         },
         {
@@ -118,6 +123,7 @@ class Business {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
+            this.goTo("/state-change-test");
           }
         }
       ],
@@ -143,6 +149,15 @@ class Business {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (페이지 뒤로가기)
+  goBack() {
+    this.navigate(-1);
+  }
+
+  // (페이지 이동)
+  goTo(path: string) {
+    this.navigate(path);
+  }
 
   //----------------------------------------------------------------------------
   // [private 함수]
