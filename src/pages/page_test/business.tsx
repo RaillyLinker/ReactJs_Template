@@ -120,7 +120,7 @@ class Business implements BusinessBasic {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
-            this.goTo("/test");
+            this.goTo("/");
           }
         }
       ],

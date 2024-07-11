@@ -1,3 +1,5 @@
+// [전역에서 필요한 클래스 모음]
+
 // (자료구조 Stack 클래스)
 export class Stack<T> {
     private items: T[] = [];

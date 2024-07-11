@@ -1,3 +1,5 @@
+// [상속을 위한 부모 클래스 모음]
+
 // (컴포넌트 Business 클래스 기본타입)
 export interface BusinessBasic { }
 
