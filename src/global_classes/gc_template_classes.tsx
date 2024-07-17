@@ -6,7 +6,7 @@ export interface StateBasic { }
 export class PageHistory {
   // (히스토리 키)
   // window.history.state["key"] 로 가져온 히스토리 고유키
-  historyKey: string;
+  historyKey: any;
 
   // (Page State)
   pageState: StateBasic;
