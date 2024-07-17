@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
-import { BusinessBasic, StateBasic } from '../../global_classes/gc_ancestor_classes';
+import { StateBasic } from '../../global_classes/gc_template_classes';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
 import GcFooterBusiness from '../../global_components/gc_footer/business';
 
 // [비즈니스 클래스]
-class Business implements BusinessBasic {
+class Business {
   // (컴포넌트 State 및 State 갱신자)
   mainState?: State;
   setMainState?: React.Dispatch<React.SetStateAction<State>>;
