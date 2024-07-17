@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { Params, SetURLSearchParams } from 'react-router-dom';
+import { Params } from 'react-router-dom';
 import { BusinessBasic, StateBasic } from '../../global_classes/gc_ancestor_classes';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
@@ -13,7 +13,12 @@ class Business implements BusinessBasic {
   setMainState?: React.Dispatch<React.SetStateAction<State>>;
 
   // (Navigate 객체)
-  // 이 객체를 사용하지 말고 아래의 pageGoTo 함수를 사용하세요.
+  // 사용법은,
+  // if (this.navigate) {
+  //   this.navigate("/test");
+  // }
+  // 위와 같으며, 파라미터가 string 이라면 path 경로로 이동하고,
+  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기
   navigate?: NavigateFunction;
 
   //----------------------------------------------------------------------------
@@ -34,7 +39,9 @@ class Business implements BusinessBasic {
           itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
           onItemClicked: (): void => {
             console.log("페이지 / 라우터 샘플 리스트");
-            this.pageGoTo(-1);
+            if (this.navigate) {
+              this.navigate(-1);
+            }
           }
         },
         {
@@ -42,7 +49,9 @@ class Business implements BusinessBasic {
           itemDescription: "다이얼로그 호출 샘플 리스트",
           onItemClicked: (): void => {
             console.log("다이얼로그 호출 샘플 리스트");
-            this.pageGoTo(1);
+            if (this.navigate) {
+              this.navigate(1);
+            }
           }
         },
         {
@@ -127,7 +136,9 @@ class Business implements BusinessBasic {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
-            this.pageGoTo("/test");
+            if (this.navigate) {
+              this.navigate("/test");
+            }
           }
         }
       ],
@@ -153,18 +164,6 @@ class Business implements BusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (페이지 이동)
-  pageGoTo(path: string | number) {
-    if (this.navigate != null) {
-      if (typeof path === "string") {
-        // path 경로로 이동
-        this.navigate(path);
-      } else {
-        // 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기
-        this.navigate(path);
-      }
-    }
-  }
 
   //----------------------------------------------------------------------------
   // [private 함수]
