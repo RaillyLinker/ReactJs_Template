@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
+import { Params } from 'react-router-dom';
 import { StateBasic } from '../../global_classes/gc_template_classes';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
@@ -12,20 +13,35 @@ class Business {
   setMainState?: React.Dispatch<React.SetStateAction<State>>;
 
   // (Navigate 객체)
+  // 사용법은,
+  // if (this.navigate) {
+  //   this.navigate("/test");
+  // }
+  // 위와 같으며, 파라미터가 string 이라면 path 경로로 이동하고,
+  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기
   navigate?: NavigateFunction;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
-  initMainState(): State {
+  initMainState(
+    // Path 파라미터 객체 (ex : pathParams["testPath"])
+    pathParams: Readonly<Params<string>>,
+    // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
+    queryParams: URLSearchParams
+  ): State {
     return {
+      pathParams: {},
+      queryParams: {},
       items: [
         {
           itemTitle: "페이지 / 라우터 샘플 리스트",
           itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
           onItemClicked: (): void => {
             console.log("페이지 / 라우터 샘플 리스트");
-            this.goBack();
+            if (this.navigate) {
+              this.navigate(-1);
+            }
           }
         },
         {
@@ -33,6 +49,9 @@ class Business {
           itemDescription: "다이얼로그 호출 샘플 리스트",
           onItemClicked: (): void => {
             console.log("다이얼로그 호출 샘플 리스트");
+            if (this.navigate) {
+              this.navigate(1);
+            }
           }
         },
         {
@@ -117,7 +136,9 @@ class Business {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
-            this.goTo("/");
+            if (this.navigate) {
+              this.navigate("/");
+            }
           }
         }
       ],
@@ -143,19 +164,6 @@ class Business {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (페이지 뒤로가기)
-  goBack() {
-    if (this.navigate != null) {
-      this.navigate(-1);
-    }
-  }
-
-  // (페이지 이동)
-  goTo(path: string) {
-    if (this.navigate != null) {
-      this.navigate(path);
-    }
-  }
 
   //----------------------------------------------------------------------------
   // [private 함수]
@@ -165,6 +173,11 @@ class Business {
 // [컴포넌트 State 인터페이스]
 // 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
 export interface State extends StateBasic {
+  // Path Parameter 로 받은 값
+  pathParams: PathParams,
+  // Query Parameter 로 받은 값
+  queryParams: QueryParams,
+
   gcHeaderBusiness: GcHeaderBusiness,
   gcFooterBusiness: GcFooterBusiness,
   items: {
@@ -172,6 +185,14 @@ export interface State extends StateBasic {
     itemDescription: string;
     onItemClicked: () => void;
   }[]
+}
+
+// [Path Parameter VO 클래스]
+export class PathParams {
+}
+
+// [Query Parameter VO 클래스]
+export class QueryParams {
 }
 
 export default Business;
