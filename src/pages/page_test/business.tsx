@@ -151,8 +151,8 @@ class Business implements BusinessBasic {
           }
         }
       ],
-      gcHeaderBusiness: new GcHeaderBusiness(),
-      gcFooterBusiness: new GcFooterBusiness()
+      gcHeaderBusiness: new GcHeaderBusiness("테스트"),
+      gcFooterBusiness: new GcFooterBusiness("by Railly")
     };
   }
 

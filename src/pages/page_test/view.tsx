@@ -49,7 +49,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
   // mainBusiness.initMainState 를 했을 때, 
-  // 페이지 구성에 필요한 State, PathParams, QueryParams 가 null 일 경우 보여줄 화면을 반환하세요.
+  // 페이지 구성에 필요한 State, PathParams, QueryParams 가 undefined 일 경우 보여줄 화면을 반환하세요.
   if (
     mainBusiness.mainState == undefined ||
     mainBusiness.pathParams == undefined ||
@@ -57,7 +57,7 @@ const View: React.FC = () => {
   ) {
     return (
       <div className={styles.MainView}>
-        dd
+        Error
       </div>
     );
   }
@@ -78,13 +78,13 @@ const View: React.FC = () => {
 
   return (
     <div className={styles.MainView}>
-      <GcHeader headerTitle='테스트' business={mainState.gcHeaderBusiness} />
+      <GcHeader business={mainState.gcHeaderBusiness} />
 
       <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
         {Row}
       </List>
 
-      <GcFooter footerMsg='by Railly' business={mainState.gcFooterBusiness} />
+      <GcFooter business={mainState.gcFooterBusiness} />
     </div>
   );
 };
