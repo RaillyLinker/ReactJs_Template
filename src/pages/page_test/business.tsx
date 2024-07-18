@@ -1,15 +1,17 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
-import { StateBasic } from '../../global_classes/gc_template_classes';
+import { BusinessBasic } from '../../global_classes/gc_template_classes';
 
 import GcHeaderBusiness from '../../global_components/gc_header/business';
 import GcFooterBusiness from '../../global_components/gc_footer/business';
 
 // [비즈니스 클래스]
-class Business {
-  // (컴포넌트 State 및 State 갱신자)
+class Business implements BusinessBasic {
+  // (컴포넌트 State)
+  // 컴포넌트 ViewModel 입니다.
   mainState?: State;
+  // 컴포넌트 화면을 Rerendering 하려면 State 변경 후 이것을 사용하세요.
   setMainState?: React.Dispatch<React.SetStateAction<State>>;
 
   // (Navigate 객체)
@@ -18,12 +20,13 @@ class Business {
   //   this.navigate("/test");
   // }
   // 위와 같으며, 파라미터가 string 이라면 path 경로로 이동하고,
-  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기
+  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
   navigate?: NavigateFunction;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
+  // 컴포넌트 진입시 가장 먼저 실행됩니다.
   initMainState(
     // Path 파라미터 객체 (ex : pathParams["testPath"])
     pathParams: Readonly<Params<string>>,
@@ -172,7 +175,8 @@ class Business {
 //----------------------------------------------------------------------------
 // [컴포넌트 State 인터페이스]
 // 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
-export interface State extends StateBasic {
+// 다른 페이지로 이동했다가 복귀하더라도 데이터가 유지됩니다.
+export interface State {
   // Path Parameter 로 받은 값
   pathParams: PathParams,
   // Query Parameter 로 받은 값
