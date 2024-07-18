@@ -3,8 +3,8 @@ import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
 
-import GcHeaderBusiness from '../../global_components/gc_header/business';
-import GcFooterBusiness from '../../global_components/gc_footer/business';
+import GcoHeaderBusiness from '../../global_components/gco_header/business';
+import GcoFooterBusiness from '../../global_components/gco_footer/business';
 
 // [비즈니스 클래스]
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
@@ -151,8 +151,8 @@ class Business implements BusinessBasic {
           }
         }
       ],
-      gcHeaderBusiness: new GcHeaderBusiness("테스트"),
-      gcFooterBusiness: new GcFooterBusiness("by Railly")
+      gcoHeaderBusiness: new GcoHeaderBusiness("테스트"),
+      gcoFooterBusiness: new GcoFooterBusiness("by Railly")
     };
   }
 
@@ -181,8 +181,8 @@ class Business implements BusinessBasic {
 //----------------------------------------------------------------------------
 // [컴포넌트 State 인터페이스]
 export interface State {
-  gcHeaderBusiness: GcHeaderBusiness,
-  gcFooterBusiness: GcFooterBusiness,
+  gcoHeaderBusiness: GcoHeaderBusiness,
+  gcoFooterBusiness: GcoFooterBusiness,
   items: {
     itemTitle: string;
     itemDescription: string;

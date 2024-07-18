@@ -6,8 +6,8 @@ import { pageHistoryDict } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
 
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
-import GcHeader from '../../global_components/gc_header/view';
-import GcFooter from '../../global_components/gc_footer/view';
+import GcoHeader from '../../global_components/gco_header/view';
+import GcoFooter from '../../global_components/gco_footer/view';
 
 // [함수형 컴포넌트 뷰]
 const View: React.FC = () => {
@@ -78,13 +78,13 @@ const View: React.FC = () => {
 
   return (
     <div className={styles.MainView}>
-      <GcHeader business={mainState.gcHeaderBusiness} />
+      <GcoHeader business={mainState.gcoHeaderBusiness} />
 
       <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
         {Row}
       </List>
 
-      <GcFooter business={mainState.gcFooterBusiness} />
+      <GcoFooter business={mainState.gcoFooterBusiness} />
     </div>
   );
 };
