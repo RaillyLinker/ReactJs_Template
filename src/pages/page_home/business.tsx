@@ -7,7 +7,14 @@ import GcHeaderBusiness from '../../global_components/gc_header/business';
 import GcFooterBusiness from '../../global_components/gc_footer/business';
 
 // [비즈니스 클래스]
+// 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
+  // (페이지 파라미터)
+  // Path Parameter 로 받은 값
+  pathParams?: PathParams
+  // Query Parameter 로 받은 값
+  queryParams?: QueryParams
+
   // (컴포넌트 State)
   // 컴포넌트 ViewModel 입니다.
   mainState?: State;
@@ -15,36 +22,39 @@ class Business implements BusinessBasic {
   setMainState?: React.Dispatch<React.SetStateAction<State>>;
 
   // (Navigate 객체)
-  // 사용법은,
-  // if (this.navigate) {
-  //   this.navigate("/test");
-  // }
-  // 위와 같으며, 파라미터가 string 이라면 path 경로로 이동하고,
+  // 사용법은 this.navigate("/test"); 이와 같습니다.
+  // 파라미터가 string 이라면 path 경로로 이동하고,
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate?: NavigateFunction;
+  navigate: NavigateFunction = () => { };
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
   // 컴포넌트 진입시 가장 먼저 실행됩니다.
+  // this.pathParams, this.queryParams, this.mainState 를 입력하면 되며,
+  // 만약 하나라도 undefined 이라면 에러 화면이 나오게 됩니다.
   initMainState(
     // Path 파라미터 객체 (ex : pathParams["testPath"])
     pathParams: Readonly<Params<string>>,
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
     queryParams: URLSearchParams
-  ): State {
-    return {
-      pathParams: {},
-      queryParams: {},
+  ) {
+    // Path 파라미터 객체로 값 입력하기
+    // (ex : pathParams["testPath"])
+    this.pathParams = {};
+
+    // Query 파라미터 객체로 값 입력하기
+    // (ex : queryParams.get("testQuery"))
+    this.queryParams = {};
+
+    this.mainState = {
       items: [
         {
           itemTitle: "페이지 / 라우터 샘플 리스트",
           itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
           onItemClicked: (): void => {
             console.log("페이지 / 라우터 샘플 리스트");
-            if (this.navigate) {
-              this.navigate(-1);
-            }
+            this.navigate(-1);
           }
         },
         {
@@ -52,9 +62,7 @@ class Business implements BusinessBasic {
           itemDescription: "다이얼로그 호출 샘플 리스트",
           onItemClicked: (): void => {
             console.log("다이얼로그 호출 샘플 리스트");
-            if (this.navigate) {
-              this.navigate(1);
-            }
+            this.navigate(1);
           }
         },
         {
@@ -139,9 +147,7 @@ class Business implements BusinessBasic {
           itemDescription: "테스트",
           onItemClicked: (): void => {
             console.log("테스트");
-            if (this.navigate) {
-              this.navigate("/test");
-            }
+            this.navigate("/test");
           }
         }
       ],
@@ -174,14 +180,7 @@ class Business implements BusinessBasic {
 
 //----------------------------------------------------------------------------
 // [컴포넌트 State 인터페이스]
-// 컴포넌트에서 사용할 모든 변수는 여기에 저장하여 사용하세요.
-// 다른 페이지로 이동했다가 복귀하더라도 데이터가 유지됩니다.
 export interface State {
-  // Path Parameter 로 받은 값
-  pathParams: PathParams,
-  // Query Parameter 로 받은 값
-  queryParams: QueryParams,
-
   gcHeaderBusiness: GcHeaderBusiness,
   gcFooterBusiness: GcFooterBusiness,
   items: {
