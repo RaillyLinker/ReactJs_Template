@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
+import cloneDeep from 'lodash/cloneDeep';
 
 // [비즈니스 클래스]
 class Business {
@@ -42,6 +43,13 @@ class Business {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (컴포넌트 화면 랜더링 함수)
+  // 이 함수를 호출하면 State 정보에 맞게 화면이 갱신됩니다.
+  reRender() {
+    if (this.mainState != undefined) {
+      this.setMainState!(cloneDeep(this.mainState));
+    }
+  }
 
   //----------------------------------------------------------------------------
   // [private 함수]

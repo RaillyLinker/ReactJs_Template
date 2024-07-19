@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
+import cloneDeep from 'lodash/cloneDeep';
 
 import GcoHeaderBusiness from '../../global_components/gco_header/business';
 import GcoFooterBusiness from '../../global_components/gco_footer/business';
@@ -173,6 +174,13 @@ class Business implements BusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (컴포넌트 화면 랜더링 함수)
+  // 이 함수를 호출하면 State 정보에 맞게 화면이 갱신됩니다.
+  reRender() {
+    if (this.mainState != undefined) {
+      this.setMainState!(cloneDeep(this.mainState));
+    }
+  }
 
   //----------------------------------------------------------------------------
   // [private 함수]
