@@ -5,8 +5,9 @@ import { NavigateFunction } from 'react-router-dom';
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 class Business {
 
-  // 컴포넌트 화면을 Rerendering 하려면 State 변경 후 이것을 사용하세요.
-  setScreenFlag?: React.Dispatch<React.SetStateAction<boolean>>;
+  // (컴포넌트 화면 Rerendering 플래그 및 객체)
+  screenFlag: boolean = false;
+  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
@@ -15,20 +16,18 @@ class Business {
   navigate: NavigateFunction = () => { };
 
   // (초기 실행 여부)
-  // 아직 State 가 없을 때 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
-  firstStart: boolean = true;
-
-  // (스크린 플래그 값)
-  screenFlag: boolean = false;
+  // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
+  firstMount: boolean = true;
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
+  // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   footerMsg: string;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
-  // this.mainState 를 입력하면 되며 만약 undefined 라면 에러 화면이 나오게 됩니다.
+  // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
   constructor(footerMsg: string) {
     this.footerMsg = footerMsg;
   }
@@ -37,7 +36,7 @@ class Business {
   // 컴포넌트가 마운트된 직 후에 호출됩니다. 
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
-  onComponentDidMount = (firstStart: boolean) => {
+  onComponentDidMount = (firstMount: boolean) => {
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)

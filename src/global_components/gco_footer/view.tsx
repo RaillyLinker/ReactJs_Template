@@ -11,14 +11,15 @@ const View: React.FC<Props> = (props) => {
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
-    mainBusiness.onComponentDidMount(mainBusiness.firstStart);
-    mainBusiness.firstStart = false;
+    mainBusiness.onComponentDidMount(mainBusiness.firstMount);
+    mainBusiness.firstMount = false;
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
   }, []);
 
-  // mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당
+  //----------------------------------------------------------------------------
+  // (mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당)
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
