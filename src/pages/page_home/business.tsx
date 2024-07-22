@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
-import cloneDeep from 'lodash/cloneDeep';
 
 import GcoHeaderBusiness from '../../global_components/gco_header/business';
 import GcoFooterBusiness from '../../global_components/gco_footer/business';
@@ -17,11 +16,8 @@ class Business implements BusinessBasic {
   // Query Parameter 로 받은 값
   queryParams?: QueryParams
 
-  // (컴포넌트 State)
-  // 컴포넌트 ViewModel 입니다.
-  mainState?: State;
   // 컴포넌트 화면을 Rerendering 하려면 State 변경 후 이것을 사용하세요.
-  setMainState?: React.Dispatch<React.SetStateAction<State>>;
+  setScreenFlag?: React.Dispatch<React.SetStateAction<boolean>>;
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
@@ -33,13 +29,130 @@ class Business implements BusinessBasic {
   // 아직 State 가 없을 때 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstStart: boolean = true;
 
+  // (스크린 플래그 값)
+  screenFlag: boolean = false;
+
+  //----------------------------------------------------------------------------
+  // [멤버 변수 공간]
+  // 이곳에 선언된 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
+  gcoHeaderBusiness: GcoHeaderBusiness = new GcoHeaderBusiness("홈");
+  gcoFooterBusiness: GcoFooterBusiness = new GcoFooterBusiness("by Railly");
+  items: {
+    itemTitle: string;
+    itemDescription: string;
+    onItemClicked: () => void;
+  }[] =
+    [
+      {
+        itemTitle: "페이지 / 라우터 샘플 리스트",
+        itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("페이지 / 라우터 샘플 리스트");
+          this.navigate(-1);
+        }
+      },
+      {
+        itemTitle: "다이얼로그 샘플 리스트",
+        itemDescription: "다이얼로그 호출 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("다이얼로그 호출 샘플 리스트");
+          this.navigate(1);
+        }
+      },
+      {
+        itemTitle: "네트워크 요청 샘플 리스트",
+        itemDescription: "네트워크 요청 및 응답 처리 샘플 리스트",
+        onItemClicked: (): void => {
+          console.log("네트워크 요청 및 응답 처리 샘플 리스트");
+        }
+      },
+      {
+        itemTitle: "계정 샘플",
+        itemDescription: "계정 관련 기능 샘플",
+        onItemClicked: (): void => {
+          console.log("계정 관련 기능 샘플");
+        }
+      },
+      {
+        itemTitle: "기타 샘플 리스트",
+        itemDescription: "기타 테스트 샘플을 모아둔 리스트",
+        onItemClicked: (): void => {
+          console.log("기타 테스트 샘플을 모아둔 리스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+        }
+      },
+      {
+        itemTitle: "테스트",
+        itemDescription: "테스트",
+        onItemClicked: (): void => {
+          console.log("테스트");
+          this.navigate("/test");
+        }
+      }
+    ];
+
   //----------------------------------------------------------------------------
   // [생명주기 함수]
-  // (컴포넌트 State 초기화)
+  // (컴포넌트 입력 파라미터 확인 및 초기화)
   // 컴포넌트 진입시 가장 먼저 실행됩니다.
-  // this.pathParams, this.queryParams, this.mainState 를 입력하면 되며,
+  // this.pathParams, this.queryParams 를 입력하면 되며,
   // 만약 하나라도 undefined 이라면 에러 화면이 나오게 됩니다.
-  initMainState = (
+  onCheckPageInputVo = (
     // Path 파라미터 객체 (ex : pathParams["testPath"])
     pathParams: Readonly<Params<string>>,
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
@@ -52,121 +165,13 @@ class Business implements BusinessBasic {
     // Query 파라미터 객체로 값 입력하기
     // (ex : queryParams.get("testQuery"))
     this.queryParams = {};
-
-    this.mainState = {
-      items: [
-        {
-          itemTitle: "페이지 / 라우터 샘플 리스트",
-          itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
-          onItemClicked: (): void => {
-            console.log("페이지 / 라우터 샘플 리스트");
-            this.navigate(-1);
-          }
-        },
-        {
-          itemTitle: "다이얼로그 샘플 리스트",
-          itemDescription: "다이얼로그 호출 샘플 리스트",
-          onItemClicked: (): void => {
-            console.log("다이얼로그 호출 샘플 리스트");
-            this.navigate(1);
-          }
-        },
-        {
-          itemTitle: "네트워크 요청 샘플 리스트",
-          itemDescription: "네트워크 요청 및 응답 처리 샘플 리스트",
-          onItemClicked: (): void => {
-            console.log("네트워크 요청 및 응답 처리 샘플 리스트");
-          }
-        },
-        {
-          itemTitle: "계정 샘플",
-          itemDescription: "계정 관련 기능 샘플",
-          onItemClicked: (): void => {
-            console.log("계정 관련 기능 샘플");
-          }
-        },
-        {
-          itemTitle: "기타 샘플 리스트",
-          itemDescription: "기타 테스트 샘플을 모아둔 리스트",
-          onItemClicked: (): void => {
-            console.log("기타 테스트 샘플을 모아둔 리스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-          }
-        },
-        {
-          itemTitle: "테스트",
-          itemDescription: "테스트",
-          onItemClicked: (): void => {
-            console.log("테스트");
-            this.navigate("/test");
-          }
-        }
-      ],
-      gcoHeaderBusiness: new GcoHeaderBusiness("홈"),
-      gcoFooterBusiness: new GcoFooterBusiness("by Railly")
-    };
   }
 
   // (컴포넌트가 마운트된 직 후)
   // 컴포넌트가 마운트된 직 후에 호출됩니다. 
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
-  onComponentDidMount = () => {
+  onComponentDidMount = (firstStart: boolean) => {
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -182,9 +187,8 @@ class Business implements BusinessBasic {
   // (컴포넌트 화면 랜더링 함수)
   // 이 함수를 호출하면 State 정보에 맞게 화면이 갱신됩니다.
   reRender = () => {
-    if (this.mainState != undefined) {
-      this.setMainState!(cloneDeep(this.mainState));
-    }
+    this.screenFlag = !this.screenFlag;
+    this.setScreenFlag!(this.screenFlag);
   }
 
   //----------------------------------------------------------------------------
@@ -192,17 +196,6 @@ class Business implements BusinessBasic {
 }
 
 //----------------------------------------------------------------------------
-// [컴포넌트 State 인터페이스]
-export interface State {
-  gcoHeaderBusiness: GcoHeaderBusiness,
-  gcoFooterBusiness: GcoFooterBusiness,
-  items: {
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[]
-}
-
 // [Path Parameter VO 클래스]
 export class PathParams {
 }

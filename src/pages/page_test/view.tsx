@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
-import Business, { State, PathParams, QueryParams } from './business';
+import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
 
@@ -27,8 +27,8 @@ const View: React.FC = () => {
     const mainBusiness: Business = new Business();
     // 히스토리에 비즈니스 객체 할당
     pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusiness);
-    // 비즈니스 객체에 초기 State 설정
-    mainBusiness.initMainState(pathParamsSrc, queryParamsSrc);
+    // 컴포넌트 입력 파라미터 확인 및 초기화
+    mainBusiness.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
 
   // 히스토리에서 페이지의 비즈니스 객체 가져오기
@@ -36,7 +36,7 @@ const View: React.FC = () => {
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
-    mainBusiness.onComponentDidMount();
+    mainBusiness.onComponentDidMount(mainBusiness.firstStart);
     mainBusiness.firstStart = false;
     return () => {
       mainBusiness.onComponentWillUnmount();
@@ -44,48 +44,45 @@ const View: React.FC = () => {
   }, []);
 
   // mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당
-  mainBusiness.setMainState = React.useState<any>(mainBusiness.mainState)[1];
+  mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
-  // mainBusiness.initMainState 를 했을 때, 
-  // 페이지 구성에 필요한 State, PathParams, QueryParams 가 undefined 일 경우 보여줄 화면을 반환하세요.
+  // mainBusiness.onCheckPageInputVo 함수를 실행 했을 때, 
+  // 페이지 구성에 필요한 pathParams, queryParams 가 undefined 일 경우 보여줄 화면을 반환하세요.
   if (
-    mainBusiness.mainState == undefined ||
     mainBusiness.pathParams == undefined ||
     mainBusiness.queryParams == undefined
   ) {
     return (
       <div className={styles.MainView}>
-        Error
+        Entering Error
       </div>
     );
   }
 
   // 페이지 진입 필수정보가 null 이 아니라고 검증된 시점
-  const mainState: State = mainBusiness.mainState!;
   const pathParams: PathParams = mainBusiness.pathParams!;
   const queryParams: QueryParams = mainBusiness.queryParams!;
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
-  const row: ({ index, style }: ListChildComponentProps) => JSX.Element =
-    ({ index, style }: ListChildComponentProps) => (
-      <div style={style} onClick={mainState.items[index].onItemClicked}>
-        {mainState.items[index].itemTitle}
-      </div>
-    );
-
   return (
     <div className={styles.MainView}>
-      <GcoHeader business={mainState.gcoHeaderBusiness} />
+      <GcoHeader business={mainBusiness.gcoHeaderBusiness} />
 
-      <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
-        {row}
+      <List height={400} itemCount={mainBusiness.items.length} itemSize={35} width={300} >
+        {
+          ({ index, style }: ListChildComponentProps) => (
+            <div style={style} onClick={mainBusiness.items[index].onItemClicked}>
+              {mainBusiness.items[index].itemTitle}
+            </div>
+          )
+        }
       </List>
 
-      <GcoFooter business={mainState.gcoFooterBusiness} />
+      <GcoFooter business={mainBusiness.gcoFooterBusiness} />
     </div>
   );
 };

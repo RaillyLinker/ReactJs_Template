@@ -1,15 +1,12 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import cloneDeep from 'lodash/cloneDeep';
 
 // [비즈니스 클래스]
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 class Business {
-  // (컴포넌트 State)
-  // 컴포넌트 ViewModel 입니다.
-  mainState?: State;
+
   // 컴포넌트 화면을 Rerendering 하려면 State 변경 후 이것을 사용하세요.
-  setMainState?: React.Dispatch<React.SetStateAction<State>>;
+  setScreenFlag?: React.Dispatch<React.SetStateAction<boolean>>;
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
@@ -17,21 +14,30 @@ class Business {
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
   navigate: NavigateFunction = () => { };
 
+  // (초기 실행 여부)
+  // 아직 State 가 없을 때 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
+  firstStart: boolean = true;
+
+  // (스크린 플래그 값)
+  screenFlag: boolean = false;
+
+  //----------------------------------------------------------------------------
+  // [멤버 변수 공간]
+  footerMsg: string;
+
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // this.mainState 를 입력하면 되며 만약 undefined 라면 에러 화면이 나오게 됩니다.
   constructor(footerMsg: string) {
-    this.mainState = {
-      footerMsg: footerMsg
-    };
+    this.footerMsg = footerMsg;
   }
 
   // (컴포넌트가 마운트된 직 후)
   // 컴포넌트가 마운트된 직 후에 호출됩니다. 
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
-  onComponentDidMount = () => {
+  onComponentDidMount = (firstStart: boolean) => {
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -47,9 +53,8 @@ class Business {
   // (컴포넌트 화면 랜더링 함수)
   // 이 함수를 호출하면 State 정보에 맞게 화면이 갱신됩니다.
   reRender = () => {
-    if (this.mainState != undefined) {
-      this.setMainState!(cloneDeep(this.mainState));
-    }
+    this.screenFlag = !this.screenFlag;
+    this.setScreenFlag!(this.screenFlag);
   }
 
   //----------------------------------------------------------------------------
@@ -57,11 +62,6 @@ class Business {
 }
 
 //----------------------------------------------------------------------------
-// [컴포넌트 State 인터페이스]
-export interface State {
-  footerMsg: string;
-}
-
 // [컴포넌트 Props 인터페이스 - 변경하지 마세요]
 export interface Props {
   // (view 와 연결되는 Business 객체)
