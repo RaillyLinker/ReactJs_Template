@@ -69,7 +69,7 @@ const View: React.FC = () => {
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
-  const Row: ({ index, style }: ListChildComponentProps) => JSX.Element =
+  const row: ({ index, style }: ListChildComponentProps) => JSX.Element =
     ({ index, style }: ListChildComponentProps) => (
       <div style={style} onClick={mainState.items[index].onItemClicked}>
         {mainState.items[index].itemTitle}
@@ -81,7 +81,7 @@ const View: React.FC = () => {
       <GcoHeader business={mainState.gcoHeaderBusiness} />
 
       <List height={400} itemCount={mainState.items.length} itemSize={35} width={300} >
-        {Row}
+        {row}
       </List>
 
       <GcoFooter business={mainState.gcoFooterBusiness} />
