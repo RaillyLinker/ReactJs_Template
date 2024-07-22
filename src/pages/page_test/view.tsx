@@ -13,8 +13,8 @@ import GcoFooter from '../../global_components/gco_footer/view';
 const View: React.FC = () => {
   // (보일러 플레이트 코드)
   // 본 페이지 히스토리 정보
-  const pageHistoryIdx = window.history.state["idx"];
-  const pageHistoryKey = window.history.state["key"];
+  const pageHistoryIdx: number = window.history.state["idx"];
+  const pageHistoryKey: string = window.history.state["key"];
 
   // Path 파라미터 객체
   const pathParamsSrc: Readonly<Params<string>> = useParams();

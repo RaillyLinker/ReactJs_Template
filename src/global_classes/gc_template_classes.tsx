@@ -6,7 +6,7 @@ export interface BusinessBasic { }
 export class PageHistory {
   // (히스토리 키)
   // window.history.state["key"] 로 가져온 히스토리 고유키
-  historyKey: any;
+  historyKey: string;
 
   // (Page Business)
   pageBusiness: BusinessBasic;
