@@ -37,6 +37,7 @@ const View: React.FC = () => {
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
     mainBusiness.onComponentDidMount();
+    mainBusiness.firstStart = false;
     return () => {
       mainBusiness.onComponentWillUnmount();
     }

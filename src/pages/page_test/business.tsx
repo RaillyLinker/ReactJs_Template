@@ -29,6 +29,10 @@ class Business implements BusinessBasic {
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
   navigate: NavigateFunction = () => { };
 
+  // (초기 실행 여부)
+  // 아직 State 가 없을 때 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
+  firstStart: boolean = true;
+
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (컴포넌트 State 초기화)
