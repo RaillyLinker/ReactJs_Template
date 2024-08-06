@@ -1,4 +1,14 @@
+/* [Tag] */
+* {
+  font-family: 'MaruBuri';
+}
+
+
+/* [Class .] */
 .MainView {
   text-align: center;
-  background-color: lightgreen;
+  background-color: white;
 }
+
+
+/* [Id #] */

@@ -28,7 +28,7 @@ const View: React.FC<Props> = (props) => {
   return (
     <div className={styles.MainView}>
       <header>
-        <h1>{mainBusiness.headerTitle}</h1>
+        <h1 id={styles.HeaderTitle}>{mainBusiness.headerTitle}</h1>
       </header>
     </div>
   );

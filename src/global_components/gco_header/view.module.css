@@ -1,4 +1,23 @@
+/* [Tag] */
+* {
+  font-family: 'MaruBuri';
+}
+
+h1 {
+  margin: 0rem;
+}
+
+
+/* [Class .] */
 .MainView {
   text-align: center;
-  background-color: lightblue;
+  background-color: #2196F3;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+
+/* [Id #] */
+#HeaderTitle {
+  color: white;
 }
