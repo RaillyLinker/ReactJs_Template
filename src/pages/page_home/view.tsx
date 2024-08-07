@@ -5,7 +5,6 @@ import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
 
-import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
 // [함수형 컴포넌트 뷰]
@@ -73,17 +72,18 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div className={styles.MainView}>
+    <div id={styles.MainView}>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <List height={400} itemCount={mainBusiness.items.length} itemSize={35} width={300} >
-          {
-            ({ index, style }: ListChildComponentProps) => (
-              <div style={style} onClick={mainBusiness.items[index].onItemClicked}>
-                {mainBusiness.items[index].itemTitle}
-              </div>
-            )
-          }
-        </List>
+        <div>
+          {mainBusiness.items.map(item => (
+            <div onClick={item.onItemClicked}>
+              <div>{item.itemTitle}</div>
+              <div>{item.itemDescription}</div>
+              <hr />
+              <br />
+            </div>
+          ))}
+        </div>
       </GcoOuterFrame>
     </div>
   );

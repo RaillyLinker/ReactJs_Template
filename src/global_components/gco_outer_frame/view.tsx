@@ -17,7 +17,7 @@ const View: React.FC<Props> = (props) => {
       mainBusiness.onComponentWillUnmount();
     }
   }, []);
-  
+
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
@@ -30,14 +30,10 @@ const View: React.FC<Props> = (props) => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div className={styles.MainView}>
+    <div id={styles.MainView}>
       <header>
         <h1 id={styles.HeaderTitleContainer}>
-          <img
-            src="/logo192.png"
-            alt="Logo"
-            id={styles.GoToHomeLogo}
-          />
+          <img id={styles.GoToHomeLogo} src="/logo192.png" alt="Logo" />
           <span id={styles.HeaderTitle}>{mainBusiness.headerTitle}</span>
         </h1>
       </header>

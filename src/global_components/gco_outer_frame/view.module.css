@@ -1,10 +1,6 @@
 /* !!!페이지 뷰에 적용할 CSS 작성!!! */
 
 /* [Tag] */
-* {
-  font-family: 'MaruBuri';
-}
-
 h1 {
   margin: 0rem;
 }
@@ -17,18 +13,13 @@ header {
 
 
 /* [Class .] */
-.MainView {
-  text-align: center;
-}
 
 
 /* [Id #] */
 #HeaderTitleContainer {
   display: flex;
   align-items: center;
-  /* 상하 중앙 정렬 */
   justify-content: flex-start;
-  /* 좌측 정렬 */
 }
 
 #GoToHomeLogo {
