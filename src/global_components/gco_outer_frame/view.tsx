@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './view.module.css';
 import Business, { Props } from './business';
@@ -26,6 +26,26 @@ const View: React.FC<Props> = (props) => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  mainBusiness.contentRef = useRef<HTMLDivElement>(null);
+  const handleScroll = () => {
+    if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+      mainBusiness.contentScrollTop = mainBusiness.contentRef.current.scrollTop;
+      mainBusiness.contentScrollLeft = mainBusiness.contentRef.current.scrollLeft;
+    }
+  };
+  useEffect(() => {
+    if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+      mainBusiness.contentRef.current.scrollTop = mainBusiness.contentScrollTop;
+      mainBusiness.contentRef.current.scrollLeft = mainBusiness.contentScrollLeft;
+      mainBusiness.contentRef.current.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+        mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
@@ -38,7 +58,7 @@ const View: React.FC<Props> = (props) => {
         </h1>
       </header>
 
-      <div id={styles.Content}>
+      <div id={styles.Content} ref={mainBusiness.contentRef}>
         {props.children}
       </div>
 
