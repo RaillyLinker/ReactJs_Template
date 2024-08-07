@@ -49,8 +49,9 @@ class Business {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (컴포넌트 화면 랜더링 함수)
-  // 이 함수를 호출하면 State 정보에 맞게 화면이 갱신됩니다.
+  // (컴포넌트 화면 리랜더링 함수)
+  // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
+  // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
     this.screenFlag = !this.screenFlag;
     this.setScreenFlag!(this.screenFlag);
