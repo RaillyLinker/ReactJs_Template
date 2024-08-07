@@ -7,3 +7,26 @@
     다만 브라우저 새로고침 버튼을 누르거나 브라우저 주소창에 주소를 입력하여 페이지를 이동시에는 전역변수가 초기화 됩니다.
     예를들어 A 페이지에서 현재 testNum 이라는 전역변수를 10 까지 증가시킨 시점에 라우터로 다음 페이지에서 전역변수를 확인하면 10이라고 확인되지만,
     주소창에 동일한 주소를 입력해서 접속하거나, 새로고침을 누른 경우에는 전역변수가 초기화됩니다.
+
+- 템플릿의 컴포넌트 코드에서 기본 제공되는 reRender 함수를 사용하면 강제로 컴포넌트 화면을 재 랜더링 할 수 있지만 그만큼 무거울 수 있습니다.
+    화면 내에서 일부만을 변경하려면 useRef 를 사용하여 각 HTML DOM 을 조작하는 방식을 사용하세요.
+
+- useRef 사용 방식
+    Business.tsx 의 멤버변수로,
+    mainViewRef? : React.RefObject<HTMLDivElement>;
+    위와 같이 레퍼런스 변수를 선언합니다.
+
+    view.tsx 의 useRef 생성 구간에서는,
+    mainBusiness.mainViewRef = useRef<HTMLDivElement>(null);
+    위와 같이 레퍼런스 변수를 생성해주세요.
+
+    또한, 레퍼런스를 적용할(조작을 가할) 태그에는,
+    <div ref={mainBusiness.mainViewRef}>
+    위와 같이 레퍼런스 옵션을 적용합니다.
+
+    이제 Business 로직에서 해당 레퍼런스를 가지고 조작을 하면 됩니다.
+    상태값이 필요한 조작이라면 Business 의 멤버변수를 사용하는 방식으로 상태값을 사용하면 되며,
+    if(this.mainViewRef!= null && this.mainViewRef.current){
+        this.mainViewRef.current.textContent = "hello";
+    }
+    위와 같은 방식으로 조작하면 됩니다.
