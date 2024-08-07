@@ -38,7 +38,9 @@ const View: React.FC<Props> = (props) => {
         </h1>
       </header>
 
-      {props.children}
+      <div id={styles.Content}>
+        {props.children}
+      </div>
 
     </div>
   );
