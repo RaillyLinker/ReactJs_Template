@@ -45,6 +45,8 @@ const View: React.FC = () => {
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
+  // !!!아래부터 페이지 뷰 작성!!!
+
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useState 와 같은 컴포넌트 전용 함수를 사용하세요.
