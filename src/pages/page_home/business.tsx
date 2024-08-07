@@ -3,8 +3,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
 
-import GcoHeaderBusiness from '../../global_components/gco_header/business';
-import GcoFooterBusiness from '../../global_components/gco_footer/business';
+import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 
 // [비즈니스 클래스]
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
@@ -33,8 +32,7 @@ class Business implements BusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoHeaderBusiness: GcoHeaderBusiness = new GcoHeaderBusiness("홈");
-  gcoFooterBusiness: GcoFooterBusiness = new GcoFooterBusiness("by Railly");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("홈");
   items: {
     itemTitle: string;
     itemDescription: string;

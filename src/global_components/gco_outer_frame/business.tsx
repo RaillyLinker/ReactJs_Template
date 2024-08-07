@@ -4,7 +4,6 @@ import { NavigateFunction } from 'react-router-dom';
 // [비즈니스 클래스]
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 class Business {
-
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
   setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
@@ -22,14 +21,14 @@ class Business {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  footerMsg: string;
+  headerTitle: string;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(footerMsg: string) {
-    this.footerMsg = footerMsg;
+  constructor(headerTitle: string) {
+    this.headerTitle = headerTitle;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -61,11 +60,18 @@ class Business {
 }
 
 //----------------------------------------------------------------------------
+// [컴포넌트 State 인터페이스]
 // [컴포넌트 Props 인터페이스 - 변경하지 마세요]
 export interface Props {
   // (view 와 연결되는 Business 객체)
   // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
   business: Business;
+
+  // (컴포넌트 Children 객체)
+  // <MyTag> ... </MyTag>
+  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
+  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
+  children?: React.ReactNode;
 }
 
 export default Business;

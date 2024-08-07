@@ -6,8 +6,7 @@ import { pageHistoryDict } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
 
 import { FixedSizeList as List, ListChildComponentProps } from 'react-window';
-import GcoHeader from '../../global_components/gco_header/view';
-import GcoFooter from '../../global_components/gco_footer/view';
+import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
 // [함수형 컴포넌트 뷰]
 const View: React.FC = () => {
@@ -43,10 +42,12 @@ const View: React.FC = () => {
     }
   }, []);
 
-  //----------------------------------------------------------------------------
-  // (mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당)
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
+
+  //----------------------------------------------------------------------------
+  // (mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당)
+  // useState 와 같은 컴포넌트 생성자를 사용하세요.
 
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
@@ -71,19 +72,17 @@ const View: React.FC = () => {
   // (컴포넌트 화면 구성 코드)
   return (
     <div className={styles.MainView}>
-      <GcoHeader business={mainBusiness.gcoHeaderBusiness} />
-
-      <List height={400} itemCount={mainBusiness.items.length} itemSize={35} width={300} >
-        {
-          ({ index, style }: ListChildComponentProps) => (
-            <div style={style} onClick={mainBusiness.items[index].onItemClicked}>
-              {mainBusiness.items[index].itemTitle}
-            </div>
-          )
-        }
-      </List>
-
-      <GcoFooter business={mainBusiness.gcoFooterBusiness} />
+      <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+        <List height={400} itemCount={mainBusiness.items.length} itemSize={35} width={300} >
+          {
+            ({ index, style }: ListChildComponentProps) => (
+              <div style={style} onClick={mainBusiness.items[index].onItemClicked}>
+                {mainBusiness.items[index].itemTitle}
+              </div>
+            )
+          }
+        </List>
+      </GcoOuterFrame>
     </div>
   );
 };

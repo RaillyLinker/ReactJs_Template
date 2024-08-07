@@ -17,11 +17,13 @@ const View: React.FC<Props> = (props) => {
       mainBusiness.onComponentWillUnmount();
     }
   }, []);
+  
+  mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
+  mainBusiness.navigate = useNavigate();
 
   //----------------------------------------------------------------------------
   // (mainBusiness 에 컴포넌트에서만 생성 가능한 변수 할당)
-  mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
-  mainBusiness.navigate = useNavigate();
+  // useState 와 같은 컴포넌트 생성자를 사용하세요.
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
@@ -37,6 +39,9 @@ const View: React.FC<Props> = (props) => {
           <span id={styles.HeaderTitle}>{mainBusiness.headerTitle}</span>
         </h1>
       </header>
+
+      {props.children}
+
     </div>
   );
 };

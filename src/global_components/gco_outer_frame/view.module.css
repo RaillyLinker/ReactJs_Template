@@ -7,13 +7,16 @@ h1 {
   margin: 0rem;
 }
 
+header {
+  background-color: #2196F3;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
 
 /* [Class .] */
 .MainView {
   text-align: center;
-  background-color: #2196F3;
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
 }
 
 
