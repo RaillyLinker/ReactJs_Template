@@ -76,8 +76,8 @@ const View: React.FC = () => {
   return (
     <div>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <div id={styles.TemplateMsg}>
-          템플릿 페이지
+        <div id={styles.MainContent}>
+          <span id={styles.TemplateMsg}>템플릿 페이지</span>
         </div>
       </GcoOuterFrame>
     </div>

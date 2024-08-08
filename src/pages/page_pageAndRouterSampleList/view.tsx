@@ -76,7 +76,7 @@ const View: React.FC = () => {
   return (
     <div id={styles.MainView}>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <div>
+        <div id={styles.MainContent}>
           {mainBusiness.items.map(item => (
             <div>
               <div id={styles.ListItem} onClick={item.onItemClicked}>
