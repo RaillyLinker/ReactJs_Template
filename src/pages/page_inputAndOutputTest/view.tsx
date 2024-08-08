@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './view.module.css';
-import { useNavigate, useParams, useSearchParams, Params, Outlet } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
@@ -77,18 +77,10 @@ const View: React.FC = () => {
     <div>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
         <div id={styles.MainContent}>
-          {mainBusiness.items.map(item => (
-            <div>
-              <div id={styles.ListItem} onClick={item.onItemClicked}>
-                <div id={styles.ListTitle} >{item.itemTitle}</div>
-                <div id={styles.ListDescription}>{item.itemDescription}</div>
-              </div>
-              <hr />
-            </div>
-          ))}
+          <div>pathParam : {pathParams.pathParam}</div>
+          <div>queryParam : {queryParams.queryParam}</div>
         </div>
       </GcoOuterFrame>
-      <Outlet />
     </div>
   );
 };

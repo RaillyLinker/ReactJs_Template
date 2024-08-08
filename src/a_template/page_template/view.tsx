@@ -60,7 +60,7 @@ const View: React.FC = () => {
     mainBusiness.queryParams == undefined
   ) {
     return (
-      <div className={styles.MainView}>
+      <div>
         Entering Error
       </div>
     );
@@ -77,7 +77,7 @@ const View: React.FC = () => {
     <div>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
         <div id={styles.MainContent}>
-          <span id={styles.TemplateMsg}>템플릿 페이지</span>
+          템플릿 페이지
         </div>
       </GcoOuterFrame>
     </div>

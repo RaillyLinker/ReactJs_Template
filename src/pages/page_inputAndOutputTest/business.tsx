@@ -4,7 +4,6 @@ import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
-import GcoTestBusiness from '../../global_components/gco_test/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -34,12 +33,7 @@ class Business implements BusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("State 및 생명주기 테스트");
-  gcoTestBusiness: GcoTestBusiness = new GcoTestBusiness();
-
-  // (테스트 숫자)
-  testNumber: number = 0;
-  testNumberRef?: React.RefObject<HTMLDivElement>;
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 입/출력 테스트");
 
 
   //----------------------------------------------------------------------------
@@ -56,17 +50,26 @@ class Business implements BusinessBasic {
   ) => {
     // Query 파라미터 객체로 값 입력하기
     // (ex : const queryParam: string | null = queryParams.get("queryParam");)
+    const queryParam: string | null = queryParams.get("queryParam");
 
     // Query 파라미터 필수 값 확인(Path 파라미터 미입력시 진입 자체가 성립되지 않습니다.)
     // ex : if (queryParam === null) { return; }
+    if (queryParam === null) {
+      return;
+    }
 
     // Path 파라미터 객체로 값 입력하기
     // (ex : const pathParam: string = pathParams["pathParam"]!;)
+    const pathParam: string = pathParams["pathParam"]!;
 
     // 파라미터 값 할당
-    this.pathParams = {};
+    this.pathParams = {
+      pathParam
+    };
 
-    this.queryParams = {};
+    this.queryParams = {
+      queryParam
+    };
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -74,7 +77,6 @@ class Business implements BusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    console.log("onComponentDidMount");
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -83,7 +85,6 @@ class Business implements BusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
-    console.log("onComponentWillUnmount");
   }
 
   //----------------------------------------------------------------------------
@@ -96,17 +97,6 @@ class Business implements BusinessBasic {
     this.setScreenFlag!(this.screenFlag);
   }
 
-  onClickTestNumber = () => {
-    this.testNumber += 1;
-    if (this.testNumberRef != null && this.testNumberRef.current) {
-      this.testNumberRef.current.textContent = this.testNumber.toString();
-    }
-  }
-
-  onClickPageChange = () => {
-    this.navigate("/page-and-router-sample-list");
-  }
-
   //----------------------------------------------------------------------------
   // [private 함수]
 }
@@ -114,10 +104,20 @@ class Business implements BusinessBasic {
 //----------------------------------------------------------------------------
 // [Path Parameter VO 클래스]
 export class PathParams {
+  constructor(pathParam: string) {
+    this.pathParam = pathParam;
+  }
+
+  pathParam: string
 }
 
 // [Query Parameter VO 클래스]
 export class QueryParams {
+  constructor(queryParam: string) {
+    this.queryParam = queryParam;
+  }
+
+  queryParam: string
 }
 
 export default Business;

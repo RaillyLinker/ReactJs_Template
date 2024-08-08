@@ -61,12 +61,18 @@ class Business implements BusinessBasic {
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
     queryParams: URLSearchParams
   ) => {
+    // Query 파라미터 객체로 값 입력하기
+    // (ex : const queryParam: string | null = queryParams.get("queryParam");)
+
+    // Query 파라미터 필수 값 확인(Path 파라미터 미입력시 진입 자체가 성립되지 않습니다.)
+    // ex : if (queryParam === null) { return; }
+
     // Path 파라미터 객체로 값 입력하기
-    // (ex : pathParams["testPath"])
+    // (ex : const pathParam: string = pathParams["pathParam"]!;)
+
+    // 파라미터 값 할당
     this.pathParams = {};
 
-    // Query 파라미터 객체로 값 입력하기
-    // (ex : queryParams.get("testQuery"))
     this.queryParams = {};
   }
 

@@ -58,7 +58,7 @@ class Business implements BusinessBasic {
         itemTitle: "페이지 입/출력 테스트",
         itemDescription: "페이지 이동시 전달하는 입력값, 복귀시 반환하는 출력값 테스트",
         onItemClicked: (): void => {
-          // todo
+          this.navigate("/page-and-router-sample-list/input-and-output-test/pathParamTest?queryParam=queryParamTest");
         }
       },
       {
@@ -89,12 +89,18 @@ class Business implements BusinessBasic {
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
     queryParams: URLSearchParams
   ) => {
+    // Query 파라미터 객체로 값 입력하기
+    // (ex : const queryParam: string | null = queryParams.get("queryParam");)
+
+    // Query 파라미터 필수 값 확인(Path 파라미터 미입력시 진입 자체가 성립되지 않습니다.)
+    // ex : if (queryParam === null) { return; }
+
     // Path 파라미터 객체로 값 입력하기
-    // (ex : pathParams["testPath"])
+    // (ex : const pathParam: string = pathParams["pathParam"]!;)
+
+    // 파라미터 값 할당
     this.pathParams = {};
 
-    // Query 파라미터 객체로 값 입력하기
-    // (ex : queryParams.get("testQuery"))
     this.queryParams = {};
   }
 

@@ -60,7 +60,7 @@ const View: React.FC = () => {
     mainBusiness.queryParams == undefined
   ) {
     return (
-      <div className={styles.MainView}>
+      <div>
         Entering Error
       </div>
     );
@@ -74,7 +74,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div id={styles.MainView}>
+    <div>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
         <div id={styles.MainContent}>
           {mainBusiness.items.map(item => (

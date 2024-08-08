@@ -64,7 +64,7 @@ const View: React.FC = () => {
     mainBusiness.queryParams == undefined
   ) {
     return (
-      <div className={styles.MainView}>
+      <div>
         Entering Error
       </div>
     );
