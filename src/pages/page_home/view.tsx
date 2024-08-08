@@ -44,11 +44,12 @@ const View: React.FC = () => {
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
-  // !!!아래부터 페이지 뷰 작성!!!
 
+  // !!!아래부터 코딩!!!
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+
 
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
@@ -69,6 +70,7 @@ const View: React.FC = () => {
   const pathParams: PathParams = mainBusiness.pathParams!;
   const queryParams: QueryParams = mainBusiness.queryParams!;
 
+  
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (

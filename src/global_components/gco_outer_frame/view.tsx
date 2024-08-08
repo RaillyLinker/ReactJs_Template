@@ -21,11 +21,13 @@ const View: React.FC<Props> = (props) => {
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
-  // !!!아래부터 페이지 뷰 작성!!!
 
+  // !!!아래부터 코딩!!!
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+
+  // 스크롤 위치 유지 처리 코드 뭉치
   mainBusiness.contentRef = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
     if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
@@ -39,13 +41,13 @@ const View: React.FC<Props> = (props) => {
       mainBusiness.contentRef.current.scrollLeft = mainBusiness.contentScrollLeft;
       mainBusiness.contentRef.current.addEventListener('scroll', handleScroll);
     }
-
     return () => {
       if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
         mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
       }
     };
   }, []);
+
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
