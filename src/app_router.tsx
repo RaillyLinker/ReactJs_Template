@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import PageTemplate from './a_template/page_template/view';
 import PageHome from './pages/page_home/view';
 import PagePageAndRouterSampleList from './pages/page_pageAndRouterSampleList/view';
 
@@ -10,6 +11,7 @@ function AppRouter(): JSX.Element {
     <Routes>
       <Route path="/" element={<PageHome />} />
       <Route path="/page-and-router-sample-list" element={<PagePageAndRouterSampleList />} />
+      <Route path="/page-and-router-sample-list/page-template" element={<PageTemplate />} />
     </Routes>
   );
 }

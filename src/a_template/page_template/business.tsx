@@ -33,49 +33,8 @@ class Business implements BusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 / 라우터 샘플 리스트");
-  items: {
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        itemTitle: "페이지 템플릿",
-        itemDescription: "템플릿 페이지를 호출합니다.",
-        onItemClicked: (): void => {
-          this.navigate("/page-and-router-sample-list/page-template");
-        }
-      },
-      {
-        itemTitle: "페이지 State 상태 및 생명주기 테스트",
-        itemDescription: "페이지 State 상태 및 생명주기를 테스트 합니다.",
-        onItemClicked: (): void => {
-          // todo
-        }
-      },
-      {
-        itemTitle: "페이지 입/출력 테스트",
-        itemDescription: "페이지 이동시 전달하는 입력값, 복귀시 반환하는 출력값 테스트",
-        onItemClicked: (): void => {
-          // todo
-        }
-      },
-      {
-        itemTitle: "페이지 이동 애니메이션 테스트",
-        itemDescription: "페이지 이동시 적용되는 애니메이션 샘플 리스트",
-        onItemClicked: (): void => {
-          // todo
-        }
-      },
-      {
-        itemTitle: "페이지 Grid 샘플",
-        itemDescription: "화면 사이즈에 따라 동적으로 변하는 Grid 페이지 샘플",
-        onItemClicked: (): void => {
-          // todo
-        }
-      }
-    ];
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 템플릿");
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
