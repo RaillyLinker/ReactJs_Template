@@ -70,7 +70,7 @@ const View: React.FC = () => {
   const pathParams: PathParams = mainBusiness.pathParams!;
   const queryParams: QueryParams = mainBusiness.queryParams!;
 
-  
+
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
@@ -78,11 +78,12 @@ const View: React.FC = () => {
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
         <div>
           {mainBusiness.items.map(item => (
-            <div onClick={item.onItemClicked}>
-              <div>{item.itemTitle}</div>
-              <div>{item.itemDescription}</div>
+            <div>
+              <div id={styles.ListItem} onClick={item.onItemClicked}>
+                <div id={styles.ListTitle} >{item.itemTitle}</div>
+                <div id={styles.ListDescription}>{item.itemDescription}</div>
+              </div>
               <hr />
-              <br />
             </div>
           ))}
         </div>
