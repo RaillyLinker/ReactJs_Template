@@ -1,0 +1,47 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+
+/* [Tag] */
+
+/* [Class .] */
+.SampleLabel {
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* [Id #] */
+#MainContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#PageStateLabel {
+    margin-top: 1rem;
+}
+
+#PageStateNumber {
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#PageChangeButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#PageChangeButton:hover {
+    background-color: #2195f3e3;
+}
