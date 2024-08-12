@@ -4,12 +4,16 @@ import { Params } from 'react-router-dom';
 import { BusinessBasic } from '../../global_classes/gc_template_classes';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import PagePageAndRouterSampleListBusiness from '../../pages/page_pageAndRouterSampleList/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
+  // (이전 페이지 비즈니스 객체)
+  prevPageBusiness?: BusinessBasic
+
   // (페이지 파라미터)
   // Path Parameter 로 받은 값
   pathParams?: PathParams
@@ -95,6 +99,14 @@ class Business implements BusinessBasic {
   reRender = () => {
     this.screenFlag = !this.screenFlag;
     this.setScreenFlag!(this.screenFlag);
+  }
+
+  onClickPrevPageChange = () => {
+    if (this.prevPageBusiness != null && this.prevPageBusiness instanceof PagePageAndRouterSampleListBusiness) {
+      // business 의 변수 값만 변경해도 해당 페이지로 복귀시 리렌더링 후 적용됩니다.
+      this.prevPageBusiness.items[2].itemTitle += "+";
+      this.navigate(-1);
+    }
   }
 
   //----------------------------------------------------------------------------

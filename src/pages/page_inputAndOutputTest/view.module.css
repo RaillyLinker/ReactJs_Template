@@ -13,3 +13,17 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#PrevPageChangeButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#PrevPageChangeButton:hover {
+    background-color: #2195f3e3;
+}

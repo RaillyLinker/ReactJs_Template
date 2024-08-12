@@ -4,3 +4,8 @@ import { PageHistory } from '../global_classes/gc_template_classes';
 // (페이지 히스토리 딕셔너리)
 // idx : window.history.state["idx"] 로 가져온 히스토리 인덱스
 export const pageHistoryDict: { [idx: number]: PageHistory } = {};
+
+// (현재 페이지의 히스토리 인덱스)
+export const currentPageHistoryIdx = {
+    idx: null as number | null,
+};

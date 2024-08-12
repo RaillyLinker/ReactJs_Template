@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
-import { pageHistoryDict } from '../../global_data/gd_template_data';
+import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
 import { PageHistory } from '../../global_classes/gc_template_classes';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
@@ -29,7 +29,7 @@ const View: React.FC = () => {
         }
       }
     }
-    
+
     // 히스토리 내에 저장되지 않은 페이지 혹은 히스토리 키가 다른 경우
     // 비즈니스 객체 생성
     const mainBusiness: Business = new Business();
@@ -53,6 +53,14 @@ const View: React.FC = () => {
 
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
+
+  // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
+  if (currentPageHistoryIdx.idx != pageHistoryIdx &&
+    currentPageHistoryIdx.idx != null &&
+    currentPageHistoryIdx.idx in pageHistoryDict) {
+    mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx].pageBusiness;
+  }
+  currentPageHistoryIdx.idx = pageHistoryIdx;
 
 
   // !!!아래부터 코딩!!!
@@ -89,6 +97,8 @@ const View: React.FC = () => {
         <div id={styles.MainContent}>
           <div>pathParam : {pathParams.pathParam}</div>
           <div>queryParam : {queryParams.queryParam}</div>
+          <br />
+          <button id={styles.PrevPageChangeButton} onClick={mainBusiness.onClickPrevPageChange}>이전 페이지 조작</button>
         </div>
       </GcoOuterFrame>
     </div>
