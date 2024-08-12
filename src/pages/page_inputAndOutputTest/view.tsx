@@ -40,15 +40,8 @@ const View: React.FC = () => {
   }
 
   // 히스토리에서 페이지의 비즈니스 객체 가져오기
-  const historyMainBusiness = pageHistoryDict[pageHistoryIdx].pageBusiness
-  let mainBusiness: Business = historyMainBusiness as Business;
-
-  // pageHistoryIdx 가 다를 경우에 대한 처리
-  // 페이지 이동 애니메이션 적용시 pageHistoryIdx 는 새로운 페이지의 인덱스인 상태로 본 페이지가 한번 더 랜더링 됩니다.
-  // 이는 페이지 이동시 기존 페이지를 보여주려는 동작에서 나타난 현상입니다.
-  if (!(historyMainBusiness instanceof Business)) {
-    mainBusiness = mainBusiness.prevPageBusiness as Business;
-  }
+  const historyMainBusiness = pageHistoryDict[pageHistoryIdx].pageBusiness;
+  const mainBusiness: Business = historyMainBusiness as Business;
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
@@ -63,8 +56,8 @@ const View: React.FC = () => {
   mainBusiness.navigate = useNavigate();
 
   // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
-  if (currentPageHistoryIdx.idx != pageHistoryIdx &&
-    currentPageHistoryIdx.idx != null &&
+  if (currentPageHistoryIdx.idx !== pageHistoryIdx &&
+    currentPageHistoryIdx.idx !== null &&
     currentPageHistoryIdx.idx in pageHistoryDict) {
     mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx].pageBusiness;
   }
@@ -82,8 +75,8 @@ const View: React.FC = () => {
   // mainBusiness.onCheckPageInputVo 함수를 실행 했을 때, 
   // 페이지 구성에 필요한 pathParams, queryParams 가 undefined 일 경우 보여줄 화면을 반환하세요.
   if (
-    mainBusiness.pathParams == undefined ||
-    mainBusiness.queryParams == undefined
+    mainBusiness.pathParams === undefined ||
+    mainBusiness.queryParams === undefined
   ) {
     return (
       <div>

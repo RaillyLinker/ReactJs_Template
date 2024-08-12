@@ -14,6 +14,14 @@ code {
     monospace;
 }
 
+html,
+body {
+  position: relative;
+  overflow: hidden;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100vw;
+}
+
 * {
   font-family: 'MaruBuri';
 }

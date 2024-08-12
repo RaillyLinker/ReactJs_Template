@@ -11,13 +11,13 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/busin
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
   // (이전 페이지 비즈니스 객체)
-  prevPageBusiness?: BusinessBasic
+  prevPageBusiness?: BusinessBasic;
 
   // (페이지 파라미터)
   // Path Parameter 로 받은 값
-  pathParams?: PathParams
+  pathParams?: PathParams;
   // Query Parameter 로 받은 값
-  queryParams?: QueryParams
+  queryParams?: QueryParams;
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;

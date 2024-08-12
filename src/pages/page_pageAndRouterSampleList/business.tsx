@@ -11,13 +11,13 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/busin
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
   // (이전 페이지 비즈니스 객체)
-  prevPageBusiness?: BusinessBasic
+  prevPageBusiness?: BusinessBasic;
 
   // (페이지 파라미터)
   // Path Parameter 로 받은 값
-  pathParams?: PathParams
+  pathParams?: PathParams;
   // Query Parameter 로 받은 값
-  queryParams?: QueryParams
+  queryParams?: QueryParams;
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
@@ -39,12 +39,14 @@ class Business implements BusinessBasic {
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 / 라우터 샘플 리스트");
   items: {
+    uid: number,
     itemTitle: string;
     itemDescription: string;
     onItemClicked: () => void;
   }[] =
     [
       {
+        uid: 0,
         itemTitle: "페이지 템플릿",
         itemDescription: "템플릿 페이지를 호출합니다.",
         onItemClicked: (): void => {
@@ -52,6 +54,7 @@ class Business implements BusinessBasic {
         }
       },
       {
+        uid: 1,
         itemTitle: "페이지 State 및 생명주기 테스트",
         itemDescription: "페이지 State 및 생명주기를 테스트 합니다.",
         onItemClicked: (): void => {
@@ -59,6 +62,7 @@ class Business implements BusinessBasic {
         }
       },
       {
+        uid: 2,
         itemTitle: "페이지 입/출력 테스트",
         itemDescription: "페이지 이동시 전달하는 입력값, 복귀시 반환하는 출력값 테스트",
         onItemClicked: (): void => {
@@ -66,6 +70,7 @@ class Business implements BusinessBasic {
         }
       },
       {
+        uid: 3,
         itemTitle: "페이지 이동 애니메이션 테스트",
         itemDescription: "페이지 이동시 적용되는 애니메이션 샘플 리스트",
         onItemClicked: (): void => {
@@ -73,6 +78,7 @@ class Business implements BusinessBasic {
         }
       },
       {
+        uid: 4,
         itemTitle: "페이지 Grid 샘플",
         itemDescription: "화면 사이즈에 따라 동적으로 변하는 Grid 페이지 샘플",
         onItemClicked: (): void => {
