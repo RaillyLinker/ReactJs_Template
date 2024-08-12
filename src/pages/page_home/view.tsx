@@ -20,6 +20,16 @@ const View: React.FC = () => {
   const queryParamsSrc: URLSearchParams = useSearchParams()[0];
 
   if (!(pageHistoryIdx in pageHistoryDict) || pageHistoryDict[pageHistoryIdx].historyKey != pageHistoryKey) {
+    if (pageHistoryIdx in pageHistoryDict && pageHistoryDict[pageHistoryIdx].historyKey != pageHistoryKey) {
+      // 페이지 히스토리 인덱스 큰 값을 제거
+      for (const key in pageHistoryDict) {
+        const numKey = Number(key);
+        if (numKey > pageHistoryIdx) {
+          delete pageHistoryDict[numKey];
+        }
+      }
+    }
+
     // 히스토리 내에 저장되지 않은 페이지 혹은 히스토리 키가 다른 경우
     // 비즈니스 객체 생성
     const mainBusiness: Business = new Business();
@@ -28,6 +38,8 @@ const View: React.FC = () => {
     // 컴포넌트 입력 파라미터 확인 및 초기화
     mainBusiness.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
+
+  console.log(Object.keys(pageHistoryDict).length)
 
   // 히스토리에서 페이지의 비즈니스 객체 가져오기
   const mainBusiness: Business = pageHistoryDict[pageHistoryIdx].pageBusiness as Business;
