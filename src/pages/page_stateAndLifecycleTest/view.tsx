@@ -20,8 +20,8 @@ const View: React.FC = () => {
   // Query 파라미터 객체
   const queryParamsSrc: URLSearchParams = useSearchParams()[0];
 
-  if (!(pageHistoryIdx in pageHistoryDict) || pageHistoryDict[pageHistoryIdx].historyKey != pageHistoryKey) {
-    if (pageHistoryIdx in pageHistoryDict && pageHistoryDict[pageHistoryIdx].historyKey != pageHistoryKey) {
+  if (!(pageHistoryIdx in pageHistoryDict) || pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
+    if (pageHistoryIdx in pageHistoryDict && pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
       // 페이지 히스토리 인덱스 큰 값을 제거
       for (const key in pageHistoryDict) {
         const numKey = Number(key);
