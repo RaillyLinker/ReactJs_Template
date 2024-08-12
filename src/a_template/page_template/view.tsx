@@ -58,7 +58,7 @@ const View: React.FC = () => {
   if (currentPageHistoryIdx.idx != pageHistoryIdx &&
     currentPageHistoryIdx.idx != null &&
     currentPageHistoryIdx.idx in pageHistoryDict) {
-    mainBusiness.lastPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx].pageBusiness;
+    mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx].pageBusiness;
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
 
