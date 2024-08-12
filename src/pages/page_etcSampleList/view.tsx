@@ -43,6 +43,9 @@ const View: React.FC = () => {
   const historyMainBusiness = pageHistoryDict[pageHistoryIdx].pageBusiness
   let mainBusiness: Business = historyMainBusiness as Business;
 
+  // pageHistoryIdx 가 다를 경우에 대한 처리
+  // 페이지 이동 애니메이션 적용시 pageHistoryIdx 는 새로운 페이지의 인덱스인 상태로 본 페이지가 한번 더 랜더링 됩니다.
+  // 이는 페이지 이동시 기존 페이지를 보여주려는 동작에서 나타난 현상입니다.
   if (!(historyMainBusiness instanceof Business)) {
     mainBusiness = mainBusiness.prevPageBusiness as Business;
   }

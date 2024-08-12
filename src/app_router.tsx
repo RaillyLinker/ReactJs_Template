@@ -13,7 +13,7 @@ function AppRouter(): JSX.Element {
   const location = useLocation();
 
   return (
-    <TransitionGroup className={'transition-wrapper'}>
+    <TransitionGroup className={'transition-group'}>
       <CSSTransition
         key={location.key}
         classNames="navigate-push"

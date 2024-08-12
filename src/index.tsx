@@ -8,6 +8,7 @@ import AppRouter from "./app_router";
 const root: ReactDOM.Root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>

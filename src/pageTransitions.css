@@ -1,10 +1,10 @@
 /* 
     [최외곽 CSS]
     페이지 이동시 이전 페이지를 보여주기 위한 필수 조치입니다.
-    이곳에서 position 을 relative 로 하고, 
-    앞으로 만들어갈 페이지 컴포넌트의 외곽 position 을 absolute 로 지정해야 합니다.
+    외곽 태그의 position 을 relative 로 하고 화면에 꽉 채웠습니다.
+    앞으로 만들어갈 페이지 컴포넌트의 외곽 태그의 position 은 absolute 로 지정하세요.
 */
-.transition-wrapper {
+.transition-group {
     position: relative;
     overflow: hidden;
     height: calc(var(--vh, 1vh) * 100);
@@ -13,7 +13,7 @@
 
 /* 
     [페이지 전환 애니메이션 CSS 클래스]
-    사용할 페이지 전환 애니메이션을 작성하세요.
+    아랫 부분에는 페이지 전환 애니메이션을 작성하세요.
     클래스명명 규칙은,
     *-enter, *-enter-active, *-exit, *-exit-active
     위와 같이 정해진 4개의 접미사 앞에 클래스 이름을 짓는 것입니다.
@@ -23,16 +23,14 @@
     예를들어 
     <CSSTransition classNames="test" >
     위와 같이 설정했다면,
-
-    본 css 파일 내의
+    본 css 파일 내의 클래스 선언은,
     test-enter, test-enter-active, test-exit, test-exit-active
-    위와 같은 클래스 선언이 실행되는 것입니다.
+    위와 같이 하면 됩니다.
 
     각 클래스 접미사별 기능은 아래와 같습니다.
 
     - enter 클래스 : 
-        enter 클래스는 컴포넌트가 진입할 때 적용됩니다. 
-        즉, in prop이 true가 되어 컴포넌트가 나타날 때 적용된다.
+        컴포넌트가 진입할 때 적용됩니다.
 
     - enter-active 클래스 : 
         enter-active 클래스는 enter 클래스가 적용될 때부터 컴포넌트가 나타날 때까지 적용된다. 
@@ -40,7 +38,6 @@
 
     - exit 클래스 : 
         exit 클래스는 컴포넌트가 나갈 때 적용된다. 
-        즉, in prop이 false가 되어 컴포넌트가 사라질 때 적용된다.
 
     - exit-active 클래스 : 
         exit-active 클래스는 exit 클래스가 적용될 때부터 컴포넌트가 사라질 때까지 적용된다. 

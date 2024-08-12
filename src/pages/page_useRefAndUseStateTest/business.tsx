@@ -33,6 +33,7 @@ class Business implements BusinessBasic {
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
 
+
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
@@ -41,8 +42,8 @@ class Business implements BusinessBasic {
   // (테스트 숫자)
   testNumberForUseRef: number = 0;
   testNumberForUseRefRef?: React.RefObject<HTMLDivElement>;
-
   testNumberForUseState: number = 10;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -86,6 +87,7 @@ class Business implements BusinessBasic {
   onComponentWillUnmount = () => {
   }
 
+
   //----------------------------------------------------------------------------
   // [public 함수]
   // (컴포넌트 화면 리랜더링 함수)
@@ -107,6 +109,7 @@ class Business implements BusinessBasic {
     this.testNumberForUseState += 1;
     this.reRender();
   }
+
 
   //----------------------------------------------------------------------------
   // [private 함수]

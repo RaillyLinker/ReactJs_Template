@@ -12,8 +12,8 @@ import GcoTestBusiness from '../../global_components/gco_test/business';
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
   // (이전 페이지 비즈니스 객체)
-  prevPageBusiness? : BusinessBasic
-  
+  prevPageBusiness?: BusinessBasic
+
   // (페이지 파라미터)
   // Path Parameter 로 받은 값
   pathParams?: PathParams
@@ -33,6 +33,7 @@ class Business implements BusinessBasic {
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
+
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
@@ -89,6 +90,7 @@ class Business implements BusinessBasic {
     console.log("onComponentWillUnmount");
   }
 
+
   //----------------------------------------------------------------------------
   // [public 함수]
   // (컴포넌트 화면 리랜더링 함수)
@@ -109,6 +111,7 @@ class Business implements BusinessBasic {
   onClickPageChange = () => {
     this.navigate("/page-and-router-sample-list");
   }
+
 
   //----------------------------------------------------------------------------
   // [private 함수]
