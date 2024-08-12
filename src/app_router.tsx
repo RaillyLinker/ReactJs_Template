@@ -4,6 +4,7 @@ import PageHome from './pages/page_home/view';
 import PagePageAndRouterSampleList from './pages/page_pageAndRouterSampleList/view';
 import PageStateAndLifecycleTest from './pages/page_stateAndLifecycleTest/view';
 import PageInputAndOutputTest from './pages/page_inputAndOutputTest/view';
+import PageEtcSampleList from './pages/page_etcSampleList/view';
 
 // [프로그램 라우터 설정 파일]
 // !!!프로그램 내에서 사용할 모든 페이지는 이곳에 등록!!!
@@ -12,12 +13,14 @@ function AppRouter(): JSX.Element {
   return (
     <Routes>
       <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
-      
+
       <Route path="/" element={<PageHome />} />
       <Route path="/page-and-router-sample-list" element={<PagePageAndRouterSampleList />} />
       <Route path="/page-and-router-sample-list/page-template" element={<PageTemplate />} />
       <Route path="/page-and-router-sample-list/state-and-lifecyle-test" element={<PageStateAndLifecycleTest />} />
       <Route path="/page-and-router-sample-list/input-and-output-test/:pathParam" element={<PageInputAndOutputTest />} />
+
+      <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
     </Routes>
   );
 }

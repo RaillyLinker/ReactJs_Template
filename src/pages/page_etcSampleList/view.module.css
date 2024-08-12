@@ -1,0 +1,32 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+
+/* [Tag] */
+hr {
+    margin: 0rem;
+}
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainContent {
+    height: 100%;
+    position: relative;
+}
+
+#ListItem {
+    padding-left: 1rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    cursor: pointer;
+}
+
+#ListTitle {
+    color: black;
+}
+
+#ListDescription {
+    margin-top: 0.2rem;
+    color: grey;
+}
