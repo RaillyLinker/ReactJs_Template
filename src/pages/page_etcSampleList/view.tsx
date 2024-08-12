@@ -39,8 +39,6 @@ const View: React.FC = () => {
     mainBusiness.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
 
-  console.log(Object.keys(pageHistoryDict).length)
-
   // 히스토리에서 페이지의 비즈니스 객체 가져오기
   const mainBusiness: Business = pageHistoryDict[pageHistoryIdx].pageBusiness as Business;
 

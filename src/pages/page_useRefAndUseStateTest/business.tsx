@@ -76,7 +76,6 @@ class Business implements BusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    console.log("onComponentDidMount");
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -85,7 +84,6 @@ class Business implements BusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
-    console.log("onComponentWillUnmount");
   }
 
   //----------------------------------------------------------------------------
