@@ -11,6 +11,8 @@ import PageInputAndOutputTest from './pages/page_inputAndOutputTest/view';
 function AppRouter(): JSX.Element {
   return (
     <Routes>
+      <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
+      
       <Route path="/" element={<PageHome />} />
       <Route path="/page-and-router-sample-list" element={<PagePageAndRouterSampleList />} />
       <Route path="/page-and-router-sample-list/page-template" element={<PageTemplate />} />
