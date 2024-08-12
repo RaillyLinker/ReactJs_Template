@@ -41,7 +41,12 @@ const View: React.FC = () => {
   }
 
   // 히스토리에서 페이지의 비즈니스 객체 가져오기
-  const mainBusiness: Business = pageHistoryDict[pageHistoryIdx].pageBusiness as Business;
+  const historyMainBusiness = pageHistoryDict[pageHistoryIdx].pageBusiness
+  let mainBusiness: Business = historyMainBusiness as Business;
+
+  if (!(historyMainBusiness instanceof Business)) {
+    mainBusiness = mainBusiness.prevPageBusiness as Business;
+  }
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
@@ -96,7 +101,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div>
+    <div id={styles.MainView}>
       <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
         <span id={styles.MainContent}>
           <div className={styles.SampleLabel}>Gco 컴포넌트 State</div>

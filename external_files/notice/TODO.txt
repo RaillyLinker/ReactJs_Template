@@ -1,8 +1,9 @@
 [TODO]
+- 페이지 이동 애니메이션 개선
+- 페이지 이동 애니메이션 뒤로가기, 앞으로 가기 등에 따라 자동으로 따로 처리되도록 처리
 - Nested Routes 샘플
 - SharedPreferences
 - Network
 - Database
 - 다이얼로그
 - 계정 샘플
-- 페이지 이동 애니메이션
