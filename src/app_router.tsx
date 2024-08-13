@@ -11,7 +11,7 @@ function AppRouter(): JSX.Element {
   const location = useLocation();
 
   return (
-    <Routes location={location}>
+    <Routes location={location} key={location.key}>
       <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
 
       <Route path="/" element={<PageHome />} />
