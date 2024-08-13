@@ -22,11 +22,9 @@ const View: React.FC = () => {
   if (!(pageHistoryIdx in pageHistoryDict)) {
     // 히스토리 내에 저장되지 않은 경우
     // 비즈니스 객체 생성
-    mainBusinessOpt = new Business(pageHistoryKey);
+    mainBusinessOpt = new Business(pageHistoryIdx, pageHistoryKey, pathParamsSrc, queryParamsSrc);
     // 히스토리에 비즈니스 객체 할당
     pageHistoryDict[pageHistoryIdx] = mainBusinessOpt;
-    // 컴포넌트 입력 파라미터 확인 및 초기화
-    mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   } else if (pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
     // 히스토리 키가 다른 경우
     // 페이지 히스토리 인덱스 큰 값을 제거
@@ -38,11 +36,9 @@ const View: React.FC = () => {
     }
 
     // 비즈니스 객체 생성
-    mainBusinessOpt = new Business(pageHistoryKey);
+    mainBusinessOpt = new Business(pageHistoryIdx, pageHistoryKey, pathParamsSrc, queryParamsSrc);
     // 히스토리에 비즈니스 객체 할당
     pageHistoryDict[pageHistoryIdx] = mainBusinessOpt;
-    // 컴포넌트 입력 파라미터 확인 및 초기화
-    mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
 
   if (mainBusinessOpt === null) {
@@ -55,16 +51,19 @@ const View: React.FC = () => {
   const mainBusiness: Business = mainBusinessOpt;
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
+  const setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
+  const navigate = useNavigate();
   useEffect(() => {
+    mainBusiness.setScreenFlag = setScreenFlag;
+    mainBusiness.navigate = navigate;
     mainBusiness.onComponentDidMount(mainBusiness.firstMount);
     mainBusiness.firstMount = false;
     return () => {
       mainBusiness.onComponentWillUnmount();
+      mainBusiness.setScreenFlag = undefined;
+      mainBusiness.navigate = undefined;
     }
   }, [mainBusiness]);
-
-  mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
-  mainBusiness.navigate = useNavigate();
 
   // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
   if (currentPageHistoryIdx.idx !== pageHistoryIdx &&

@@ -11,36 +11,32 @@ import GcoTestBusiness from '../../global_components/gco_test/business';
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business implements BusinessBasic {
-  // (본 페이지 히스토리 키)
+  // (본 페이지 히스토리 인덱스 / 키)
+  historyIdx: number;
   historyKey: string;
-  
+
   // (이전 페이지 비즈니스 객체)
-  prevPageBusiness?: BusinessBasic;
+  prevPageBusiness: BusinessBasic | undefined;
 
   // (페이지 파라미터)
   // Path Parameter 로 받은 값
-  pathParams?: PathParams;
+  pathParams: PathParams | undefined;
   // Query Parameter 로 받은 값
-  queryParams?: QueryParams;
+  queryParams: QueryParams | undefined;
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
+  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> | undefined;
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
   // 파라미터가 string 이라면 path 경로로 이동하고,
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction = () => { };
+  navigate: NavigateFunction | undefined;
 
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
-
-  // (생성자)
-  constructor(historyKey: string) {
-    this.historyKey = historyKey;
-  }
 
 
   //----------------------------------------------------------------------------
@@ -56,16 +52,22 @@ class Business implements BusinessBasic {
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
-  // (컴포넌트 입력 파라미터 확인 및 초기화)
-  // 컴포넌트 진입시 가장 먼저 실행됩니다.
-  // this.pathParams, this.queryParams 를 입력하면 되며,
-  // 만약 하나라도 undefined 이라면 에러 화면이 나오게 됩니다.
-  onCheckPageInputVo = (
+  // (생성자)
+  constructor(
+    historyIdx: number,
+    historyKey: string,
     // Path 파라미터 객체 (ex : pathParams["testPath"])
     pathParams: Readonly<Params<string>>,
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
     queryParams: URLSearchParams
-  ) => {
+  ) {
+    this.historyIdx = historyIdx;
+    this.historyKey = historyKey;
+
+    // (컴포넌트 입력 파라미터 확인 및 초기화)
+    // this.pathParams, this.queryParams 를 입력하면 되며,
+    // 만약 하나라도 undefined 이라면 에러 화면이 나오게 됩니다.
+
     // Query 파라미터 객체로 값 입력하기
     // (ex : const queryParam: string | null = queryParams.get("queryParam");)
 
@@ -105,10 +107,13 @@ class Business implements BusinessBasic {
   // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
   // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
-    this.screenFlag = !this.screenFlag;
-    this.setScreenFlag!(this.screenFlag);
+    if (this.setScreenFlag !== undefined) {
+      this.screenFlag = !this.screenFlag;
+      this.setScreenFlag(this.screenFlag);
+    }
   }
 
+  // (숫자 변경 버튼 클릭시)
   onClickTestNumber = () => {
     this.testNumber += 1;
     if (this.testNumberRef != null && this.testNumberRef.current) {
@@ -116,8 +121,11 @@ class Business implements BusinessBasic {
     }
   }
 
+  // (페이지 이동 버튼 클릭시)
   onClickPageChange = () => {
-    this.navigate("/page-and-router-sample-list");
+    if (this.navigate !== undefined) {
+      this.navigate("/page-and-router-sample-list");
+    }
   }
 
 
