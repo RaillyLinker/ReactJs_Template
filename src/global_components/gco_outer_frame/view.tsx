@@ -16,7 +16,7 @@ const View: React.FC<Props> = (props) => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  }, []);
+  }, [mainBusiness]);
 
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
@@ -29,13 +29,14 @@ const View: React.FC<Props> = (props) => {
 
   // 스크롤 위치 유지 처리 코드 뭉치
   mainBusiness.contentRef = useRef<HTMLDivElement>(null);
-  const handleScroll = () => {
-    if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
-      mainBusiness.contentScrollTop = mainBusiness.contentRef.current.scrollTop;
-      mainBusiness.contentScrollLeft = mainBusiness.contentRef.current.scrollLeft;
-    }
-  };
   useEffect(() => {
+    const handleScroll = () => {
+      if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+        mainBusiness.contentScrollTop = mainBusiness.contentRef.current.scrollTop;
+        mainBusiness.contentScrollLeft = mainBusiness.contentRef.current.scrollLeft;
+      }
+    };
+
     if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
       mainBusiness.contentRef.current.scrollTop = mainBusiness.contentScrollTop;
       mainBusiness.contentRef.current.scrollLeft = mainBusiness.contentScrollLeft;
@@ -46,7 +47,7 @@ const View: React.FC<Props> = (props) => {
         mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
       }
     };
-  }, []);
+  }, [mainBusiness]);
 
 
   //----------------------------------------------------------------------------

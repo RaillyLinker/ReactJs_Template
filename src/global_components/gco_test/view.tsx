@@ -16,7 +16,7 @@ const View: React.FC<Props> = (props) => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  }, []);
+  }, [mainBusiness]);
 
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
