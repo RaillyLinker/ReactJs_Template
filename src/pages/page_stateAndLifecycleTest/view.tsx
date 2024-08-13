@@ -3,7 +3,6 @@ import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
-import { PageHistory } from '../../global_classes/gc_template_classes';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 import GcoTest from '../../global_components/gco_test/view';
@@ -24,9 +23,9 @@ const View: React.FC = () => {
   if (!(pageHistoryIdx in pageHistoryDict)) {
     // 히스토리 내에 저장되지 않은 경우
     // 비즈니스 객체 생성
-    mainBusinessOpt = new Business();
+    mainBusinessOpt = new Business(pageHistoryKey);
     // 히스토리에 비즈니스 객체 할당
-    pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusinessOpt);
+    pageHistoryDict[pageHistoryIdx] = mainBusinessOpt;
     // 컴포넌트 입력 파라미터 확인 및 초기화
     mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   } else if (pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
@@ -40,9 +39,9 @@ const View: React.FC = () => {
     }
 
     // 비즈니스 객체 생성
-    mainBusinessOpt = new Business();
+    mainBusinessOpt = new Business(pageHistoryKey);
     // 히스토리에 비즈니스 객체 할당
-    pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusinessOpt);
+    pageHistoryDict[pageHistoryIdx] = mainBusinessOpt;
     // 컴포넌트 입력 파라미터 확인 및 초기화
     mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
@@ -50,7 +49,7 @@ const View: React.FC = () => {
   if (mainBusinessOpt === null) {
     // Business 가 새로 생성되지 않은 경우
     // 히스토리에서 가져오기
-    mainBusinessOpt = pageHistoryDict[pageHistoryIdx].pageBusiness as Business;
+    mainBusinessOpt = pageHistoryDict[pageHistoryIdx] as Business;
   }
 
   // 비즈니스 객체 할당
@@ -72,7 +71,7 @@ const View: React.FC = () => {
   if (currentPageHistoryIdx.idx !== pageHistoryIdx &&
     currentPageHistoryIdx.idx !== null &&
     currentPageHistoryIdx.idx in pageHistoryDict) {
-    mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx].pageBusiness;
+    mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx];
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
 
