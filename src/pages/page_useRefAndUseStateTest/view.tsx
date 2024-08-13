@@ -19,29 +19,41 @@ const View: React.FC = () => {
   // Query 파라미터 객체
   const queryParamsSrc: URLSearchParams = useSearchParams()[0];
 
-  if (!(pageHistoryIdx in pageHistoryDict) || pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
-    if (pageHistoryIdx in pageHistoryDict && pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
-      // 페이지 히스토리 인덱스 큰 값을 제거
-      for (const key in pageHistoryDict) {
-        const numKey = Number(key);
-        if (numKey > pageHistoryIdx) {
-          delete pageHistoryDict[numKey];
-        }
+  let mainBusinessOpt: Business | null = null;
+  if (!(pageHistoryIdx in pageHistoryDict)) {
+    // 히스토리 내에 저장되지 않은 경우
+    // 비즈니스 객체 생성
+    mainBusinessOpt = new Business();
+    // 히스토리에 비즈니스 객체 할당
+    pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusinessOpt);
+    // 컴포넌트 입력 파라미터 확인 및 초기화
+    mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
+  } else if (pageHistoryDict[pageHistoryIdx].historyKey !== pageHistoryKey) {
+    // 히스토리 키가 다른 경우
+    // 페이지 히스토리 인덱스 큰 값을 제거
+    for (const historyIdx in pageHistoryDict) {
+      const numIdx = Number(historyIdx);
+      if (numIdx > pageHistoryIdx) {
+        delete pageHistoryDict[numIdx];
       }
     }
 
-    // 히스토리 내에 저장되지 않은 페이지 혹은 히스토리 키가 다른 경우
     // 비즈니스 객체 생성
-    const mainBusiness: Business = new Business();
+    mainBusinessOpt = new Business();
     // 히스토리에 비즈니스 객체 할당
-    pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusiness);
+    pageHistoryDict[pageHistoryIdx] = new PageHistory(pageHistoryKey, mainBusinessOpt);
     // 컴포넌트 입력 파라미터 확인 및 초기화
-    mainBusiness.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
+    mainBusinessOpt.onCheckPageInputVo(pathParamsSrc, queryParamsSrc);
   }
 
-  // 히스토리에서 페이지의 비즈니스 객체 가져오기
-  const historyMainBusiness = pageHistoryDict[pageHistoryIdx].pageBusiness;
-  const mainBusiness: Business = historyMainBusiness as Business;
+  if (mainBusinessOpt === null) {
+    // Business 가 새로 생성되지 않은 경우
+    // 히스토리에서 가져오기
+    mainBusinessOpt = pageHistoryDict[pageHistoryIdx].pageBusiness as Business;
+  }
+
+  // 비즈니스 객체 할당
+  const mainBusiness: Business = mainBusinessOpt;
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
