@@ -16,9 +16,11 @@ class Business implements BusinessBasic {
   historyKey: string;
 
   // (이전 페이지 비즈니스 객체)
+  // undefined 라면 이전 페이지가 없음
   prevPageBusiness: BusinessBasic | undefined;
 
   // (페이지 파라미터)
+  // undefined 라면 잘못된 진입
   // Path Parameter 로 받은 값
   pathParams: PathParams | undefined;
   // Query Parameter 로 받은 값
@@ -26,13 +28,13 @@ class Business implements BusinessBasic {
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
   // 파라미터가 string 이라면 path 경로로 이동하고,
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction | undefined;
+  navigate: NavigateFunction = () => { };
 
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
@@ -47,7 +49,7 @@ class Business implements BusinessBasic {
 
   // (테스트 숫자)
   testNumber: number = 0;
-  testNumberRef?: React.RefObject<HTMLDivElement>;
+  testNumberRef: React.RefObject<HTMLDivElement> | undefined;
 
 
   //----------------------------------------------------------------------------
@@ -107,25 +109,21 @@ class Business implements BusinessBasic {
   // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
   // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
-    if (this.setScreenFlag !== undefined) {
-      this.screenFlag = !this.screenFlag;
-      this.setScreenFlag(this.screenFlag);
-    }
+    this.screenFlag = !this.screenFlag;
+    this.setScreenFlag(this.screenFlag);
   }
 
   // (숫자 변경 버튼 클릭시)
   onClickTestNumber = () => {
     this.testNumber += 1;
-    if (this.testNumberRef != null && this.testNumberRef.current) {
+    if (this.testNumberRef !== undefined && this.testNumberRef.current) {
       this.testNumberRef.current.textContent = this.testNumber.toString();
     }
   }
 
   // (페이지 이동 버튼 클릭시)
   onClickPageChange = () => {
-    if (this.navigate !== undefined) {
-      this.navigate("/page-and-router-sample-list");
-    }
+    this.navigate("/page-and-router-sample-list");
   }
 
 

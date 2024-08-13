@@ -51,17 +51,11 @@ const View: React.FC = () => {
   const mainBusiness: Business = mainBusinessOpt;
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
-  const setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
-  const navigate = useNavigate();
   useEffect(() => {
-    mainBusiness.setScreenFlag = setScreenFlag;
-    mainBusiness.navigate = navigate;
     mainBusiness.onComponentDidMount(mainBusiness.firstMount);
     mainBusiness.firstMount = false;
     return () => {
       mainBusiness.onComponentWillUnmount();
-      mainBusiness.setScreenFlag = undefined;
-      mainBusiness.navigate = undefined;
     }
   }, [mainBusiness]);
 
@@ -72,6 +66,11 @@ const View: React.FC = () => {
     mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx];
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
+
+  const setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
+  mainBusiness.setScreenFlag = setScreenFlag;
+  const navigate = useNavigate();
+  mainBusiness.navigate = navigate;
 
 
   // !!!아래부터 코딩!!!

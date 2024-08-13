@@ -16,9 +16,11 @@ class Business implements BusinessBasic {
   historyKey: string;
 
   // (이전 페이지 비즈니스 객체)
+  // undefined 라면 이전 페이지가 없음
   prevPageBusiness: BusinessBasic | undefined;
 
   // (페이지 파라미터)
+  // undefined 라면 잘못된 진입
   // Path Parameter 로 받은 값
   pathParams: PathParams | undefined;
   // Query Parameter 로 받은 값
@@ -26,13 +28,13 @@ class Business implements BusinessBasic {
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
   // 파라미터가 string 이라면 path 경로로 이동하고,
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction | undefined;
+  navigate: NavigateFunction = () => { };
 
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
@@ -109,20 +111,16 @@ class Business implements BusinessBasic {
   // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
   // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
-    if (this.setScreenFlag !== undefined) {
-      this.screenFlag = !this.screenFlag;
-      this.setScreenFlag(this.screenFlag);
-    }
+    this.screenFlag = !this.screenFlag;
+    this.setScreenFlag(this.screenFlag);
   }
 
   // (이전 화면으로 이동 버튼을 눌렀을 때)
   onClickPrevPageChange = () => {
     if (this.prevPageBusiness !== undefined && this.prevPageBusiness instanceof PagePageAndRouterSampleListBusiness) {
       // business 의 변수 값만 변경해도 해당 페이지로 복귀시 리렌더링 후 적용됩니다.
-      if (this.navigate !== undefined) {
-        this.prevPageBusiness.items[2].itemTitle += "+";
-        this.navigate(-1);
-      }
+      this.prevPageBusiness.items[2].itemTitle += "+";
+      this.navigate(-1);
     }
   }
 
