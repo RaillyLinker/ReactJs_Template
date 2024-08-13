@@ -66,7 +66,7 @@ const View: React.FC = () => {
     mainBusiness.prevPageBusiness = pageHistoryDict[currentPageHistoryIdx.idx];
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
-  
+
   const setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.setScreenFlag = setScreenFlag;
   const navigate = useNavigate();
@@ -82,10 +82,10 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
   // mainBusiness.onCheckPageInputVo 함수를 실행 했을 때, 
-  // 페이지 구성에 필요한 pathParams, queryParams 가 undefined 일 경우 보여줄 화면을 반환하세요.
+  // 페이지 구성에 필요한 pathParams, queryParams 가 null 일 경우 보여줄 화면을 반환하세요.
   if (
-    mainBusiness.pathParams === undefined ||
-    mainBusiness.queryParams === undefined
+    mainBusiness.pathParams === null ||
+    mainBusiness.queryParams === null
   ) {
     return (
       <div>

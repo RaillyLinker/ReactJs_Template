@@ -16,15 +16,15 @@ class Business implements BusinessBasic {
   historyKey: string;
 
   // (이전 페이지 비즈니스 객체)
-  // undefined 라면 이전 페이지가 없음
-  prevPageBusiness: BusinessBasic | undefined;
+  // null 이라면 이전 페이지가 없음
+  prevPageBusiness: BusinessBasic | null = null;
 
   // (페이지 파라미터)
-  // undefined 라면 잘못된 진입
+  // null 라면 잘못된 진입
   // Path Parameter 로 받은 값
-  pathParams: PathParams | undefined;
+  pathParams: PathParams | null = null;
   // Query Parameter 로 받은 값
-  queryParams: QueryParams | undefined;
+  queryParams: QueryParams | null = null;
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
@@ -49,7 +49,7 @@ class Business implements BusinessBasic {
 
   // (테스트 숫자)
   testNumber: number = 0;
-  testNumberRef: React.RefObject<HTMLDivElement> | undefined;
+  testNumberRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ class Business implements BusinessBasic {
 
     // (컴포넌트 입력 파라미터 확인 및 초기화)
     // this.pathParams, this.queryParams 를 입력하면 되며,
-    // 만약 하나라도 undefined 이라면 에러 화면이 나오게 됩니다.
+    // 만약 하나라도 null 이라면 에러 화면이 나오게 됩니다.
 
     // Query 파라미터 객체로 값 입력하기
     // (ex : const queryParam: string | null = queryParams.get("queryParam");)
@@ -116,7 +116,7 @@ class Business implements BusinessBasic {
   // (숫자 변경 버튼 클릭시)
   onClickTestNumber = () => {
     this.testNumber += 1;
-    if (this.testNumberRef !== undefined && this.testNumberRef.current) {
+    if (this.testNumberRef !== null && this.testNumberRef.current) {
       this.testNumberRef.current.textContent = this.testNumber.toString();
     }
   }
