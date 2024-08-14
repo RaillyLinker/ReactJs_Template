@@ -8,10 +8,8 @@ import PageEtcSampleList from './pages/page_etcSampleList/view';
 import PageUseRefAndUseStateTest from './pages/page_useRefAndUseStateTest/view';
 
 function AppRouter(): JSX.Element {
-  const location = useLocation();
-
   return (
-    <Routes location={location} key={location.key}>
+    <Routes location={window.location} key={window.location.pathname}>
       <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
 
       <Route path="/" element={<PageHome />} />
