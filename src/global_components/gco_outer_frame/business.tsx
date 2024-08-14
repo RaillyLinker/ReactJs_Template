@@ -24,7 +24,7 @@ class Business {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   // (화면 본문 레퍼런스)
-  contentRef?: React.RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement> | null = null;
   // (content 스크롤 상하 위치)
   contentScrollTop: number = 0;
   // (content 스크롤 좌우 위치)
@@ -65,7 +65,7 @@ class Business {
   // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
     this.screenFlag = !this.screenFlag;
-    this.setScreenFlag!(this.screenFlag);
+    this.setScreenFlag(this.screenFlag);
   }
 
 

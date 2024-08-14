@@ -24,7 +24,7 @@ class Business {
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   // (테스트 숫자)
   testNumber: number = 0;
-  testNumberRef?: React.RefObject<HTMLDivElement>;
+  testNumberRef: React.RefObject<HTMLDivElement> | null = null;
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -55,12 +55,12 @@ class Business {
   // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
   reRender = () => {
     this.screenFlag = !this.screenFlag;
-    this.setScreenFlag!(this.screenFlag);
+    this.setScreenFlag(this.screenFlag);
   }
 
   onClickTestNumber = () => {
     this.testNumber += 1;
-    if (this.testNumberRef != null && this.testNumberRef.current) {
+    if (this.testNumberRef !== null && this.testNumberRef.current) {
       this.testNumberRef.current.textContent = this.testNumber.toString();
     }
   }

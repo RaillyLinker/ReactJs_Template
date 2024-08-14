@@ -18,6 +18,7 @@ const View: React.FC<Props> = (props) => {
     }
   }, [mainBusiness]);
 
+  // 필요 객체 할당
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
@@ -31,19 +32,19 @@ const View: React.FC<Props> = (props) => {
   mainBusiness.contentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
-      if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+      if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
         mainBusiness.contentScrollTop = mainBusiness.contentRef.current.scrollTop;
         mainBusiness.contentScrollLeft = mainBusiness.contentRef.current.scrollLeft;
       }
     };
 
-    if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+    if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
       mainBusiness.contentRef.current.scrollTop = mainBusiness.contentScrollTop;
       mainBusiness.contentRef.current.scrollLeft = mainBusiness.contentScrollLeft;
       mainBusiness.contentRef.current.addEventListener('scroll', handleScroll);
     }
     return () => {
-      if (mainBusiness.contentRef != null && mainBusiness.contentRef.current) {
+      if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
         mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
       }
     };

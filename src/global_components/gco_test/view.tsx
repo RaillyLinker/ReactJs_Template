@@ -18,6 +18,7 @@ const View: React.FC<Props> = (props) => {
     }
   }, [mainBusiness]);
 
+  // 필요 객체 할당
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
   mainBusiness.navigate = useNavigate();
 
