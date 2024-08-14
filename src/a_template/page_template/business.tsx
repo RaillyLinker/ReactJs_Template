@@ -1,5 +1,3 @@
-import React from 'react';
-import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic, PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
@@ -10,35 +8,13 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/busin
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
-class Business implements PageBusinessBasic {
-  // (본 페이지 히스토리 인덱스 / 키)
-  historyIdx: number;
-  historyKey: string;
-
-  // (이전 페이지 비즈니스 객체)
-  // null 이라면 이전 페이지가 없음
-  prevPageBusiness: PageBusinessBasic | null = null;
-
+class Business extends PageBusinessBasic {
   // (페이지 파라미터)
   // null 이라면 잘못된 진입
   // Path Parameter 로 받은 값
   pathParams: PathParams | null = null;
   // Query Parameter 로 받은 값
   queryParams: QueryParams | null = null;
-
-  // (컴포넌트 화면 Rerendering 플래그 및 객체)
-  screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
-
-  // (Navigate 객체)
-  // 사용법은 this.navigate("/test"); 이와 같습니다.
-  // 파라미터가 string 이라면 path 경로로 이동하고,
-  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction = () => { };
-
-  // (초기 실행 여부)
-  // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
-  firstMount: boolean = true;
 
   // (다이얼로그 비즈니스)
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
@@ -61,8 +37,7 @@ class Business implements PageBusinessBasic {
     // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
     queryParams: URLSearchParams
   ) {
-    this.historyIdx = historyIdx;
-    this.historyKey = historyKey;
+    super(historyIdx, historyKey);
 
     // (컴포넌트 입력 파라미터 확인 및 초기화)
     // this.pathParams, this.queryParams 를 입력하면 되며,
@@ -101,13 +76,6 @@ class Business implements PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (컴포넌트 화면 리랜더링 함수)
-  // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
-  // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
-  reRender = () => {
-    this.screenFlag = !this.screenFlag;
-    this.setScreenFlag(this.screenFlag);
-  }
 
 
   //----------------------------------------------------------------------------

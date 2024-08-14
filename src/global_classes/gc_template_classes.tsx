@@ -48,7 +48,7 @@ export abstract class ComponentBusinessBasic extends BusinessBasic {
   parentComponentBusiness: BusinessBasic;
 
   // (생성자)
-  constructor(parentComponentBusiness: BusinessBasic){
+  constructor(parentComponentBusiness: BusinessBasic) {
     super();
     this.parentComponentBusiness = parentComponentBusiness;
   }
@@ -68,24 +68,31 @@ export interface ComponentProps {
 }
 
 // (페이지 Business 클래스 기본타입)
-export interface PageBusinessBasic extends BusinessBasic {
+export abstract class PageBusinessBasic extends BusinessBasic {
   // (본 페이지 히스토리 인덱스 / 키)
   historyIdx: number;
   historyKey: string;
 
   // (이전 페이지 비즈니스 객체)
   // null 이라면 이전 페이지가 없음
-  prevPageBusiness: PageBusinessBasic | null;
+  prevPageBusiness: PageBusinessBasic | null = null;
 
   // (페이지 파라미터)
   // null 이라면 잘못된 진입
   // Path Parameter 로 받은 값
-  pathParams: PagePathParamBasic | null;
+  abstract pathParams: PagePathParamBasic | null;
   // Query Parameter 로 받은 값
-  queryParams: PageQueryParamBasic | null;
+  abstract queryParams: PageQueryParamBasic | null;
 
   // (다이얼로그 비즈니스)
-  gcoDialogFrameBusiness: GcoDialogFrameBusiness;
+  abstract gcoDialogFrameBusiness: GcoDialogFrameBusiness;
+
+  // (생성자)
+  constructor(historyIdx: number, historyKey: string) {
+    super();
+    this.historyIdx = historyIdx;
+    this.historyKey = historyKey;
+  }
 }
 
 // (페이지 Path Parameter 인터페이스)
