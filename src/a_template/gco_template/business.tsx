@@ -1,32 +1,9 @@
-import React from 'react';
-import { NavigateFunction } from 'react-router-dom';
 import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
-class Business implements ComponentBusinessBasic {
-  // (컴포넌트 화면 Rerendering 플래그 및 객체)
-  screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
-
-  // (Navigate 객체)
-  // 사용법은 this.navigate("/test"); 이와 같습니다.
-  // 파라미터가 string 이라면 path 경로로 이동하고,
-  // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction = () => { };
-
-  // (초기 실행 여부)
-  // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
-  firstMount: boolean = true;
-
-  // (부모 컴포넌트 비즈니스 객체)
-  // 페이지 비즈니스 혹은 컴포넌트 비즈니스 객체가 올 수 있음
-  // 최 상위에는 항상 페이지 컴포넌트가 있으므로 not null
-  parentComponentBusiness: BusinessBasic;
-
-
-  //----------------------------------------------------------------------------
+class Business extends ComponentBusinessBasic {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 
@@ -36,7 +13,7 @@ class Business implements ComponentBusinessBasic {
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
   constructor(parentComponentBusiness: BusinessBasic) {
-    this.parentComponentBusiness = parentComponentBusiness;
+    super(parentComponentBusiness);
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -57,13 +34,6 @@ class Business implements ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (컴포넌트 화면 리랜더링 함수)
-  // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
-  // 가볍게 일부만 변경하려면 useRef 로 DOM 을 조작하세요.
-  reRender = () => {
-    this.screenFlag = !this.screenFlag;
-    this.setScreenFlag(this.screenFlag);
-  }
 
 
   //----------------------------------------------------------------------------
