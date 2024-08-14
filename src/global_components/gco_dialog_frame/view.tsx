@@ -51,7 +51,7 @@ const View: React.FC<Props> = (props) => {
               mainBusiness.dialogBarrierDismissible
             ) {
               // 다이얼로그 종료
-              mainBusiness.dialogRef.current.close();
+              mainBusiness.closeDialog();
             }
           }
         }

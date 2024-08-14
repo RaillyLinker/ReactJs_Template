@@ -31,6 +31,8 @@ class Business implements ComponentBusinessBasic {
   dialogBarrierDismissible: boolean = true;
   // (다이얼로그 뷰 컴포넌트)
   dialogView: React.FC = () => { return (<div></div>); }
+  // (다이얼로그가 현재 실행중인지 여부)
+  dialogOn: boolean = false;
 
 
   //----------------------------------------------------------------------------
@@ -74,6 +76,7 @@ class Business implements ComponentBusinessBasic {
       this.dialogView = dialogView;
       this.reRender();
       this.dialogRef.current.showModal();
+      this.dialogOn = true;
     }
   }
 
@@ -82,6 +85,7 @@ class Business implements ComponentBusinessBasic {
   closeDialog = () => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogRef.current.close();
+      this.dialogOn = false;
     }
   }
 
