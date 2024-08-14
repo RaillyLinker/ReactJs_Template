@@ -1,5 +1,4 @@
 [TODO]
-- 페이지, 컴포넌트 뷰의 클래스를 상속받은 abastact class 로 만들고 비즈니스 코드를 몰아넣기
 - SharedPreferences
 - Network
 - 다이얼로그

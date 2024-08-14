@@ -34,7 +34,7 @@ const View: React.FC<Props> = (props) => {
   // (컴포넌트 화면 구성 코드)
   return (
     <div id={styles.MainView}>
-      template
+        <p>template</p>
     </div>
   );
 };
