@@ -68,10 +68,9 @@ const View: React.FC = () => {
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
 
-  const setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
-  mainBusiness.setScreenFlag = setScreenFlag;
-  const navigate = useNavigate();
-  mainBusiness.navigate = navigate;
+  // 필요 객체 할당
+  mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
+  mainBusiness.navigate = useNavigate();
 
 
   // !!!아래부터 코딩!!!
