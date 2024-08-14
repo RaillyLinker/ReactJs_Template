@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { ComponentBusinessBasic, BusinessBasic, ComponentProps } from '../../global_classes/gc_template_classes';
+import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -78,21 +78,6 @@ class Business implements ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
-}
-
-//----------------------------------------------------------------------------
-// [컴포넌트 State 인터페이스]
-// [컴포넌트 Props 인터페이스 - 변경하지 마세요]
-export interface Props extends ComponentProps {
-  // (view 와 연결되는 Business 객체)
-  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  business: Business;
-
-  // (컴포넌트 Children 객체)
-  // <MyTag> ... </MyTag>
-  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
-  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
-  children?: React.ReactNode;
 }
 
 export default Business;

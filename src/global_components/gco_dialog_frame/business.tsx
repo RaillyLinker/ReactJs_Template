@@ -35,7 +35,9 @@ class Business implements ComponentBusinessBasic {
   // (다이얼로그 외곽을 클릭시 다이얼로그를 종료할지 여부)
   dialogBarrierDismissible: boolean = true;
   // (다이얼로그 뷰 컴포넌트)
-  dialogView: React.FC = () => { return (<div></div>); }
+  dialogView: React.FC<ComponentProps> = () => { return (<div></div>); }
+  // (다이얼로그 뷰 컴포넌트 비즈니스)
+  dialogBusiness: ComponentBusinessBasic = this;
   // (다이얼로그가 현재 실행중인지 여부)
   dialogOn: boolean = false;
 
@@ -81,10 +83,11 @@ class Business implements ComponentBusinessBasic {
 
   // (다이얼로그 호출 함수)
   // 다이얼로그 호출시엔 반드시 이 함수를 사용하세요.
-  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC) => {
+  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<ComponentProps>, dialogBusiness: ComponentBusinessBasic) => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogBarrierDismissible = dialogBarrierDismissible;
       this.dialogView = dialogView;
+      this.dialogBusiness = dialogBusiness;
       this.reRender();
       this.dialogRef.current.showModal();
       this.dialogOn = true;
@@ -103,21 +106,6 @@ class Business implements ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
-}
-
-//----------------------------------------------------------------------------
-// [컴포넌트 State 인터페이스]
-// [컴포넌트 Props 인터페이스 - 변경하지 마세요]
-export interface Props extends ComponentProps {
-  // (view 와 연결되는 Business 객체)
-  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  business: Business;
-
-  // (컴포넌트 Children 객체)
-  // <MyTag> ... </MyTag>
-  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
-  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
-  children?: React.ReactNode;
 }
 
 export default Business;
