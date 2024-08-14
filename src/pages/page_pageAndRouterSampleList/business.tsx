@@ -77,14 +77,6 @@ class Business implements BusinessBasic {
       },
       {
         uid: 3,
-        itemTitle: "페이지 이동 애니메이션 테스트",
-        itemDescription: "페이지 이동시 적용되는 애니메이션 샘플 리스트",
-        onItemClicked: (): void => {
-          // todo
-        }
-      },
-      {
-        uid: 4,
         itemTitle: "페이지 Grid 샘플",
         itemDescription: "화면 사이즈에 따라 동적으로 변하는 Grid 페이지 샘플",
         onItemClicked: (): void => {

@@ -1,0 +1,35 @@
+/* !!!최 상위 컴포넌트에 적용할 CSS 작성!!! */
+/* [Tag] */
+* {
+  font-family: 'MaruBuri';
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+  position: relative;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100vw;
+  background-color: white;
+}
