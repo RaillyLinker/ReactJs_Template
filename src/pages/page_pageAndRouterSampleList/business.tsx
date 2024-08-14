@@ -74,14 +74,6 @@ class Business implements BusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/page-and-router-sample-list/input-and-output-test/pathParamTest?queryParam=queryParamTest");
         }
-      },
-      {
-        uid: 3,
-        itemTitle: "페이지 Grid 샘플",
-        itemDescription: "화면 사이즈에 따라 동적으로 변하는 Grid 페이지 샘플",
-        onItemClicked: (): void => {
-          // todo
-        }
       }
     ];
 
