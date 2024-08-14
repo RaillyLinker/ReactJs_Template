@@ -8,6 +8,7 @@ import PageStateAndLifecycleTest from './pages/page_stateAndLifecycleTest/view';
 import PageInputAndOutputTest from './pages/page_inputAndOutputTest/view';
 import PageEtcSampleList from './pages/page_etcSampleList/view';
 import PageUseRefAndUseStateTest from './pages/page_useRefAndUseStateTest/view';
+import PageDialogExampleList from './pages/page_dialogExampleList/view';
 
 // [라우터 클래스]
 // !!!웹에서 사용할 라우터 설정을 아래에 추가하세요.!!!
@@ -24,6 +25,8 @@ function AppRouter(): JSX.Element {
         <Route path="/page-and-router-sample-list/page-template" element={<PageTemplate />} />
         <Route path="/page-and-router-sample-list/state-and-lifecyle-test" element={<PageStateAndLifecycleTest />} />
         <Route path="/page-and-router-sample-list/input-and-output-test/:pathParam" element={<PageInputAndOutputTest />} />
+
+        <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
 
         <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
         <Route path="/etc-sample-list/use-ref-and-use-state-test" element={<PageUseRefAndUseStateTest />} />

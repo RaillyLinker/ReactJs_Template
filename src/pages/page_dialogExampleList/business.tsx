@@ -43,7 +43,7 @@ class Business implements BusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("홈");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("다이얼로그 예제 리스트");
   items: {
     uid: number,
     itemTitle: string;
@@ -53,27 +53,18 @@ class Business implements BusinessBasic {
     [
       {
         uid: 0,
-        itemTitle: "페이지 / 라우터 샘플 리스트",
-        itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
+        itemTitle: "다이얼로그 샘플 리스트",
+        itemDescription: "다이얼로그 샘플 리스트",
         onItemClicked: (): void => {
-          this.navigate("/page-and-router-sample-list");
+          this.navigate("/dialog-example-list/dialog-sample-list");
         }
       },
       {
         uid: 1,
-        itemTitle: "다이얼로그 예제 리스트",
-        itemDescription: "다이얼로그 샘플 / 애니메이션 예제 리스트",
+        itemTitle: "다이얼로그 애니메이션 리스트",
+        itemDescription: "다이얼로그 애니메이션 리스트",
         onItemClicked: (): void => {
-          this.navigate("/dialog-example-list");
-        }
-      },
-      // todo
-      {
-        uid: 2,
-        itemTitle: "기타 샘플 리스트",
-        itemDescription: "기타 테스트 샘플을 모아둔 리스트",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list");
+          this.navigate("/dialog-example-list/dialog-animation-list");
         }
       }
     ];
