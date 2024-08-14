@@ -91,8 +91,10 @@ const View: React.FC = () => {
     mainBusiness.queryParams === null
   ) {
     return (
-      <div>
-        Entering Error
+      <div id={styles.MainView}>
+        <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
+          Entering Error
+        </GcoDialogFrame>
       </div>
     );
   }
