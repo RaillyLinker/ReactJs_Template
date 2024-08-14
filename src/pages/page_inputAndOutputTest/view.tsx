@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
-import Business, { PathParams, QueryParams } from './business';
+import Business from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
+import { PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
@@ -118,5 +119,24 @@ const View: React.FC = () => {
     </div>
   );
 };
+
+//----------------------------------------------------------------------------
+// [Path Parameter VO 클래스]
+export class PathParams implements PagePathParamBasic {
+  constructor(pathParam: string) {
+    this.pathParam = pathParam;
+  }
+
+  pathParam: string;
+}
+
+// [Query Parameter VO 클래스]
+export class QueryParams implements PageQueryParamBasic {
+  constructor(queryParam: string) {
+    this.queryParam = queryParam;
+  }
+
+  queryParam: string;
+}
 
 export default View;

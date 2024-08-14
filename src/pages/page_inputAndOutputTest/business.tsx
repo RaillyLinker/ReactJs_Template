@@ -1,6 +1,7 @@
 import { Params } from 'react-router-dom';
-import { PageBusinessBasic, PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
+import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import { PathParams, QueryParams } from './view';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import PagePageAndRouterSampleListBusiness from '../../pages/page_pageAndRouterSampleList/business';
@@ -98,25 +99,6 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
-}
-
-//----------------------------------------------------------------------------
-// [Path Parameter VO 클래스]
-export class PathParams implements PagePathParamBasic {
-  constructor(pathParam: string) {
-    this.pathParam = pathParam;
-  }
-
-  pathParam: string;
-}
-
-// [Query Parameter VO 클래스]
-export class QueryParams implements PageQueryParamBasic {
-  constructor(queryParam: string) {
-    this.queryParam = queryParam;
-  }
-
-  queryParam: string;
 }
 
 export default Business;
