@@ -66,6 +66,8 @@ class Business implements ComponentBusinessBasic {
     this.setScreenFlag(this.screenFlag);
   }
 
+  // (다이얼로그 호출 함수)
+  // 다이얼로그 호출시엔 반드시 이 함수를 사용하세요.
   showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC) => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogBarrierDismissible = dialogBarrierDismissible;
@@ -75,6 +77,8 @@ class Business implements ComponentBusinessBasic {
     }
   }
 
+  // (다이얼로그 종료 함수)
+  // 다이얼로그 종료시엔 반드시 이 함수를 사용하세요.
   closeDialog = () => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogRef.current.close();
