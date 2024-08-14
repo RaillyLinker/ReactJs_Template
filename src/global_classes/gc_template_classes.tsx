@@ -73,3 +73,16 @@ export interface ComponentBusinessBasic extends BusinessBasic {
   // 최 상위에는 항상 페이지 컴포넌트가 있으므로 not null
   parentComponentBusiness: BusinessBasic;
 }
+
+// (컴포넌트 Props 인터페이스)
+export interface ComponentProps {
+  // (view 와 연결되는 Business 객체)
+  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
+  business: ComponentBusinessBasic;
+
+  // (컴포넌트 Children 객체)
+  // <MyTag> ... </MyTag>
+  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
+  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
+  children?: React.ReactNode;
+}
