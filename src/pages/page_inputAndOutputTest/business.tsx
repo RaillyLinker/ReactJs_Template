@@ -42,13 +42,13 @@ class Business implements PageBusinessBasic {
   firstMount: boolean = true;
 
   // (다이얼로그 비즈니스)
-  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness();
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 입/출력 테스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "페이지 입/출력 테스트");
 
 
   //----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { ComponentBusinessBasic } from '../../global_classes/gc_template_classes';
+import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -19,6 +19,11 @@ class Business implements ComponentBusinessBasic {
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
+
+  // (부모 컴포넌트 비즈니스 객체)
+  // 페이지 비즈니스 혹은 컴포넌트 비즈니스 객체가 올 수 있음
+  // 최 상위에는 항상 페이지 컴포넌트가 있으므로 not null
+  parentComponentBusiness: BusinessBasic;
 
 
   //----------------------------------------------------------------------------
@@ -39,7 +44,8 @@ class Business implements ComponentBusinessBasic {
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(headerTitle: string) {
+  constructor(parentComponentBusiness: BusinessBasic, headerTitle: string) {
+    this.parentComponentBusiness = parentComponentBusiness;
     this.headerTitle = headerTitle;
   }
 
