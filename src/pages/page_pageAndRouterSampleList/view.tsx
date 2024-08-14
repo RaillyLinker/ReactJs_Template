@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './view.module.css';
-import { useNavigate, useParams, useSearchParams, Params, Outlet } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
 
@@ -115,7 +115,6 @@ const View: React.FC = () => {
           ))}
         </div>
       </GcoOuterFrame>
-      <Outlet />
     </div>
   );
 };
