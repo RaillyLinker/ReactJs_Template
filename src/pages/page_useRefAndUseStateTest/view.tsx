@@ -3,6 +3,7 @@ import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
+import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
@@ -105,18 +106,20 @@ const View: React.FC = () => {
   // (컴포넌트 화면 구성 코드)
   return (
     <div id={styles.MainView}>
-      <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <span id={styles.MainContent}>
-          <div className={styles.SampleLabel}>useState 화면 갱신</div>
-          <div id={styles.PageStateNumber} onClick={mainBusiness.onClickTestNumberForUseState}>
-            {mainBusiness.testNumberForUseState}
-          </div>
-          <div id={styles.PageStateLabel} className={styles.SampleLabel}>useRef 요소 갱신</div>
-          <div id={styles.PageStateNumber} ref={mainBusiness.testNumberForUseRefRef} onClick={mainBusiness.onClickTestNumberForUseRef}>
-            {mainBusiness.testNumberForUseRef}
-          </div>
-        </span>
-      </GcoOuterFrame>
+      <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
+        <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+          <span id={styles.MainContent}>
+            <div className={styles.SampleLabel}>useState 화면 갱신</div>
+            <div id={styles.PageStateNumber} onClick={mainBusiness.onClickTestNumberForUseState}>
+              {mainBusiness.testNumberForUseState}
+            </div>
+            <div id={styles.PageStateLabel} className={styles.SampleLabel}>useRef 요소 갱신</div>
+            <div id={styles.PageStateNumber} ref={mainBusiness.testNumberForUseRefRef} onClick={mainBusiness.onClickTestNumberForUseRef}>
+              {mainBusiness.testNumberForUseRef}
+            </div>
+          </span>
+        </GcoOuterFrame>
+      </GcoDialogFrame>
     </div>
   );
 };

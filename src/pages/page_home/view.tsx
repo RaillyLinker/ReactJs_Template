@@ -3,6 +3,7 @@ import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
+import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
@@ -102,19 +103,21 @@ const View: React.FC = () => {
   // (컴포넌트 화면 구성 코드)
   return (
     <div id={styles.MainView}>
-      <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <div id={styles.MainContent}>
-          {mainBusiness.items.map(item => (
-            <div key={item.uid}>
-              <div id={styles.ListItem} onClick={item.onItemClicked}>
-                <div id={styles.ListTitle} >{item.itemTitle}</div>
-                <div id={styles.ListDescription}>{item.itemDescription}</div>
+      <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
+        <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+          <div id={styles.MainContent}>
+            {mainBusiness.items.map(item => (
+              <div key={item.uid}>
+                <div id={styles.ListItem} onClick={item.onItemClicked}>
+                  <div id={styles.ListTitle} >{item.itemTitle}</div>
+                  <div id={styles.ListDescription}>{item.itemDescription}</div>
+                </div>
+                <hr />
               </div>
-              <hr />
-            </div>
-          ))}
-        </div>
-      </GcoOuterFrame>
+            ))}
+          </div>
+        </GcoOuterFrame>
+      </GcoDialogFrame>
     </div>
   );
 };

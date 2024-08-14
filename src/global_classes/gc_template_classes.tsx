@@ -1,4 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
+import GcoDialogFrameBusiness from '../global_components/gco_dialog_frame/business';
 
 // [템플릿 전용 클래스 모음]
 // (페이지 Business 클래스 기본타입)
@@ -31,6 +32,9 @@ export interface PageBusinessBasic {
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean;
+
+  // (다이얼로그 비즈니스)
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness;
 
   // (컴포넌트가 마운트된 직 후)
   // 컴포넌트가 마운트된 직 후에 호출됩니다. 

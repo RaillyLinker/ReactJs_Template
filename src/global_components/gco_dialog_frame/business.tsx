@@ -1,31 +1,11 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { Params } from 'react-router-dom';
-import { PageBusinessBasic, PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
-
-import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import { ComponentBusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
-// 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
-class Business implements PageBusinessBasic {
-  // (본 페이지 히스토리 인덱스 / 키)
-  historyIdx: number;
-  historyKey: string;
-
-  // (이전 페이지 비즈니스 객체)
-  // null 이라면 이전 페이지가 없음
-  prevPageBusiness: PageBusinessBasic | null = null;
-
-  // (페이지 파라미터)
-  // null 이라면 잘못된 진입
-  // Path Parameter 로 받은 값
-  pathParams: PathParams | null = null;
-  // Query Parameter 로 받은 값
-  queryParams: QueryParams | null = null;
-
+class Business implements ComponentBusinessBasic {
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
   setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
@@ -40,47 +20,24 @@ class Business implements PageBusinessBasic {
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
 
-  // (다이얼로그 비즈니스)
-  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness();
-
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
-  // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness("페이지 템플릿");
+  // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
+
+  // (다이얼로그 레퍼런스 객체)
+  dialogRef: React.RefObject<HTMLDialogElement> | null = null;
+  // (다이얼로그 외곽을 클릭시 다이얼로그를 종료할지 여부)
+  dialogBarrierDismissible: boolean = true;
+  // (다이얼로그 뷰 컴포넌트)
+  dialogView: React.FC = () => { return (<div></div>); }
 
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
-  // (생성자)
-  constructor(
-    historyIdx: number,
-    historyKey: string,
-    // Path 파라미터 객체 (ex : pathParams["testPath"])
-    pathParams: Readonly<Params<string>>,
-    // Query 파라미터 객체 (ex : queryParams.get("testQuery"))
-    queryParams: URLSearchParams
-  ) {
-    this.historyIdx = historyIdx;
-    this.historyKey = historyKey;
-
-    // (컴포넌트 입력 파라미터 확인 및 초기화)
-    // this.pathParams, this.queryParams 를 입력하면 되며,
-    // 만약 하나라도 null 이라면 에러 화면이 나오게 됩니다.
-
-    // Query 파라미터 객체로 값 입력하기
-    // (ex : const queryParam: string | null = queryParams.get("queryParam");)
-
-    // Query 파라미터 필수 값 확인(Path 파라미터 미입력시 진입 자체가 성립되지 않습니다.)
-    // ex : if (queryParam === null) { return; }
-
-    // Path 파라미터 객체로 값 입력하기
-    // (ex : const pathParam: string = pathParams["pathParam"]!;)
-
-    // 파라미터 값 할당
-    this.pathParams = {};
-
-    this.queryParams = {};
+  // (비즈니스 클래스 생성자)
+  // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
+  constructor() {
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -109,18 +66,39 @@ class Business implements PageBusinessBasic {
     this.setScreenFlag(this.screenFlag);
   }
 
+  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC) => {
+    if (this.dialogRef !== null && this.dialogRef.current !== null) {
+      this.dialogBarrierDismissible = dialogBarrierDismissible;
+      this.dialogView = dialogView;
+      this.reRender();
+      this.dialogRef.current.showModal();
+    }
+  }
+
+  closeDialog = () => {
+    if (this.dialogRef !== null && this.dialogRef.current !== null) {
+      this.dialogRef.current.close();
+    }
+  }
+
 
   //----------------------------------------------------------------------------
   // [private 함수]
 }
 
 //----------------------------------------------------------------------------
-// [Path Parameter VO 클래스]
-export class PathParams implements PagePathParamBasic {
-}
+// [컴포넌트 State 인터페이스]
+// [컴포넌트 Props 인터페이스 - 변경하지 마세요]
+export interface Props {
+  // (view 와 연결되는 Business 객체)
+  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
+  business: Business;
 
-// [Query Parameter VO 클래스]
-export class QueryParams implements PageQueryParamBasic {
+  // (컴포넌트 Children 객체)
+  // <MyTag> ... </MyTag>
+  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
+  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
+  children?: React.ReactNode;
 }
 
 export default Business;

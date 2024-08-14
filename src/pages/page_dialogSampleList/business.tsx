@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic, PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 
@@ -39,6 +40,9 @@ class Business implements PageBusinessBasic {
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
 
+  // (다이얼로그 비즈니스)
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness();
+
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
@@ -53,10 +57,11 @@ class Business implements PageBusinessBasic {
     [
       {
         uid: 0,
-        itemTitle: "다이얼로그 샘플 리스트",
-        itemDescription: "다이얼로그 샘플 리스트",
+        itemTitle: "다이얼로그 템플릿",
+        itemDescription: "템플릿 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
           // todo
+          this.gcoDialogFrameBusiness.showDialog(true, () => { return (<div>test</div>); });
         }
       }
     ];

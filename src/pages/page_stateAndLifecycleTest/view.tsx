@@ -3,6 +3,7 @@ import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business, { PathParams, QueryParams } from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
+import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 import GcoTest from '../../global_components/gco_test/view';
@@ -106,18 +107,20 @@ const View: React.FC = () => {
   // (컴포넌트 화면 구성 코드)
   return (
     <div id={styles.MainView}>
-      <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
-        <span id={styles.MainContent}>
-          <div className={styles.SampleLabel}>Gco 컴포넌트 State</div>
-          <GcoTest business={mainBusiness.gcoTestBusiness} />
-          <div id={styles.PageStateLabel} className={styles.SampleLabel}>페이지 State</div>
-          <div id={styles.PageStateNumber} ref={mainBusiness.testNumberRef} onClick={mainBusiness.onClickTestNumber}>
-            {mainBusiness.testNumber}
-          </div>
+      <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
+        <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+          <span id={styles.MainContent}>
+            <div className={styles.SampleLabel}>Gco 컴포넌트 State</div>
+            <GcoTest business={mainBusiness.gcoTestBusiness} />
+            <div id={styles.PageStateLabel} className={styles.SampleLabel}>페이지 State</div>
+            <div id={styles.PageStateNumber} ref={mainBusiness.testNumberRef} onClick={mainBusiness.onClickTestNumber}>
+              {mainBusiness.testNumber}
+            </div>
 
-          <button id={styles.PageChangeButton} onClick={mainBusiness.onClickPageChange}>페이지 이동</button>
-        </span>
-      </GcoOuterFrame>
+            <button id={styles.PageChangeButton} onClick={mainBusiness.onClickPageChange}>페이지 이동</button>
+          </span>
+        </GcoOuterFrame>
+      </GcoDialogFrame>
     </div>
   );
 };
