@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
+import { ComponentBusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
-class Business {
+class Business implements ComponentBusinessBasic {
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
   setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
@@ -19,12 +20,14 @@ class Business {
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
   firstMount: boolean = true;
 
+
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   // (테스트 숫자)
   testNumber: number = 0;
   testNumberRef: React.RefObject<HTMLDivElement> | null = null;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -48,6 +51,7 @@ class Business {
   onComponentWillUnmount = () => {
   }
 
+
   //----------------------------------------------------------------------------
   // [public 함수]
   // (컴포넌트 화면 리랜더링 함수)
@@ -65,6 +69,7 @@ class Business {
     }
   }
 
+  
   //----------------------------------------------------------------------------
   // [private 함수]
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
+import { ComponentBusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
-class Business {
+class Business implements ComponentBusinessBasic {
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
   setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };

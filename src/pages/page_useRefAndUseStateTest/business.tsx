@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { Params } from 'react-router-dom';
-import { BusinessBasic } from '../../global_classes/gc_template_classes';
+import { PageBusinessBasic, PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 
@@ -9,14 +9,14 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/busin
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
 // 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 // 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
-class Business implements BusinessBasic {
+class Business implements PageBusinessBasic {
   // (본 페이지 히스토리 인덱스 / 키)
   historyIdx: number;
   historyKey: string;
 
   // (이전 페이지 비즈니스 객체)
   // null 이라면 이전 페이지가 없음
-  prevPageBusiness: BusinessBasic | null = null;
+  prevPageBusiness: PageBusinessBasic | null = null;
 
   // (페이지 파라미터)
   // null 이라면 잘못된 진입
@@ -131,11 +131,11 @@ class Business implements BusinessBasic {
 
 //----------------------------------------------------------------------------
 // [Path Parameter VO 클래스]
-export class PathParams {
+export class PathParams implements PagePathParamBasic {
 }
 
 // [Query Parameter VO 클래스]
-export class QueryParams {
+export class QueryParams implements PageQueryParamBasic {
 }
 
 export default Business;
