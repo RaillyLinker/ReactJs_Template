@@ -45,7 +45,7 @@ class Business extends PageBusinessBasic {
         itemTitle: "확인 다이얼로그",
         itemDescription: "버튼이 하나인 확인 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(true, DialogInfo, new DialogInfoBusiness(this, () => { console.log("confirm") }));
+          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this, () => { console.log("confirm") }));
         }
       }
     ];
