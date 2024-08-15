@@ -116,6 +116,16 @@ export abstract class DialogBusinessBasic extends BusinessBasic {
   }
 }
 
+// (다이얼로그 Business 임시 클래스)
+// Nullable 을 막기 위해 임시로 사용하는 클래스
+export class VoidDialogBusinessBasic extends DialogBusinessBasic {
+  onComponentDidMount: (firstMount: boolean) => void = () => { };
+  onComponentWillUnmount: () => void = () => { };
+  constructor(gcoDialogFrameBusiness: GcoDialogFrameBusiness, parentComponentBusiness: BusinessBasic) {
+    super(gcoDialogFrameBusiness, parentComponentBusiness);
+  }
+}
+
 // (다이얼로그 Props 인터페이스)
 export interface DialogProps {
   // (view 와 연결되는 Business 객체)

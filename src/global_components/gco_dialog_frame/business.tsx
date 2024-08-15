@@ -1,6 +1,6 @@
 import { DialogProps, DialogBusinessBasic } from '../../global_classes/gc_template_classes';
 import React from 'react';
-import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
+import { ComponentBusinessBasic, BusinessBasic, VoidDialogBusinessBasic } from '../../global_classes/gc_template_classes';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -19,7 +19,7 @@ class Business extends ComponentBusinessBasic {
   // (다이얼로그 뷰 컴포넌트)
   dialogView: React.FC<DialogProps> = () => { return (<></>) };
   // (다이얼로그 뷰 컴포넌트 비즈니스)
-  dialogBusiness: DialogBusinessBasic | null = null;
+  dialogBusiness: DialogBusinessBasic = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
 
 
   //----------------------------------------------------------------------------
