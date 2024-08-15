@@ -26,6 +26,13 @@ hr {
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     cursor: pointer;
+    user-select: none;
+    transition: background-color 0.1s ease;
+}
+
+#ListItem:hover {
+    background-color: #dfefff;
+    /* 호버 시 배경색 변경 */
 }
 
 #ListTitle {
