@@ -85,7 +85,7 @@ export abstract class PageBusinessBasic extends BusinessBasic {
   abstract queryParams: PageQueryParamBasic | null;
 
   // (다이얼로그 비즈니스)
-  abstract gcoDialogFrameBusiness: GcoDialogFrameBusiness;
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (생성자)
   constructor(historyIdx: number, historyKey: string) {

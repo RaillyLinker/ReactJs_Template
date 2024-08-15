@@ -1,6 +1,5 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 import { PathParams, QueryParams } from './view';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
@@ -17,9 +16,6 @@ class Business extends PageBusinessBasic {
   pathParams: PathParams | null = null;
   // Query Parameter 로 받은 값
   queryParams: QueryParams | null = null;
-
-  // (다이얼로그 비즈니스)
-  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
 
   //----------------------------------------------------------------------------
