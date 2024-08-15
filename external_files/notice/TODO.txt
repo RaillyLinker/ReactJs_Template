@@ -1,4 +1,5 @@
 [TODO]
+- dialog frame 에 dialogBusiness: DialogBusinessBasic | null = null; 를 null 없도록 수정
 - 리스트 아이템에 호버링시 색 변화
 - Toast
 - SharedPreferences

@@ -1,6 +1,7 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import GcoTestBusiness from '../../global_components/gco_test/business';
@@ -21,7 +22,14 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
+
+  // (다이얼로그 프레임 비즈니스)
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
+
+  // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "State 및 생명주기 테스트");
+
+  // (테스트 Gco 비즈니스)
   gcoTestBusiness: GcoTestBusiness = new GcoTestBusiness(this);
 
   // (테스트 숫자)

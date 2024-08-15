@@ -1,6 +1,7 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import DialogTemplate from '../../a_template/dialog_template/view';
@@ -24,7 +25,14 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
   // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
+
+  // (다이얼로그 프레임 비즈니스)
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
+
+  // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "다이얼로그 샘플 리스트");
+
+  // (메인 리스트)
   items: {
     uid: number,
     itemTitle: string;
@@ -37,7 +45,7 @@ class Business extends PageBusinessBasic {
         itemTitle: "다이얼로그 템플릿",
         itemDescription: "템플릿 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(true, DialogTemplate, new DialogTemplateBusiness(this));
+          this.gcoDialogFrameBusiness.showDialog(true, DialogTemplate, new DialogTemplateBusiness(this.gcoDialogFrameBusiness, this));
         }
       },
       {
@@ -45,7 +53,7 @@ class Business extends PageBusinessBasic {
         itemTitle: "확인 다이얼로그",
         itemDescription: "버튼이 하나인 확인 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this, () => { console.log("confirm") }));
+          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this.gcoDialogFrameBusiness, this, () => { console.log("confirm") }));
         }
       }
     ];

@@ -1,4 +1,5 @@
 import { DialogBusinessBasic, PageBusinessBasic } from '../../global_classes/gc_template_classes';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -12,8 +13,8 @@ class Business extends DialogBusinessBasic {
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(parentPageBusiness: PageBusinessBasic) {
-    super(parentPageBusiness);
+  constructor(gcoDialogFrameBusiness: GcoDialogFrameBusiness, parentPageBusiness: PageBusinessBasic) {
+    super(gcoDialogFrameBusiness, parentPageBusiness);
   }
 
   // (컴포넌트가 마운트된 직 후)

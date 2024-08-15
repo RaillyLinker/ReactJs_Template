@@ -57,9 +57,6 @@ export abstract class PageBusinessBasic extends BusinessBasic {
   // Query Parameter 로 받은 값
   abstract queryParams: PageQueryParamBasic | null;
 
-  // (다이얼로그 비즈니스)
-  gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
-
   // (생성자)
   constructor(historyIdx: number, historyKey: string) {
     super();
@@ -106,12 +103,16 @@ export interface ComponentProps {
 export abstract class DialogBusinessBasic extends BusinessBasic {
   // (부모 컴포넌트 비즈니스 객체)
   // 다이얼로그를 호출한 페이지 비즈니스 객체
-  parentPageBusiness: PageBusinessBasic;
+  parentComponentBusiness: BusinessBasic;
+
+  // (다이얼로그 프레임 비즈니스)
+  gcoDialogFrameBusiness: GcoDialogFrameBusiness;
 
   // (생성자)
-  constructor(parentPageBusiness: PageBusinessBasic) {
+  constructor(gcoDialogFrameBusiness: GcoDialogFrameBusiness, parentComponentBusiness: BusinessBasic) {
     super();
-    this.parentPageBusiness = parentPageBusiness;
+    this.parentComponentBusiness = parentComponentBusiness;
+    this.gcoDialogFrameBusiness = gcoDialogFrameBusiness;
   }
 }
 
