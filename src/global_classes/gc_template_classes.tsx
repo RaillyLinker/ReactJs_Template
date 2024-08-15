@@ -40,33 +40,6 @@ export abstract class BusinessBasic {
   };
 }
 
-// (컴포넌트 Business 클래스 기본타입)
-export abstract class ComponentBusinessBasic extends BusinessBasic {
-  // (부모 컴포넌트 비즈니스 객체)
-  // 페이지 비즈니스 혹은 컴포넌트 비즈니스 객체가 올 수 있음
-  // 최 상위에는 항상 페이지 컴포넌트가 있으므로 not null
-  parentComponentBusiness: BusinessBasic;
-
-  // (생성자)
-  constructor(parentComponentBusiness: BusinessBasic) {
-    super();
-    this.parentComponentBusiness = parentComponentBusiness;
-  }
-}
-
-// (컴포넌트 Props 인터페이스)
-export interface ComponentProps {
-  // (view 와 연결되는 Business 객체)
-  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  business: ComponentBusinessBasic;
-
-  // (컴포넌트 Children 객체)
-  // <MyTag> ... </MyTag>
-  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
-  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
-  children?: React.ReactNode;
-}
-
 // (페이지 Business 클래스 기본타입)
 export abstract class PageBusinessBasic extends BusinessBasic {
   // (본 페이지 히스토리 인덱스 / 키)
@@ -101,4 +74,56 @@ export interface PagePathParamBasic {
 
 // (페이지 Query Parameter 인터페이스)
 export interface PageQueryParamBasic {
+}
+
+// (컴포넌트 Business 클래스 기본타입)
+export abstract class ComponentBusinessBasic extends BusinessBasic {
+  // (부모 컴포넌트 비즈니스 객체)
+  // 최상위에는 항상 페이지 컴포넌트가 있으므로 not null
+  parentComponentBusiness: BusinessBasic;
+
+  // (생성자)
+  constructor(parentComponentBusiness: BusinessBasic) {
+    super();
+    this.parentComponentBusiness = parentComponentBusiness;
+  }
+}
+
+// (컴포넌트 Props 인터페이스)
+export interface ComponentProps {
+  // (view 와 연결되는 Business 객체)
+  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
+  business: ComponentBusinessBasic;
+
+  // (컴포넌트 Children 객체)
+  // <MyTag> ... </MyTag>
+  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
+  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
+  children?: React.ReactNode;
+}
+
+// (다이얼로그 Business 클래스 기본타입)
+export abstract class DialogBusinessBasic extends BusinessBasic {
+  // (부모 컴포넌트 비즈니스 객체)
+  // 다이얼로그를 호출한 페이지 비즈니스 객체
+  parentPageBusiness: PageBusinessBasic;
+
+  // (생성자)
+  constructor(parentPageBusiness: PageBusinessBasic) {
+    super();
+    this.parentPageBusiness = parentPageBusiness;
+  }
+}
+
+// (다이얼로그 Props 인터페이스)
+export interface DialogProps {
+  // (view 와 연결되는 Business 객체)
+  // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
+  business: DialogBusinessBasic;
+
+  // (컴포넌트 Children 객체)
+  // <MyTag> ... </MyTag>
+  // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
+  // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
+  children?: React.ReactNode;
 }

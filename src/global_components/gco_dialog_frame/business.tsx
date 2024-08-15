@@ -1,4 +1,4 @@
-import { ComponentBusinessBasic, BusinessBasic, ComponentProps } from '../../global_classes/gc_template_classes';
+import { PageBusinessBasic, DialogProps, DialogBusinessBasic } from '../../global_classes/gc_template_classes';
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ class Business {
   // (부모 컴포넌트 비즈니스 객체)
   // 페이지 비즈니스 혹은 컴포넌트 비즈니스 객체가 올 수 있음
   // 최 상위에는 항상 페이지 컴포넌트가 있으므로 not null
-  parentComponentBusiness: BusinessBasic;
+  parentPageBusiness: PageBusinessBasic;
 
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
   screenFlag: boolean = false;
@@ -32,20 +32,21 @@ class Business {
   dialogRef: React.RefObject<HTMLDialogElement> | null = null;
   // (다이얼로그 외곽을 클릭시 다이얼로그를 종료할지 여부)
   dialogBarrierDismissible: boolean = true;
-  // (다이얼로그 뷰 컴포넌트)
-  dialogView: React.FC<ComponentProps> = () => { return (<div></div>); }
-  // (다이얼로그 뷰 컴포넌트 비즈니스)
-  dialogBusiness: ComponentBusinessBasic = this;
   // (다이얼로그가 현재 실행중인지 여부)
   dialogOn: boolean = false;
+
+  // (다이얼로그 뷰 컴포넌트)
+  dialogView: React.FC<DialogProps> = () => { return (<></>) };
+  // (다이얼로그 뷰 컴포넌트 비즈니스)
+  dialogBusiness: DialogBusinessBasic | null = null;
 
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(parentComponentBusiness: BusinessBasic) {
-    this.parentComponentBusiness = parentComponentBusiness;
+  constructor(parentPageBusiness: PageBusinessBasic) {
+    this.parentPageBusiness = parentPageBusiness;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -81,7 +82,7 @@ class Business {
 
   // (다이얼로그 호출 함수)
   // 다이얼로그 호출시엔 반드시 이 함수를 사용하세요.
-  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<ComponentProps>, dialogBusiness: ComponentBusinessBasic) => {
+  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<DialogProps>, dialogBusiness: DialogBusinessBasic) => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogBarrierDismissible = dialogBarrierDismissible;
       this.dialogView = dialogView;

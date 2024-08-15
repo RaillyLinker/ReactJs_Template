@@ -3,8 +3,8 @@ import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
-import GcoTemplate from '../../a_template/gco_template/view';
-import GcoTemplateBusiness from '../../a_template/gco_template/business';
+import DialogTemplate from '../../a_template/dialog_template/view';
+import DialogTemplateBusiness from '../../a_template/dialog_template/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -35,7 +35,7 @@ class Business extends PageBusinessBasic {
         itemTitle: "다이얼로그 템플릿",
         itemDescription: "템플릿 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(true, GcoTemplate, new GcoTemplateBusiness(this));
+          this.gcoDialogFrameBusiness.showDialog(true, DialogTemplate, new DialogTemplateBusiness(this));
         }
       }
     ];
