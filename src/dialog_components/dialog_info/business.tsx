@@ -7,13 +7,17 @@ class Business extends DialogBusinessBasic {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 
+  // (확인 버튼 클릭 리스너)
+  confirmButtonClickListener: () => void;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(parentPageBusiness: PageBusinessBasic) {
+  constructor(parentPageBusiness: PageBusinessBasic, confirmButtonClickListener: () => void) {
     super(parentPageBusiness);
+    this.confirmButtonClickListener = confirmButtonClickListener;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -34,6 +38,10 @@ class Business extends DialogBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  onConfirmButtonClick = () => {
+    this.confirmButtonClickListener();
+    this.parentPageBusiness.gcoDialogFrameBusiness.closeDialog();
+  }
 
 
   //----------------------------------------------------------------------------

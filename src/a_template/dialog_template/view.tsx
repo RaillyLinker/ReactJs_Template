@@ -5,10 +5,10 @@ import Business from './business';
 import { DialogProps } from '../../global_classes/gc_template_classes';
 
 // [함수형 컴포넌트 뷰]
-const View: React.FC<Props> = (props) => {
+const View: React.FC<DialogProps> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체 = 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  const mainBusiness: Business = props.business;
+  const mainBusiness: Business = (props as Props).business;
 
   // 컴포넌트 생명주기를 mainBusiness 로 전달
   useEffect(() => {
