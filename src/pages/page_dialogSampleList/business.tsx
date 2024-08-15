@@ -5,6 +5,8 @@ import { PathParams, QueryParams } from './view';
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import DialogTemplate from '../../a_template/dialog_template/view';
 import DialogTemplateBusiness from '../../a_template/dialog_template/business';
+import DialogInfo from '../../dialog_components/dialog_info/view';
+import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -36,6 +38,14 @@ class Business extends PageBusinessBasic {
         itemDescription: "템플릿 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
           this.gcoDialogFrameBusiness.showDialog(true, DialogTemplate, new DialogTemplateBusiness(this));
+        }
+      },
+      {
+        uid: 1,
+        itemTitle: "확인 다이얼로그",
+        itemDescription: "버튼이 하나인 확인 다이얼로그를 호출합니다.",
+        onItemClicked: (): void => {
+          this.gcoDialogFrameBusiness.showDialog(true, DialogInfo, new DialogInfoBusiness(this));
         }
       }
     ];
