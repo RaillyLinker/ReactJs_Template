@@ -1,0 +1,89 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#SpwTemplateContainer {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border: 1px solid #2196F3;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    padding: 1rem;
+    text-align: center;
+    width: 20rem;
+}
+
+#SpwTemplateValueLabel {
+    margin-top: 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+#SpwTemplateValue {
+    margin-top: 0.5rem;
+    text-align: left;
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+#SpwTemplateInputValueLabel {
+    margin-top: 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+#SpwTemplateInputValueGroup {
+    display: flex;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+}
+
+#SpwTemplateInputValue {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 3;
+}
+
+#SpwTemplateButtonContainer {
+    margin-top: 1rem;
+}
+
+#SpwTemplateSaveButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    padding: 0.3rem 2rem;
+}
+
+#SpwTemplateSaveButton:hover {
+    background-color: #2195f3e3;
+}
+
+#SpwTemplateDeleteButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    padding: 0.3rem 2rem;
+}
+
+#SpwTemplateDeleteButton:hover {
+    background-color: #2195f3e3;
+}

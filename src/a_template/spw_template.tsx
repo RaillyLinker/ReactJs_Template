@@ -30,7 +30,7 @@ export class SharedPreferenceWrapper {
 
                 // Map 을 Object 로 변경
                 const map = JSON.parse(decryptedJsonString);
-                const resultObject = new SharedPreferenceWrapperVo(map.sampleInt);
+                const resultObject = new SharedPreferenceWrapperVo(map.sampleString);
                 return resultObject;
             } catch (e) {
                 // 복호화시 에러가 난 경우를 가정
@@ -50,7 +50,7 @@ export class SharedPreferenceWrapper {
             localStorage.setItem(this.globalKeyName, "");
         } else {
             // Object 를 Map 으로 변경
-            const map = { sampleInt: value.sampleInt };
+            const map = { sampleString: value.sampleString };
 
             // 값 암호화
             const encryptedJsonString = aes256Encrypt(JSON.stringify(map), this.secretKey, this.secretIv);
@@ -63,10 +63,10 @@ export class SharedPreferenceWrapper {
 
 // !!!저장 정보 데이터 형태 작성!!!
 export class SharedPreferenceWrapperVo {
-    constructor(sampleInt: number) {
-        this.sampleInt = sampleInt;
+    constructor(sampleString: string) {
+        this.sampleString = sampleString;
     }
 
     // 샘플 int 데이터
-    sampleInt: number
+    sampleString: string
 }

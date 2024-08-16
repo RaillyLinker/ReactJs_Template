@@ -4,6 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import { SharedPreferenceWrapper } from '../../a_template/spw_template';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -26,33 +27,17 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "SharedPreferences 샘플");
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "SharedPreferences 샘플",
-        itemDescription: "SharedPreferences 사용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/shared-preferences-sample");
-        }
-      }
-    ];
+  // (Base64 테스트 암호화할 평문 입력창)
+  SpwTemplateInputValue: string = "";
+  onChangeSpwTemplateInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.SpwTemplateInputValue = event.target.value;
+    this.reRender();
+  }
+
+  // (SpwTemplate 값)
+  spwTemplateValue: string = "";
 
 
   //----------------------------------------------------------------------------
@@ -92,6 +77,13 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    const spwTemplateValue = SharedPreferenceWrapper.get();
+    if (spwTemplateValue === null) {
+      this.spwTemplateValue = "null";
+    } else {
+      this.spwTemplateValue = spwTemplateValue.sampleString;
+    }
+    this.reRender();
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -105,6 +97,17 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (SpwTemplate 값 저장)
+  saveSpwTemplate = () => {
+    // todo
+
+  }
+
+  // (SpwTemplate 값 삭제)
+  deleteSpwTemplate = () => {
+    // todo
+
+  }
 
 
   //----------------------------------------------------------------------------
