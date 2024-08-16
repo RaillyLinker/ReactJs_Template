@@ -56,6 +56,14 @@ class Business extends PageBusinessBasic {
     this.reRender();
   }
 
+  // (암호화 결과)
+  encryptResult: string = "";
+  encryptResultRef: React.RefObject<HTMLDivElement> | null = null;
+
+  // (복호화 결과)
+  decryptResult: string = "";
+  decryptResultRef: React.RefObject<HTMLDivElement> | null = null;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -94,7 +102,6 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    console.log(this.aes256SecretKey);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -111,11 +118,21 @@ class Business extends PageBusinessBasic {
   // (암호화)
   doEncrypt = () => {
     // todo
+
+    this.encryptResult = "t";
+    if (this.encryptResultRef !== null && this.encryptResultRef.current) {
+      this.encryptResultRef.current.textContent = this.encryptResult;
+    }
   }
 
   // (복호화)
   doDecrypt = () => {
     // todo
+
+    this.decryptResult = "t";
+    if (this.decryptResultRef !== null && this.decryptResultRef.current) {
+      this.decryptResultRef.current.textContent = this.decryptResult;
+    }
   }
 
 
