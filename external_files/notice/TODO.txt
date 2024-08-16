@@ -1,5 +1,11 @@
 [TODO]
 (1단계)
+- reRender 함수를 제거하기
+  type ComponentType = React.ReactElement | null;
+
+  // Use useState to manage the current component
+  const [CurrentComponent, setCurrentComponent] = useState<ComponentType>(<ComponentA />);
+
 - SharedPreferences (spw_template 가 잘 동작하는지 확인하고 처리하기)
 - 비동기 처리 및 뮤텍스
 - Grid 샘플
