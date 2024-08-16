@@ -3,7 +3,7 @@ import App from './app';
 
 import PageTemplate from './a_template/page_template/view';
 import PageHome from './pages/page_home/view';
-import PagePageAndRouterSampleList from './pages/page_pageAndRouterSampleList/view';
+import PageTemplateBasicFunctionSampleList from './pages/page_templateBasicFunctionSampleList/view';
 import PageStateAndLifecycleTest from './pages/page_stateAndLifecycleTest/view';
 import PageInputAndOutputTest from './pages/page_inputAndOutputTest/view';
 import PageEtcSampleList from './pages/page_etcSampleList/view';
@@ -22,16 +22,17 @@ function AppRouter(): JSX.Element {
         <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
 
         <Route path="/" element={<PageHome />} />
-        <Route path="/page-and-router-sample-list" element={<PagePageAndRouterSampleList />} />
-        <Route path="/page-and-router-sample-list/page-template" element={<PageTemplate />} />
-        <Route path="/page-and-router-sample-list/state-and-lifecyle-test" element={<PageStateAndLifecycleTest />} />
-        <Route path="/page-and-router-sample-list/input-and-output-test/:pathParam" element={<PageInputAndOutputTest />} />
+        
+        <Route path="/template-basic-function-sample-list" element={<PageTemplateBasicFunctionSampleList />} />
+        <Route path="/template-basic-function-sample-list/page-template" element={<PageTemplate />} />
+        <Route path="/template-basic-function-sample-list/state-and-lifecyle-test" element={<PageStateAndLifecycleTest />} />
+        <Route path="/template-basic-function-sample-list/input-and-output-test/:pathParam" element={<PageInputAndOutputTest />} />
+        <Route path="/template-basic-function-sample-list/use-ref-and-use-state-test" element={<PageUseRefAndUseStateTest />} />
 
         <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
         <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
 
         <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
-        <Route path="/etc-sample-list/use-ref-and-use-state-test" element={<PageUseRefAndUseStateTest />} />
 
       </Route>
     </Routes>

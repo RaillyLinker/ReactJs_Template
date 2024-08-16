@@ -36,14 +36,14 @@ class Business extends PageBusinessBasic {
     onItemClicked: () => void;
   }[] =
     [
-      {
-        uid: 0,
-        itemTitle: "useRef / useState 테스트",
-        itemDescription: "useRef, useState 를 이용한 화면 갱신 테스트",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/use-ref-and-use-state-test");
-        }
-      }
+      // {
+      //   uid: 0,
+      //   itemTitle: "useRef / useState 테스트",
+      //   itemDescription: "useRef, useState 를 이용한 화면 갱신 테스트",
+      //   onItemClicked: (): void => {
+      //     this.navigate("/etc-sample-list/use-ref-and-use-state-test");
+      //   }
+      // }
     ];
 
 

@@ -38,10 +38,10 @@ class Business extends PageBusinessBasic {
     [
       {
         uid: 0,
-        itemTitle: "페이지 / 라우터 샘플 리스트",
-        itemDescription: "페이지 이동, 파라미터 전달 등의 샘플 리스트",
+        itemTitle: "템플릿 기본 기능 샘플 리스트",
+        itemDescription: "템플릿의 기본 필수 기능에 대한 샘플 리스트",
         onItemClicked: (): void => {
-          this.navigate("/page-and-router-sample-list");
+          this.navigate("/template-basic-function-sample-list");
         }
       },
       {

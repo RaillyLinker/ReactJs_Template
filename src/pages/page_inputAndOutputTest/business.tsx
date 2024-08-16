@@ -4,7 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
-import PagePageAndRouterSampleListBusiness from '../../pages/page_pageAndRouterSampleList/business';
+import PagePageAndRouterSampleListBusiness from '../page_templateBasicFunctionSampleList/business';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
