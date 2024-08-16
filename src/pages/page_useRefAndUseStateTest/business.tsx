@@ -29,9 +29,11 @@ class Business extends PageBusinessBasic {
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "useRef / useState 테스트");
 
   // (테스트 숫자)
+  testNumberForUseState: number = 10;
+
+  // 아래와 같이 useRef 를 사용하여 화면 값을 변경할 수도 있지만, 그냥 reRender 함수를 사용하세요.
   testNumberForUseRef: number = 0;
   testNumberForUseRefRef: React.RefObject<HTMLDivElement> | null = null;
-  testNumberForUseState: number = 10;
 
 
   //----------------------------------------------------------------------------

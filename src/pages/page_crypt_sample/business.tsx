@@ -60,11 +60,9 @@ class Business extends PageBusinessBasic {
 
   // (암호화 결과)
   encryptResult: string = "";
-  encryptResultRef: React.RefObject<HTMLDivElement> | null = null;
 
   // (복호화 결과)
   decryptResult: string = "";
-  decryptResultRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -122,9 +120,7 @@ class Business extends PageBusinessBasic {
     // todo 입력값 검증
 
     this.encryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
-    if (this.encryptResultRef !== null && this.encryptResultRef.current) {
-      this.encryptResultRef.current.textContent = this.encryptResult;
-    }
+    this.reRender();
   }
 
   // (복호화)
@@ -132,9 +128,7 @@ class Business extends PageBusinessBasic {
     // todo 입력값 검증
 
     this.decryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
-    if (this.decryptResultRef !== null && this.decryptResultRef.current) {
-      this.decryptResultRef.current.textContent = this.decryptResult;
-    }
+    this.reRender();
   }
 
 

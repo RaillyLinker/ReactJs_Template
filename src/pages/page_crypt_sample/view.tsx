@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
@@ -78,8 +78,6 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-  mainBusiness.encryptResultRef = useRef<HTMLDivElement>(null);
-  mainBusiness.decryptResultRef = useRef<HTMLDivElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -126,14 +124,14 @@ const View: React.FC = () => {
               <button id={styles.Aes256EncryptButton} onClick={mainBusiness.doEncrypt}>암호화</button>
             </div>
 
-            <div id={styles.Aes256EncryptedResult} >결과 : <span ref={mainBusiness.encryptResultRef}>{mainBusiness.decryptResult}</span></div>
+            <div id={styles.Aes256EncryptedResult} >결과 : <span>{mainBusiness.encryptResult}</span></div>
 
             <div id={styles.Aes256CipherTextGroup}>
               <input type="text" id={styles.Aes256CipherText} placeholder="복호화할 암호문" value={mainBusiness.aes256CipherText} onChange={mainBusiness.onChangeAes256CipherText} />
               <button id={styles.Aes256DecryptButton} onClick={mainBusiness.doDecrypt}>복호화</button>
             </div>
 
-            <div id={styles.Aes256DecryptedResult} >결과 : <span ref={mainBusiness.decryptResultRef}>{mainBusiness.encryptResult}</span></div>
+            <div id={styles.Aes256DecryptedResult} >결과 : <span>{mainBusiness.decryptResult}</span></div>
           </div>
         </GcoOuterFrame>
       </GcoDialogFrame>

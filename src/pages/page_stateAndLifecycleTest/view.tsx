@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styles from './view.module.css';
 import { useNavigate, useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
@@ -80,9 +80,6 @@ const View: React.FC = () => {
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
 
-  // 테스트 숫자 레퍼런스
-  mainBusiness.testNumberRef = useRef<HTMLDivElement>(null);
-
 
   //----------------------------------------------------------------------------
   // (진입 에러 발생 화면 구성 코드)
@@ -116,7 +113,7 @@ const View: React.FC = () => {
             <div className={styles.SampleLabel}>Gco 컴포넌트 State</div>
             <GcoTest business={mainBusiness.gcoTestBusiness} />
             <div id={styles.PageStateLabel} className={styles.SampleLabel}>페이지 State</div>
-            <div id={styles.PageStateNumber} ref={mainBusiness.testNumberRef} onClick={mainBusiness.onClickTestNumber}>
+            <div id={styles.PageStateNumber} onClick={mainBusiness.onClickTestNumber}>
               {mainBusiness.testNumber}
             </div>
 

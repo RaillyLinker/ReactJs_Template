@@ -34,7 +34,6 @@ class Business extends PageBusinessBasic {
 
   // (테스트 숫자)
   testNumber: number = 0;
-  testNumberRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -92,14 +91,12 @@ class Business extends PageBusinessBasic {
   // (숫자 변경 버튼 클릭시)
   onClickTestNumber = () => {
     this.testNumber += 1;
-    if (this.testNumberRef !== null && this.testNumberRef.current) {
-      this.testNumberRef.current.textContent = this.testNumber.toString();
-    }
+    this.reRender();
   }
 
   // (페이지 이동 버튼 클릭시)
   onClickPageChange = () => {
-    this.navigate("/page-and-router-sample-list");
+    this.navigate("/template-basic-function-sample-list");
   }
 
 

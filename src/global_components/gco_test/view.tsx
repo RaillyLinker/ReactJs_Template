@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './view.module.css';
 import Business from './business';
@@ -29,14 +29,11 @@ const View: React.FC<ComponentProps> = (props) => {
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
 
-  // 테스트 숫자 레퍼런스
-  mainBusiness.testNumberRef = useRef<HTMLDivElement>(null);
-
 
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div id={styles.MainView} ref={mainBusiness.testNumberRef} onClick={mainBusiness.onClickTestNumber}>
+    <div id={styles.MainView} onClick={mainBusiness.onClickTestNumber}>
       {mainBusiness.testNumber}
     </div>
   );

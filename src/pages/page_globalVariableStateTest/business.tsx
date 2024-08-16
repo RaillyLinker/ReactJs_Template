@@ -29,9 +29,6 @@ class Business extends PageBusinessBasic {
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "전역 변수 상태 확인 테스트");
 
-  // (테스트 숫자)
-  testNumberForUseRefRef: React.RefObject<HTMLDivElement> | null = null;
-
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -86,9 +83,7 @@ class Business extends PageBusinessBasic {
   // (Ref 사용 숫자 변경)
   onClickTestNumberForUseRef = () => {
     sampleNumber.num += 1;
-    if (this.testNumberForUseRefRef !== null && this.testNumberForUseRefRef.current) {
-      this.testNumberForUseRefRef.current.textContent = sampleNumber.num.toString();
-    }
+    this.reRender();
   }
 
 

@@ -1,5 +1,4 @@
 import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
-import React from 'react';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -9,7 +8,6 @@ class Business extends ComponentBusinessBasic {
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
   // (테스트 숫자)
   testNumber: number = 0;
-  testNumberRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -41,9 +39,7 @@ class Business extends ComponentBusinessBasic {
   // (숫자 클릭시)
   onClickTestNumber = () => {
     this.testNumber += 1;
-    if (this.testNumberRef !== null && this.testNumberRef.current) {
-      this.testNumberRef.current.textContent = this.testNumber.toString();
-    }
+    this.reRender();
   }
 
 
