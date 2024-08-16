@@ -1,0 +1,107 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#Aes256Container {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border: 1px solid #2196F3;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    padding: 1rem;
+    text-align: center;
+    width: 20rem;
+}
+
+#Aes256SecretKey {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#Aes256SecretIv {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+#Aes256PlainTextGroup {
+    display: flex;
+    width: 100%;
+    margin-top: 0.5rem;
+
+}
+
+#Aes256PlainText {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 3;
+}
+
+#Aes256EncryptButton {
+    flex: 1;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#Aes256EncryptButton:hover {
+    background-color: #2195f3e3;
+}
+
+#Aes256CipherTextGroup {
+    display: flex;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+#Aes256CipherText {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 3;
+}
+
+#Aes256DecryptButton {
+    flex: 1;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#Aes256DecryptButton:hover {
+    background-color: #2195f3e3;
+}
+
+#Aes256EncryptedResult {
+    margin-top: 0.1rem;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+#Aes256DecryptedResult {
+    margin-top: 0.1rem;
+    text-align: left;
+    font-size: 0.8rem;
+}

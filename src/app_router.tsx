@@ -11,6 +11,7 @@ import PageUseRefAndUseStateTest from './pages/page_useRefAndUseStateTest/view';
 import PageDialogExampleList from './pages/page_dialogExampleList/view';
 import PageDialogSampleList from './pages/page_dialogSampleList/view';
 import PageGlobalVariableStateTest from './pages/page_globalVariableStateTest/view';
+import PageCryptSample from './pages/page_crypt_sample/view';
 
 // [라우터 클래스]
 // !!!웹에서 사용할 라우터 설정을 아래에 추가하세요.!!!
@@ -35,6 +36,7 @@ function AppRouter(): JSX.Element {
         <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
 
         <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
+        <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
 
       </Route>
     </Routes>
