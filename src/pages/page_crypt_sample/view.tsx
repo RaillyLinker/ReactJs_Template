@@ -111,14 +111,14 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.Aes256Container}>
-            <h2>AES256 테스트</h2>
+            <h2>AES256 알고리즘</h2>
 
             <div>
-              <input type="text" id={styles.Aes256SecretKey} placeholder="암호키 (32자)" value={mainBusiness.aes256SecretKey} onChange={mainBusiness.onChangeAes256SecretKey} />
+              <input type="text" id={styles.Aes256SecretKey} maxLength={32} placeholder="암호키 (32자)" value={mainBusiness.aes256SecretKey} onChange={mainBusiness.onChangeAes256SecretKey} />
             </div>
 
             <div>
-              <input type="text" id={styles.Aes256SecretIv} placeholder="초기화 벡터 (16자)" value={mainBusiness.aes256SecretIv} onChange={mainBusiness.onChangeAes256SecretIv} />
+              <input type="text" id={styles.Aes256SecretIv} maxLength={16} placeholder="초기화 벡터 (16자)" value={mainBusiness.aes256SecretIv} onChange={mainBusiness.onChangeAes256SecretIv} />
             </div>
 
             <div id={styles.Aes256PlainTextGroup}>

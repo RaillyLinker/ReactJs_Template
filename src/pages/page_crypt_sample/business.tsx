@@ -4,6 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import { aes256Encrypt, aes256Decrypt } from '../../global_functions/gf_crypto';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -29,6 +30,7 @@ class Business extends PageBusinessBasic {
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "암/복호화 샘플");
 
   // (AES256 테스트 암호키 입력창)
+  // todo ref 로는 불가능한지
   aes256SecretKey: string = "";
   onChangeAes256SecretKey = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.aes256SecretKey = event.target.value;
@@ -117,9 +119,9 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (암호화)
   doEncrypt = () => {
-    // todo
+    // todo 입력값 검증
 
-    this.encryptResult = "t";
+    this.encryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
     if (this.encryptResultRef !== null && this.encryptResultRef.current) {
       this.encryptResultRef.current.textContent = this.encryptResult;
     }
@@ -127,9 +129,9 @@ class Business extends PageBusinessBasic {
 
   // (복호화)
   doDecrypt = () => {
-    // todo
+    // todo 입력값 검증
 
-    this.decryptResult = "t";
+    this.decryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
     if (this.decryptResultRef !== null && this.decryptResultRef.current) {
       this.decryptResultRef.current.textContent = this.decryptResult;
     }
