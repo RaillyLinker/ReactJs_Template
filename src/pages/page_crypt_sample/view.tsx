@@ -123,17 +123,36 @@ const View: React.FC = () => {
 
             <div id={styles.Aes256PlainTextGroup}>
               <input type="text" id={styles.Aes256PlainText} placeholder="암호화할 평문" value={mainBusiness.aes256PlainText} onChange={mainBusiness.onChangeAes256PlainText} />
-              <button id={styles.Aes256EncryptButton} onClick={mainBusiness.doEncrypt}>암호화</button>
+              <button id={styles.Aes256EncryptButton} onClick={mainBusiness.doAes256Encrypt}>암호화</button>
             </div>
 
-            <div id={styles.Aes256EncryptedResult} >결과 : <span>{mainBusiness.encryptResult}</span></div>
+            <div id={styles.Aes256EncryptedResult} >결과 : <span>{mainBusiness.aes256EncryptResult}</span></div>
 
             <div id={styles.Aes256CipherTextGroup}>
               <input type="text" id={styles.Aes256CipherText} placeholder="복호화할 암호문" value={mainBusiness.aes256CipherText} onChange={mainBusiness.onChangeAes256CipherText} />
-              <button id={styles.Aes256DecryptButton} onClick={mainBusiness.doDecrypt}>복호화</button>
+              <button id={styles.Aes256DecryptButton} onClick={mainBusiness.doAes256Decrypt}>복호화</button>
             </div>
 
-            <div id={styles.Aes256DecryptedResult} >결과 : <span>{mainBusiness.decryptResult}</span></div>
+            <div id={styles.Aes256DecryptedResult} >결과 : <span>{mainBusiness.aes256DecryptResult}</span></div>
+          </div>
+
+
+          <div id={styles.Base64Container}>
+            <h2>Base64 알고리즘</h2>
+
+            <div id={styles.Base64PlainTextGroup}>
+              <input type="text" id={styles.Base64PlainText} placeholder="암호화할 평문" value={mainBusiness.base64PlainText} onChange={mainBusiness.onChangeBase64PlainText} />
+              <button id={styles.Base64EncryptButton} onClick={mainBusiness.doBase64Encrypt}>암호화</button>
+            </div>
+
+            <div id={styles.Base64EncryptedResult} >결과 : <span>{mainBusiness.base64EncryptResult}</span></div>
+
+            <div id={styles.Base64CipherTextGroup}>
+              <input type="text" id={styles.Base64CipherText} placeholder="복호화할 암호문" value={mainBusiness.base64CipherText} onChange={mainBusiness.onChangeBase64CipherText} />
+              <button id={styles.Base64DecryptButton} onClick={mainBusiness.doBase64Decrypt}>복호화</button>
+            </div>
+
+            <div id={styles.Base64DecryptedResult} >결과 : <span>{mainBusiness.base64DecryptResult}</span></div>
           </div>
         </GcoOuterFrame>
       </GcoDialogFrame>

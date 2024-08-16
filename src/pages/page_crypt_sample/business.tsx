@@ -4,7 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
-import { aes256Encrypt, aes256Decrypt } from '../../global_functions/gf_crypto';
+import { aes256Encrypt, aes256Decrypt, base64Encode, base64Decode } from '../../global_functions/gf_crypto';
 
 // [비즈니스 클래스]
 // !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
@@ -66,10 +66,30 @@ class Business extends PageBusinessBasic {
   }
 
   // (암호화 결과)
-  encryptResult: string = "";
+  aes256EncryptResult: string = "";
 
   // (복호화 결과)
-  decryptResult: string = "";
+  aes256DecryptResult: string = "";
+
+  // (Base64 테스트 암호화할 평문 입력창)
+  base64PlainText: string = "";
+  onChangeBase64PlainText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.base64PlainText = event.target.value;
+    this.reRender();
+  }
+
+  // (Base64 테스트 복호화할 평문 입력창)
+  base64CipherText: string = "";
+  onChangeBase64CipherText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.base64CipherText = event.target.value;
+    this.reRender();
+  }
+
+  // (암호화 결과)
+  base64EncryptResult: string = "";
+
+  // (복호화 결과)
+  base64DecryptResult: string = "";
 
 
   //----------------------------------------------------------------------------
@@ -123,7 +143,7 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [public 함수]
   // (암호화)
-  doEncrypt = () => {
+  doAes256Encrypt = () => {
     let valid = true;
     if (this.aes256SecretKey == "") {
       this.aes256SecretKeyErrorMsg = "암호화 키를 입력해주세요.";
@@ -142,14 +162,14 @@ class Business extends PageBusinessBasic {
     }
 
     if (valid) {
-      this.encryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
+      this.aes256EncryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
     }
 
     this.reRender();
   }
 
   // (복호화)
-  doDecrypt = () => {
+  doAes256Decrypt = () => {
     let valid = true;
     if (this.aes256SecretKey == "") {
       this.aes256SecretKeyErrorMsg = "암호화 키를 입력해주세요.";
@@ -168,9 +188,20 @@ class Business extends PageBusinessBasic {
     }
 
     if (valid) {
-      this.decryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
+      this.aes256DecryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
     }
 
+    this.reRender();
+  }
+  // (Base64 암호화)
+  doBase64Encrypt = () => {
+    this.base64EncryptResult = base64Encode(this.base64PlainText);
+    this.reRender();
+  }
+
+  // (Base64 복호화)
+  doBase64Decrypt = () => {
+    this.base64DecryptResult = base64Decode(this.base64CipherText);
     this.reRender();
   }
 

@@ -5,12 +5,17 @@ import CryptoJS from 'crypto-js';
 // -----------------------------------------------------------------------------
 // (Base64 인코딩)
 export function base64Encode(plainText: string): string {
-    return Buffer.from(plainText, 'utf8').toString('base64');
+    return btoa(encodeURIComponent(plainText)
+        .replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
 }
 
 // (Base64 디코딩)
 export function base64Decode(encodedText: string): string {
-    return Buffer.from(encodedText, 'base64').toString('utf8');
+    return decodeURIComponent(
+        Array.prototype.map.call(atob(encodedText), c =>
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join('')
+    );
 }
 
 // (AES 256 암호화 함수)
