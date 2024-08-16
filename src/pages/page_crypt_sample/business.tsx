@@ -30,19 +30,26 @@ class Business extends PageBusinessBasic {
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "암/복호화 샘플");
 
   // (AES256 테스트 암호키 입력창)
-  // todo ref 로는 불가능한지
   aes256SecretKey: string = "";
   onChangeAes256SecretKey = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.aes256SecretKey = event.target.value;
+    this.aes256SecretKeyWordCount = this.aes256SecretKey.length;
+    this.aes256SecretKeyErrorMsg = "";
     this.reRender();
   }
+  aes256SecretKeyErrorMsg: string = "";
+  aes256SecretKeyWordCount: number = 0;
 
   // (AES256 테스트 초기화 벡터 입력창)
   aes256SecretIv: string = "";
   onChangeAes256SecretIv = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.aes256SecretIv = event.target.value;
+    this.aes256SecretIvWordCount = this.aes256SecretIv.length;
+    this.aes256SecretIvErrorMsg = "";
     this.reRender();
   }
+  aes256SecretIvErrorMsg: string = "";
+  aes256SecretIvWordCount: number = 0;
 
   // (AES256 테스트 암호화할 평문 입력창)
   aes256PlainText: string = "";
@@ -117,17 +124,53 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (암호화)
   doEncrypt = () => {
-    // todo 입력값 검증
+    let valid = true;
+    if (this.aes256SecretKey == "") {
+      this.aes256SecretKeyErrorMsg = "암호화 키를 입력해주세요.";
+      valid = false;
+    } else if (this.aes256SecretKey.length < 32) {
+      this.aes256SecretKeyErrorMsg = "암호화 키는 32 자로 입력해주세요.";
+      valid = false;
+    }
 
-    this.encryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
+    if (this.aes256SecretIv == "") {
+      this.aes256SecretIvErrorMsg = "암호화 벡터를 입력해주세요.";
+      valid = false;
+    } else if (this.aes256SecretIv.length < 16) {
+      this.aes256SecretIvErrorMsg = "암호화 벡터는 16 자로 입력해주세요.";
+      valid = false;
+    }
+
+    if (valid) {
+      this.encryptResult = aes256Encrypt(this.aes256PlainText, this.aes256SecretKey, this.aes256SecretIv);
+    }
+
     this.reRender();
   }
 
   // (복호화)
   doDecrypt = () => {
-    // todo 입력값 검증
+    let valid = true;
+    if (this.aes256SecretKey == "") {
+      this.aes256SecretKeyErrorMsg = "암호화 키를 입력해주세요.";
+      valid = false;
+    } else if (this.aes256SecretKey.length < 32) {
+      this.aes256SecretKeyErrorMsg = "암호화 키는 32 자로 입력해주세요.";
+      valid = false;
+    }
 
-    this.decryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
+    if (this.aes256SecretIv == "") {
+      this.aes256SecretIvErrorMsg = "암호화 벡터를 입력해주세요.";
+      valid = false;
+    } else if (this.aes256SecretIv.length < 16) {
+      this.aes256SecretIvErrorMsg = "암호화 벡터는 16 자로 입력해주세요.";
+      valid = false;
+    }
+
+    if (valid) {
+      this.decryptResult = aes256Decrypt(this.aes256CipherText, this.aes256SecretKey, this.aes256SecretIv);
+    }
+
     this.reRender();
   }
 

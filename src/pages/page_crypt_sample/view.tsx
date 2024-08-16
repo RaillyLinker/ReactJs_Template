@@ -113,10 +113,12 @@ const View: React.FC = () => {
 
             <div>
               <input type="text" id={styles.Aes256SecretKey} maxLength={32} placeholder="암호키 (32자)" value={mainBusiness.aes256SecretKey} onChange={mainBusiness.onChangeAes256SecretKey} />
+              <div id={styles.Aes256SecretKeyInfoContainer}><span id={styles.Aes256SecretKeyErrorMsg}>{mainBusiness.aes256SecretKeyErrorMsg}</span><span id={styles.Aes256SecretKeyWordCount}>{mainBusiness.aes256SecretKeyWordCount}/32</span></div>
             </div>
 
             <div>
               <input type="text" id={styles.Aes256SecretIv} maxLength={16} placeholder="초기화 벡터 (16자)" value={mainBusiness.aes256SecretIv} onChange={mainBusiness.onChangeAes256SecretIv} />
+              <div id={styles.Aes256SecretIvInfoContainer}><span id={styles.Aes256SecretIvErrorMsg}>{mainBusiness.aes256SecretIvErrorMsg}</span><span id={styles.Aes256SecretIvWordCount}>{mainBusiness.aes256SecretIvWordCount}/16</span></div>
             </div>
 
             <div id={styles.Aes256PlainTextGroup}>

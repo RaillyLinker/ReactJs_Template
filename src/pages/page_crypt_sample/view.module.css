@@ -31,12 +31,46 @@
     border-radius: 5px;
 }
 
+#Aes256SecretKeyInfoContainer {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+#Aes256SecretKeyErrorMsg {
+    margin-left: 0.5rem;
+    justify-self: start;
+    font-size: 0.6rem;
+    color: red;
+}
+
+#Aes256SecretKeyWordCount {
+    justify-self: end;
+    font-size: 0.6rem;
+}
+
 #Aes256SecretIv {
     width: 100%;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-top: 0.5rem;
+}
+
+#Aes256SecretIvInfoContainer {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+#Aes256SecretIvErrorMsg {
+    margin-left: 0.5rem;
+    justify-self: start;
+    font-size: 0.6rem;
+    color: red;
+}
+
+#Aes256SecretIvWordCount {
+    justify-self: end;
+    font-size: 0.6rem;
 }
 
 #Aes256PlainTextGroup {
