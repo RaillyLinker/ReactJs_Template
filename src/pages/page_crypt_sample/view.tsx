@@ -112,23 +112,23 @@ const View: React.FC = () => {
             <h2>AES256 테스트</h2>
 
             <div>
-              <input type="text" id={styles.Aes256SecretKey} placeholder="32자의 암호키" />
+              <input type="text" id={styles.Aes256SecretKey} placeholder="암호키 (32자)" value={mainBusiness.aes256SecretKey} onChange={mainBusiness.onChangeAes256SecretKey} />
             </div>
 
             <div>
-              <input type="text" id={styles.Aes256SecretIv} placeholder="16자의 초기화 벡터" />
+              <input type="text" id={styles.Aes256SecretIv} placeholder="초기화 벡터 (16자)" value={mainBusiness.aes256SecretIv} onChange={mainBusiness.onChangeAes256SecretIv} />
             </div>
 
             <div id={styles.Aes256PlainTextGroup}>
-              <input type="text" id={styles.Aes256PlainText} placeholder="암호화할 평문" />
-              <button id={styles.Aes256EncryptButton}>암호화</button>
+              <input type="text" id={styles.Aes256PlainText} placeholder="암호화할 평문" value={mainBusiness.aes256PlainText} onChange={mainBusiness.onChangeAes256PlainText} />
+              <button id={styles.Aes256EncryptButton} onClick={mainBusiness.doEncrypt}>암호화</button>
             </div>
 
             <div id={styles.Aes256EncryptedResult} >결과 :</div>
 
             <div id={styles.Aes256CipherTextGroup}>
-              <input type="text" id={styles.Aes256CipherText} placeholder="복호화할 암호문" />
-              <button id={styles.Aes256DecryptButton}>복호화</button>
+              <input type="text" id={styles.Aes256CipherText} placeholder="복호화할 암호문" value={mainBusiness.aes256CipherText} onChange={mainBusiness.onChangeAes256CipherText} />
+              <button id={styles.Aes256DecryptButton} onClick={mainBusiness.doDecrypt}>복호화</button>
             </div>
 
             <div id={styles.Aes256DecryptedResult} >결과 :</div>

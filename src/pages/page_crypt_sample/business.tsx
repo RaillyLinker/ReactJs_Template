@@ -28,6 +28,34 @@ class Business extends PageBusinessBasic {
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "암/복호화 샘플");
 
+  // (AES256 테스트 암호키 입력창)
+  aes256SecretKey: string = "";
+  onChangeAes256SecretKey = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.aes256SecretKey = event.target.value;
+    this.reRender();
+  }
+
+  // (AES256 테스트 초기화 벡터 입력창)
+  aes256SecretIv: string = "";
+  onChangeAes256SecretIv = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.aes256SecretIv = event.target.value;
+    this.reRender();
+  }
+
+  // (AES256 테스트 암호화할 평문 입력창)
+  aes256PlainText: string = "";
+  onChangeAes256PlainText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.aes256PlainText = event.target.value;
+    this.reRender();
+  }
+
+  // (AES256 테스트 복호화할 평문 입력창)
+  aes256CipherText: string = "";
+  onChangeAes256CipherText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.aes256CipherText = event.target.value;
+    this.reRender();
+  }
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -66,6 +94,7 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    console.log(this.aes256SecretKey);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -79,6 +108,15 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (암호화)
+  doEncrypt = () => {
+    // todo
+  }
+
+  // (복호화)
+  doDecrypt = () => {
+    // todo
+  }
 
 
   //----------------------------------------------------------------------------
