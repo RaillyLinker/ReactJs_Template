@@ -1,5 +1,6 @@
 [TODO]
 (1단계)
+- 비동기 처리 및 뮤텍스
 - SharedPreferences
 - Grid 샘플
 - Toast
