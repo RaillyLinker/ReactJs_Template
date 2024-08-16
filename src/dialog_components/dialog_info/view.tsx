@@ -21,7 +21,6 @@ const View: React.FC<DialogProps> = (props) => {
 
   // 필요 객체 할당
   mainBusiness.setScreenFlag = React.useState<boolean>(mainBusiness.screenFlag)[1];
-  mainBusiness.navigate = useNavigate();
 
 
   // !!!아래부터 코딩!!!

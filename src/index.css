@@ -1,4 +1,4 @@
-/* !!!최 상위 컴포넌트에 적용할 CSS 작성!!! */
+/* !!!최상위 컴포넌트에 적용할 CSS 작성!!! */
 /* [Tag] */
 * {
   font-family: 'MaruBuri';
@@ -27,9 +27,3 @@ code {
 
 
 /* [Id #] */
-#MainView {
-  position: relative;
-  height: calc(var(--vh, 1vh) * 100);
-  width: 100vw;
-  background-color: white;
-}

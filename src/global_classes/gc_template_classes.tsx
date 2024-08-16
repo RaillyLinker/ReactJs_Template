@@ -1,3 +1,4 @@
+import { navigate } from '../app_router';
 import { NavigateFunction } from 'react-router-dom';
 import GcoDialogFrameBusiness from '../global_components/gco_dialog_frame/business';
 
@@ -12,7 +13,7 @@ export abstract class BusinessBasic {
   // 사용법은 this.navigate("/test"); 이와 같습니다.
   // 파라미터가 string 이라면 path 경로로 이동하고,
   // path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
-  navigate: NavigateFunction = () => { };
+  navigate: NavigateFunction = navigate;
 
   // (초기 실행 여부)
   // 처음 컴포넌트 실행시 onComponentDidMount 가 실행되기 전까지는 true, 실행된 직후 false
