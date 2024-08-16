@@ -15,7 +15,6 @@ import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/vi
 
 // [라우터 클래스]
 // !!!웹에서 사용할 라우터 설정을 아래에 추가하세요.!!!
-// 모든 라우트는 <Route path="/" element={<App />} > 이 태그 안에 위치해야 합니다.
 function AppRouter(): JSX.Element {
   navigate = useNavigate();
   return (

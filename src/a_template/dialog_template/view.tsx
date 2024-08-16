@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './view.module.css';
 import Business from './business';
 import { DialogProps } from '../../global_classes/gc_template_classes';
