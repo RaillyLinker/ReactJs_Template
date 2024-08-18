@@ -3,7 +3,8 @@ import styles from './view.module.css';
 import Business from './business';
 import { ComponentProps } from '../../global_classes/gc_template_classes';
 
-// [함수형 컴포넌트 뷰]
+
+// [뷰 함수]
 const View: React.FC<ComponentProps> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체 = 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.

@@ -1,9 +1,8 @@
 import { DialogBusinessBasic, PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
+
 // [비즈니스 클래스]
-// !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
-// 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
 class Business extends DialogBusinessBasic {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.

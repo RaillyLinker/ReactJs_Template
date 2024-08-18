@@ -1,8 +1,8 @@
 import CryptoJS from 'crypto-js';
 
+
 // [암호화 함수 작성 파일]
 
-// -----------------------------------------------------------------------------
 // (Base64 인코딩)
 export function base64Encode(plainText: string): string {
     return btoa(encodeURIComponent(plainText)

@@ -8,7 +8,8 @@ import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
-// [함수형 컴포넌트 뷰]
+
+// [뷰 함수]
 const View: React.FC = () => {
   // (보일러 플레이트 코드)
   // 본 페이지 히스토리 정보

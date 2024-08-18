@@ -5,10 +5,8 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 
+
 // [비즈니스 클래스]
-// !!!페이지에서 사용할 데이터 선언 및 로직 작성!!!
-// 함수는 변수 형식으로 저장합시다. 그래야 onclick 에 입력시 에러가 나지 않습니다.
-// 본 클래스의 객체는 다른 페이지로 이동했다가 복귀하더라도 그대로 유지됩니다.
 class Business extends PageBusinessBasic {
   // (페이지 파라미터)
   // null 이라면 잘못된 진입

@@ -13,6 +13,7 @@ import PageGlobalVariableStateTest from './pages/page_globalVariableStateTest/vi
 import PageCryptSample from './pages/page_crypt_sample/view';
 import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/view';
 
+
 // [라우터 클래스]
 // !!!웹에서 사용할 라우터 설정을 아래에 추가하세요.!!!
 function AppRouter(): JSX.Element {
@@ -41,9 +42,6 @@ function AppRouter(): JSX.Element {
 }
 
 // (Navigate 객체)
-// 사용법은 this.navigate("/test"); 이와 같습니다.
-// 파라미터가 string 이라면 path 경로로 이동하고,
-// path 가 number 일 때, 양수라면 숫자만큼 앞으로 가기, 음수라면 숫자만큼 뒤로가기를 합니다.
 export let navigate: NavigateFunction = () => { };
 
 export default AppRouter;
