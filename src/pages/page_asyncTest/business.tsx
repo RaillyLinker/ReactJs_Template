@@ -100,7 +100,9 @@ class Business extends PageBusinessBasic {
     switch (this.workState) {
       case 0: {
         // 초기화 -> 진행중
-        // todo
+        // todo 작업 시작
+        this.work1();
+        this.work2();
 
 
         // 상태 변경 및 화면 변경
@@ -111,7 +113,7 @@ class Business extends PageBusinessBasic {
       }
       case 1: {
         // 진행 중 -> 일시 중지
-        // todo
+        // todo 작업 일시 중지 (일시중지 완료 될 때까지 대기)
 
 
         // 상태 변경 및 화면 변경
@@ -122,7 +124,9 @@ class Business extends PageBusinessBasic {
       }
       case 2: {
         // 일시 중지 -> 진행중
-        // todo
+        // todo 작업 다시 진행
+        this.work1();
+        this.work2();
 
 
         // 상태 변경 및 화면 변경
@@ -133,10 +137,11 @@ class Business extends PageBusinessBasic {
       }
       case 3: {
         // 완료 -> 초기화
-        // todo
-
 
         // 상태 변경 및 화면 변경
+        this.progress1Value = 0;
+        this.progress2Value = 0;
+        this.sharedCounter = 0;
         this.workState = 0;
         this.workButtonName = "작업 시작";
         this.reRender();
@@ -148,6 +153,32 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
+  // todo 각 비동기 작업 완료시 합류 스레드 만들어서 완료 처리하기, 일시정지 처리 하기
+  // (프로그래스1 작업)
+  private work1 = async () => {
+    while (this.progress1Value < 100) {
+      // 대기
+      await new Promise(resolve => setTimeout(resolve, 50));
+      this.progress1Value += 1;
+
+      // todo 뮤텍스 처리
+      this.sharedCounter += 1;
+      this.reRender();
+    }
+  };
+
+  // (프로그래스2 작업)
+  private work2 = async () => {
+    while (this.progress2Value < 100) {
+      // 대기
+      await new Promise(resolve => setTimeout(resolve, 20));
+      this.progress2Value += 1;
+
+      // todo 뮤텍스 처리
+      this.sharedCounter += 1;
+      this.reRender();
+    }
+  };
 }
 
 export default Business;
