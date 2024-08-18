@@ -10,8 +10,9 @@ import PageUseRefAndUseStateTest from './pages/page_useRefAndUseStateTest/view';
 import PageDialogExampleList from './pages/page_dialogExampleList/view';
 import PageDialogSampleList from './pages/page_dialogSampleList/view';
 import PageGlobalVariableStateTest from './pages/page_globalVariableStateTest/view';
-import PageCryptSample from './pages/page_crypt_sample/view';
+import PageCryptSample from './pages/page_cryptSample/view';
 import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/view';
+import PageAsyncTest from './pages/page_asyncTest/view';
 
 
 // [라우터 클래스]
@@ -30,6 +31,7 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/input-and-output-test/:pathParam" element={<PageInputAndOutputTest />} />
       <Route path="/template-basic-function-sample-list/use-ref-and-use-state-test" element={<PageUseRefAndUseStateTest />} />
       <Route path="/template-basic-function-sample-list/global-variable-state-test" element={<PageGlobalVariableStateTest />} />
+      <Route path="/template-basic-function-sample-list/async-test" element={<PageAsyncTest />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />

@@ -24,65 +24,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "템플릿 기본 기능 샘플 리스트");
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "페이지 템플릿",
-        itemDescription: "템플릿 페이지를 호출합니다.",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/page-template");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "페이지 State 및 생명주기 테스트",
-        itemDescription: "페이지 State 및 생명주기를 테스트 합니다.",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/state-and-lifecyle-test");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "페이지 입/출력 테스트",
-        itemDescription: "페이지 이동시 전달하는 입력값, 복귀시 반환하는 출력값 테스트",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/input-and-output-test/pathParamTest?queryParam=queryParamTest");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "useRef / useState 테스트",
-        itemDescription: "useRef, useState 를 이용한 화면 갱신 테스트",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/use-ref-and-use-state-test");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "전역 변수 상태 확인 테스트",
-        itemDescription: "컴포넌트 뷰모델이 아닌 전역 변수 사용시 데이터 유지 테스트",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/global-variable-state-test");
-        }
-      },
-      {
-        uid: 5,
-        itemTitle: "비동기 테스트",
-        itemDescription: "React 의 비동기 프로그래밍 동작 테스트",
-        onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list/async-test");
-        }
-      }
-    ];
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비동기 테스트");
 
 
   //----------------------------------------------------------------------------
