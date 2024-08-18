@@ -71,8 +71,8 @@ const View: React.FC = () => {
   }
   currentPageHistoryIdx.idx = pageHistoryIdx;
 
-  // 필요 객체 할당
-  [mainBusiness.screenFlag, mainBusiness.setScreenFlag] = React.useState<{ flag: boolean; }>(mainBusiness.screenFlag);
+  // State 할당
+  [mainBusiness.screenFlag, mainBusiness.setScreenFlag] = React.useState<{}>(mainBusiness.screenFlag);
 
 
   // !!!아래부터 코딩!!!

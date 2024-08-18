@@ -11,11 +11,16 @@ export function base64Encode(plainText: string): string {
 
 // (Base64 디코딩)
 export function base64Decode(encodedText: string): string {
-    return decodeURIComponent(
-        Array.prototype.map.call(atob(encodedText), c =>
-            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-        ).join('')
-    );
+    try {
+        return decodeURIComponent(
+            Array.prototype.map.call(atob(encodedText), c =>
+                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+            ).join('')
+        );
+    } catch (e) {
+        console.log(e);
+        return "";
+    }
 }
 
 // (AES 256 암호화 함수)
