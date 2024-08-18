@@ -16,7 +16,7 @@ class Business extends ComponentBusinessBasic {
   dialogOn: boolean = false;
 
   // (다이얼로그 뷰 컴포넌트)
-  dialogView: React.FC<DialogProps> = () => { return (<></>) };
+  dialogView: React.FC<DialogProps<any>> = () => { return (<></>) };
   // (다이얼로그 뷰 컴포넌트 비즈니스)
   dialogBusiness: DialogBusinessBasic = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
 
@@ -24,8 +24,10 @@ class Business extends ComponentBusinessBasic {
   //----------------------------------------------------------------------------
   // [생명주기 함수]
   // (비즈니스 클래스 생성자)
-  // 부모 컴포넌트에서 주입하는 값을 처리하면 됩니다.
-  constructor(parentComponentBusiness: BusinessBasic) {
+  // 부모 컴포넌트에서 값을 받을 때는 이곳으로 받습니다.
+  constructor(
+    parentComponentBusiness: BusinessBasic
+  ) {
     super(parentComponentBusiness);
   }
 
@@ -54,7 +56,7 @@ class Business extends ComponentBusinessBasic {
   // [public 함수]
   // (다이얼로그 호출 함수)
   // 다이얼로그 호출시엔 반드시 이 함수를 사용하세요.
-  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<DialogProps>, dialogBusiness: DialogBusinessBasic) => {
+  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<DialogProps<any>>, dialogBusiness: DialogBusinessBasic) => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogBarrierDismissible = dialogBarrierDismissible;
       this.dialogView = dialogView;

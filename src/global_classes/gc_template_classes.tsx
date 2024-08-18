@@ -90,10 +90,10 @@ export abstract class ComponentBusinessBasic extends BusinessBasic {
 }
 
 // (컴포넌트 Props 인터페이스)
-export interface ComponentProps {
+export interface ComponentProps<Business extends ComponentBusinessBasic> {
   // (view 와 연결되는 Business 객체)
   // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  business: ComponentBusinessBasic;
+  business: Business;
 
   // (컴포넌트 Children 객체)
   // <MyTag> ... </MyTag>
@@ -130,10 +130,10 @@ export class VoidDialogBusinessBasic extends DialogBusinessBasic {
 }
 
 // (다이얼로그 Props 인터페이스)
-export interface DialogProps {
+export interface DialogProps<Business extends DialogBusinessBasic> {
   // (view 와 연결되는 Business 객체)
   // 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
-  business: DialogBusinessBasic;
+  business: Business;
 
   // (컴포넌트 Children 객체)
   // <MyTag> ... </MyTag>
