@@ -1,6 +1,8 @@
 import { aes256Encrypt, aes256Decrypt } from '../global_functions/gf_crypto';
 
-export class SharedPreferenceWrapper {
+
+// [Shared Preference Wrapper(SPW) 클래스]
+export class SpwTemplate {
     // (전역 키 이름)
     // !!!전역 키 이름 설정!!!
     // 적용 구역이 전역이므로 중복되지 않도록 spws 안의 파일명을 적을 것
@@ -16,7 +18,7 @@ export class SharedPreferenceWrapper {
     static secretIv = "aaaaaaaaaabbbbbb";
 
     // (SPW 값 가져오기)
-    static get(): SharedPreferenceWrapperVo | null {
+    static get(): SpwTemplateVo | null {
         // 키를 사용하여 저장된 jsonString 가져오기
         const savedJsonString = localStorage.getItem(this.globalKeyName) || "";
 
@@ -30,7 +32,7 @@ export class SharedPreferenceWrapper {
 
                 // Map 을 Object 로 변경
                 const map = JSON.parse(decryptedJsonString);
-                const resultObject = new SharedPreferenceWrapperVo(map.sampleString);
+                const resultObject = new SpwTemplateVo(map.sampleString);
                 return resultObject;
             } catch (e) {
                 // 복호화시 에러가 난 경우를 가정
@@ -44,7 +46,7 @@ export class SharedPreferenceWrapper {
     }
 
     // (SPW 값 저장하기)
-    static async set(value: SharedPreferenceWrapperVo | null): Promise<void> {
+    static async set(value: SpwTemplateVo | null): Promise<void> {
         if (value === null) {
             // 값을 null로 설정
             localStorage.setItem(this.globalKeyName, "");
@@ -62,7 +64,7 @@ export class SharedPreferenceWrapper {
 }
 
 // !!!저장 정보 데이터 형태 작성!!!
-export class SharedPreferenceWrapperVo {
+export class SpwTemplateVo {
     constructor(sampleString: string) {
         this.sampleString = sampleString;
     }

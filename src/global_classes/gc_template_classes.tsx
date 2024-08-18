@@ -35,8 +35,7 @@ export abstract class BusinessBasic {
 
   // (컴포넌트 화면 리랜더링 함수)
   // 이 함수를 호출하면 컴포넌트 화면이 다시 랜더링 됩니다.
-  // useRef 로도 DOM 을 조작할 수 있지만, 화면 변경에 관련하여 왠만하면 이것을 사용합시다.
-  // (간편하기도 하고, 통일성도 있으며, 성능 차이도 없습니다.)
+  // useRef 로도 DOM 을 조작할 수 있지만, 통일성을 위하여 화면 변경에 관련하여 왠만하면 이것을 사용합시다.
   reRender: () => void = () => {
     this.setScreenFlag((prevState) => ({ ...prevState }));
   };

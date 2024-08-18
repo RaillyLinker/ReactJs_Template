@@ -4,7 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
-import { SharedPreferenceWrapper, SharedPreferenceWrapperVo } from '../../a_template/spw_template';
+import { SpwTemplate, SpwTemplateVo } from '../../a_template/spw_template';
 
 
 // [비즈니스 클래스]
@@ -91,14 +91,14 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (SpwTemplate 값 저장)
   saveSpwTemplate = () => {
-    SharedPreferenceWrapper.set(new SharedPreferenceWrapperVo(this.SpwTemplateInputValue));
+    SpwTemplate.set(new SpwTemplateVo(this.SpwTemplateInputValue));
     this.getSpwValue();
 
   }
 
   // (SpwTemplate 값 삭제)
   deleteSpwTemplate = () => {
-    SharedPreferenceWrapper.set(null);
+    SpwTemplate.set(null);
     this.getSpwValue();
   }
 
@@ -106,7 +106,7 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [private 함수]
   private getSpwValue = () => {
-    const spwTemplateValue = SharedPreferenceWrapper.get();
+    const spwTemplateValue = SpwTemplate.get();
     if (spwTemplateValue === null) {
       this.spwTemplateValue = "null";
     } else {
