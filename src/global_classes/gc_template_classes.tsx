@@ -7,8 +7,12 @@ import GcoDialogFrameBusiness from '../global_components/gco_dialog_frame/busine
 // (Business 클래스 기본타입)
 export abstract class BusinessBasic {
   // (컴포넌트 화면 Rerendering 플래그 및 객체)
-  screenFlag: boolean = false;
-  setScreenFlag: React.Dispatch<React.SetStateAction<boolean>> = () => { };
+  screenFlag: {
+    flag: boolean;
+  } = { flag: false };
+  setScreenFlag: React.Dispatch<React.SetStateAction<{
+    flag: boolean;
+  }>> = () => { };
 
   // (Navigate 객체)
   // 사용법은 this.navigate("/test"); 이와 같습니다.
@@ -38,8 +42,7 @@ export abstract class BusinessBasic {
   // useRef 로도 DOM 을 조작할 수 있지만, 화면 변경에 관련하여 왠만하면 이것을 사용합시다.
   // (간편하기도 하고, 통일성도 있으며, 성능 차이도 없습니다.)
   reRender: () => void = () => {
-    this.screenFlag = !this.screenFlag;
-    this.setScreenFlag(this.screenFlag);
+    this.setScreenFlag((prevState) => ({ ...prevState, flag: !prevState.flag }));
   };
 }
 
