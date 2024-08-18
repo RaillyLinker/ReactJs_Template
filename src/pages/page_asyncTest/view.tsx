@@ -109,7 +109,16 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <div>
+              <div>작업 1</div>
+              <progress value={mainBusiness.progress1Value} max="100" />
+            </div>
+            <div>
+              <div>작업 2</div>
+              <progress value={mainBusiness.progress2Value} max="100" />
+            </div>
+            <p>공유 카운터: {mainBusiness.sharedCounter}</p>
+            <button id={styles.WorkButton} onClick={mainBusiness.onClickWorkButton}>{mainBusiness.workButtonName}</button>
           </div>
         </GcoOuterFrame>
       </GcoDialogFrame>

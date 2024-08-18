@@ -26,6 +26,24 @@ class Business extends PageBusinessBasic {
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비동기 테스트");
 
+  // (프로그래스 value)
+  // 스레드 1이 담당
+  progress1Value: number = 0;
+  // 스레드 2가 담당
+  progress2Value: number = 0;
+
+  // (공유 카운터)
+  // 스레드 1, 2 모두 접근 (뮤텍스 처리 필요)
+  sharedCounter: number = 0;
+
+  // (작업 상태 및 버튼 이름)
+  // 상태 0 = 초기화, 버튼 이름 : 작업 시작
+  // 상태 1 = 진행 중, 버튼 이름 : 일시 중지
+  // 상태 2 = 일시 중지, 버튼 이름 : 다시 시작
+  // 상태 3 = 완료, 버튼 이름 : 초기화
+  workState = 0;
+  workButtonName = "작업 시작";
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -77,6 +95,55 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  onClickWorkButton = () => {
+    // todo
+    switch (this.workState) {
+      case 0: {
+        // 초기화 -> 진행중
+        // todo
+
+
+        // 상태 변경 및 화면 변경
+        this.workState = 1;
+        this.workButtonName = "일시 중지";
+        this.reRender();
+        break;
+      }
+      case 1: {
+        // 진행 중 -> 일시 중지
+        // todo
+
+
+        // 상태 변경 및 화면 변경
+        this.workState = 2;
+        this.workButtonName = "다시 시작";
+        this.reRender();
+        break;
+      }
+      case 2: {
+        // 일시 중지 -> 진행중
+        // todo
+
+
+        // 상태 변경 및 화면 변경
+        this.workState = 1;
+        this.workButtonName = "일시 중지";
+        this.reRender();
+        break;
+      }
+      case 3: {
+        // 완료 -> 초기화
+        // todo
+
+
+        // 상태 변경 및 화면 변경
+        this.workState = 0;
+        this.workButtonName = "작업 시작";
+        this.reRender();
+        break;
+      }
+    }
+  }
 
 
   //----------------------------------------------------------------------------

@@ -18,4 +18,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#WorkButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#WorkButton:hover {
+    background-color: #2195f3e3;
 }
