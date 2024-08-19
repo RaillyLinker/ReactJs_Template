@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import { Semaphore } from 'async-mutex';
+import { ThreadMerger } from '../../global_classes/gc_my_classes';
 
 
 // [비즈니스 클래스]
@@ -45,6 +46,14 @@ class Business extends PageBusinessBasic {
   // 상태 3 = 완료, 버튼 이름 : 초기화
   workState = 0;
   workButtonName = "작업 시작";
+
+  // (스레드 병합 객체)
+  threadMerger = new ThreadMerger(2, () => {
+    // 상태 변경 및 화면 변경
+    this.workState = 3;
+    this.workButtonName = "초기화";
+    this.reRender();
+  });
 
 
 
@@ -142,6 +151,7 @@ class Business extends PageBusinessBasic {
         // 완료 -> 초기화
 
         // 상태 변경 및 화면 변경
+        this.threadMerger.rewind();
         this.progress1Value = 0;
         this.progress2Value = 0;
         this.sharedCounter = 0;
@@ -173,6 +183,7 @@ class Business extends PageBusinessBasic {
       }
       this.reRender();
     }
+    this.threadMerger.mergeThread();
   };
 
   // (프로그래스2 작업)
@@ -191,6 +202,7 @@ class Business extends PageBusinessBasic {
       }
       this.reRender();
     }
+    this.threadMerger.mergeThread();
   };
 }
 

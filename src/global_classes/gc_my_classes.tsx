@@ -24,7 +24,7 @@ export class ThreadMerger {
     mergedThreadCountSemaphore = new Semaphore(1);
 
     // (스레드 병합 개수 +1)
-    threadComplete = async () => {
+    mergeThread = async () => {
         this.mergedThreadCountSemaphore.acquire()
         try {
             // 스레드 병합 카운트 +1
