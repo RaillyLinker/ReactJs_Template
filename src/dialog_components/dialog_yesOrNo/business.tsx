@@ -13,8 +13,17 @@ class Business extends DialogBusinessBasic {
   // (내용)
   content: string
 
-  // (확인 버튼 클릭 리스너)
-  confirmButtonClickListener: () => void;
+  // (긍정 버튼 제목)
+  positiveButtonTitle: string
+
+  // (부정 버튼 제목)
+  negativeButtonTitle: string
+
+  // (긍정 버튼 클릭 리스너)
+  positiveButtonClickListener: () => void;
+
+  // (부정 버튼 클릭 리스너)
+  negativeButtonClickListener: () => void;
 
 
   //----------------------------------------------------------------------------
@@ -26,12 +35,18 @@ class Business extends DialogBusinessBasic {
     parentPageBusiness: PageBusinessBasic,
     title: string,
     content: string,
-    confirmButtonClickListener: () => void
+    positiveButtonTitle: string,
+    negativeButtonTitle: string,
+    positiveButtonClickListener: () => void,
+    negativeButtonClickListener: () => void
   ) {
     super(gcoDialogFrameBusiness, parentPageBusiness);
     this.title = title;
     this.content = content;
-    this.confirmButtonClickListener = confirmButtonClickListener;
+    this.positiveButtonTitle = positiveButtonTitle;
+    this.negativeButtonTitle = negativeButtonTitle;
+    this.positiveButtonClickListener = positiveButtonClickListener;
+    this.negativeButtonClickListener = negativeButtonClickListener;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -52,9 +67,17 @@ class Business extends DialogBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  onConfirmButtonClick = () => {
+  positiveButtonClick = () => {
     // 외부 주입 리스너 실행
-    this.confirmButtonClickListener();
+    this.positiveButtonClickListener();
+
+    // 다이얼로그 닫기
+    this.gcoDialogFrameBusiness.closeDialog();
+  }
+
+  negativeButtonClick = () => {
+    // 외부 주입 리스너 실행
+    this.negativeButtonClickListener();
 
     // 다이얼로그 닫기
     this.gcoDialogFrameBusiness.closeDialog();

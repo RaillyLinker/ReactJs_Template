@@ -13,6 +13,8 @@ import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/
 import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 import DialogStateTest from '../../dialog_components/dialog_stateTest/view';
 import DialogStateTestBusiness from '../../dialog_components/dialog_stateTest/business';
+import DialogYesOrNo from '../../dialog_components/dialog_yesOrNo/view';
+import DialogYesOrNoBusiness from '../../dialog_components/dialog_yesOrNo/business';
 
 
 // [비즈니스 클래스]
@@ -64,27 +66,35 @@ class Business extends PageBusinessBasic {
         itemTitle: "확인 다이얼로그",
         itemDescription: "버튼이 하나인 확인 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this.gcoDialogFrameBusiness, this, () => {
-            toast.info("Confirmed!", {
-              // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
-              position: "bottom-center",
-              // 자동 닫힘 시간(밀리초)
-              autoClose: 5000,
-              // 닫힘 시간 프로그래스바 숨기기
-              hideProgressBar: false,
-              // 바로 닫기 버튼 나타내기
-              closeOnClick: true,
-              // 호버링시 진행 멈추기
-              pauseOnHover: true,
-              // 드래그로 닫기
-              draggable: true,
-              // 테마 (light, dark, colored)
-              theme: "light",
-              // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
-              transition: Bounce,
-              progress: undefined
-            });
-          }));
+          this.gcoDialogFrameBusiness.showDialog(
+            false,
+            DialogInfo,
+            new DialogInfoBusiness(
+              this.gcoDialogFrameBusiness,
+              this,
+              "확인 다이얼로그",
+              "확인 다이얼로그 호출",
+              () => {
+                toast.info("Confirmed!", {
+                  // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+                  position: "bottom-center",
+                  // 자동 닫힘 시간(밀리초)
+                  autoClose: 5000,
+                  // 닫힘 시간 프로그래스바 숨기기
+                  hideProgressBar: false,
+                  // 바로 닫기 버튼 나타내기
+                  closeOnClick: true,
+                  // 호버링시 진행 멈추기
+                  pauseOnHover: true,
+                  // 드래그로 닫기
+                  draggable: true,
+                  // 테마 (light, dark, colored)
+                  theme: "light",
+                  // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+                  transition: Bounce,
+                  progress: undefined
+                });
+              }));
         }
       },
       {
@@ -103,6 +113,66 @@ class Business extends PageBusinessBasic {
         itemDescription: "다이얼로그 상태 및 생명주기를 테스트합니다.",
         onItemClicked: (): void => {
           this.gcoDialogFrameBusiness.showDialog(true, DialogStateTest, new DialogStateTestBusiness(this.gcoDialogFrameBusiness, this));
+        }
+      },
+      {
+        uid: 4,
+        itemTitle: "선택 다이얼로그",
+        itemDescription: "버튼이 두개인 선택 다이얼로그를 호출합니다.",
+        onItemClicked: (): void => {
+          this.gcoDialogFrameBusiness.showDialog(
+            false,
+            DialogYesOrNo,
+            new DialogYesOrNoBusiness(
+              this.gcoDialogFrameBusiness,
+              this,
+              "선택 다이얼로그",
+              "선택 다이얼로그 호출",
+              "긍정",
+              "부정",
+              () => {
+                toast.info("Positive!", {
+                  // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+                  position: "bottom-center",
+                  // 자동 닫힘 시간(밀리초)
+                  autoClose: 5000,
+                  // 닫힘 시간 프로그래스바 숨기기
+                  hideProgressBar: false,
+                  // 바로 닫기 버튼 나타내기
+                  closeOnClick: true,
+                  // 호버링시 진행 멈추기
+                  pauseOnHover: true,
+                  // 드래그로 닫기
+                  draggable: true,
+                  // 테마 (light, dark, colored)
+                  theme: "light",
+                  // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+                  transition: Bounce,
+                  progress: undefined
+                });
+              },
+              () => {
+                toast.info("Negative!", {
+                  // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+                  position: "bottom-center",
+                  // 자동 닫힘 시간(밀리초)
+                  autoClose: 5000,
+                  // 닫힘 시간 프로그래스바 숨기기
+                  hideProgressBar: false,
+                  // 바로 닫기 버튼 나타내기
+                  closeOnClick: true,
+                  // 호버링시 진행 멈추기
+                  pauseOnHover: true,
+                  // 드래그로 닫기
+                  draggable: true,
+                  // 테마 (light, dark, colored)
+                  theme: "light",
+                  // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+                  transition: Bounce,
+                  progress: undefined
+                });
+              }
+            ));
         }
       }
     ];

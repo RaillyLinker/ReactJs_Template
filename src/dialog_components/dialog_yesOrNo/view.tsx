@@ -37,7 +37,8 @@ const View: React.FC<DialogProps<Business>> = (props) => {
       <div id={styles.Middle}>{mainBusiness.content}</div>
       <hr />
       <div id={styles.Bottom}>
-        <button id={styles.Button} onClick={mainBusiness.onConfirmButtonClick}>확인</button>
+        <button id={styles.NegativeButton} onClick={mainBusiness.negativeButtonClick}>{mainBusiness.negativeButtonTitle}</button>
+        <button id={styles.PositiveButton} onClick={mainBusiness.positiveButtonClick}>{mainBusiness.positiveButtonTitle}</button>
       </div>
     </div>
   );
