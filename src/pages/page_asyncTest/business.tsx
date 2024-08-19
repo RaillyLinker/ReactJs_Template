@@ -28,6 +28,20 @@ class Business extends PageBusinessBasic {
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비동기 테스트");
 
+  // (작업 상태 및 버튼 이름)
+  // 상태 0 = 초기화, 버튼 이름 : 작업 시작
+  // 상태 1 = 진행 중, 버튼 이름 : 일시 중지
+  // 상태 2 = 일시 중지, 버튼 이름 : 다시 시작
+  // 상태 3 = 완료, 버튼 이름 : 초기화
+  workState = 0;
+  workButtonName = "작업 시작";
+
+  // (스레드 상태)
+  thread1Work: boolean = false;
+  thread1WorkSemaphore = new Semaphore(1);
+  thread2Work: boolean = false;
+  thread2WorkSemaphore = new Semaphore(1);
+
   // (프로그래스 value)
   // 스레드 1이 담당
   progress1Value: number = 0;
@@ -38,14 +52,6 @@ class Business extends PageBusinessBasic {
   // 스레드 1, 2 모두 접근 (뮤텍스 처리 필요)
   sharedCounter: number = 0;
   sharedCounterSemaphore = new Semaphore(1);
-
-  // (작업 상태 및 버튼 이름)
-  // 상태 0 = 초기화, 버튼 이름 : 작업 시작
-  // 상태 1 = 진행 중, 버튼 이름 : 일시 중지
-  // 상태 2 = 일시 중지, 버튼 이름 : 다시 시작
-  // 상태 3 = 완료, 버튼 이름 : 초기화
-  workState = 0;
-  workButtonName = "작업 시작";
 
   // (스레드 병합 객체)
   threadMergerOnComplete = new ThreadMerger(2, () => {
@@ -107,15 +113,26 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  onClickWorkButton = () => {
+  onClickWorkButton = async () => {
     // todo
     switch (this.workState) {
       case 0: {
         // 초기화 -> 진행중
-        // todo 작업 시작
+
+        // 스레드가 하나라도 동작중이라면 return
+        await this.thread1WorkSemaphore.acquire();
+        await this.thread2WorkSemaphore.acquire();
+        if (this.thread1Work || this.thread2Work) {
+          this.thread2WorkSemaphore.release();
+          this.thread1WorkSemaphore.release();
+          return;
+        }
+        this.thread2WorkSemaphore.release();
+        this.thread1WorkSemaphore.release();
+
+        // 작업 시작
         this.work1();
         this.work2();
-
 
         // 상태 변경 및 화면 변경
         this.workState = 1;
@@ -127,37 +144,37 @@ class Business extends PageBusinessBasic {
         // 진행 중 -> 일시 중지
         // todo 작업 일시 중지 (일시중지 완료 될 때까지 대기)
 
-
-        // 상태 변경 및 화면 변경
-        this.workState = 2;
-        this.workButtonName = "다시 시작";
-        this.reRender();
         break;
       }
       case 2: {
         // 일시 중지 -> 진행중
-        // todo 작업 다시 진행
-        this.work1();
-        this.work2();
+        // todo
 
-
-        // 상태 변경 및 화면 변경
-        this.workState = 1;
-        this.workButtonName = "일시 중지";
-        this.reRender();
         break;
       }
       case 3: {
         // 완료 -> 초기화
+        // 스레드가 하나라도 동작중이라면 return
+        await this.thread1WorkSemaphore.acquire();
+        await this.thread2WorkSemaphore.acquire();
+        if (this.thread1Work || this.thread2Work) {
+          this.thread2WorkSemaphore.release();
+          this.thread1WorkSemaphore.release();
+          return;
+        }
+        this.thread2WorkSemaphore.release();
+        this.thread1WorkSemaphore.release();
 
-        // 상태 변경 및 화면 변경
-        this.threadMergerOnComplete.rewind();
+        // 초기화 작업
+        this.workState = 0;
+        this.workButtonName = "작업 시작";
         this.progress1Value = 0;
         this.progress2Value = 0;
         this.sharedCounter = 0;
-        this.workState = 0;
-        this.workButtonName = "작업 시작";
         this.reRender();
+
+        this.threadMergerOnComplete.rewind();
+
         break;
       }
     }
@@ -169,44 +186,74 @@ class Business extends PageBusinessBasic {
   // todo 각 비동기 작업 완료시 합류 스레드 만들어서 완료 처리하기, 일시정지 처리 하기
   // (프로그래스1 작업)
   private work1 = async () => {
+    // 스레드 동작 상태로 변경
+    await this.thread1WorkSemaphore.acquire();
+    this.thread1Work = true;
+    this.thread1WorkSemaphore.release();
+
+    // 스레드 작업
     while (this.progress1Value < 100) {
       // 대기
       await new Promise(resolve => setTimeout(resolve, 50));
+
+      // 값 증가
       this.progress1Value += 1;
 
       // 뮤텍스 처리
       await this.sharedCounterSemaphore.acquire();
-      try {
-        this.sharedCounter += 1;
-      } finally {
-        this.sharedCounterSemaphore.release();
-      }
+      // 값 증가
+      this.sharedCounter += 1;
+      this.sharedCounterSemaphore.release();
+
       this.reRender();
     }
+    // 루프 탈출
+
     if (this.progress1Value == 100) {
+      // 작업 완료 -> 스레드 병합
       this.threadMergerOnComplete.mergeThread();
     }
+
+    // 스레드 정지 상태로 변경
+    await this.thread1WorkSemaphore.acquire();
+    this.thread1Work = false;
+    this.thread1WorkSemaphore.release();
   };
 
   // (프로그래스2 작업)
   private work2 = async () => {
+    // 스레드 동작 상태로 변경
+    await this.thread2WorkSemaphore.acquire();
+    this.thread2Work = true;
+    this.thread2WorkSemaphore.release();
+
+    // 스레드 작업
     while (this.progress2Value < 100) {
       // 대기
       await new Promise(resolve => setTimeout(resolve, 20));
+
+      // 값 증가
       this.progress2Value += 1;
 
       // 뮤텍스 처리
       await this.sharedCounterSemaphore.acquire();
-      try {
-        this.sharedCounter += 1;
-      } finally {
-        this.sharedCounterSemaphore.release();
-      }
+      // 값 증가
+      this.sharedCounter += 1;
+      this.sharedCounterSemaphore.release();
+
       this.reRender();
     }
+    // 루프 탈출
+
     if (this.progress2Value == 100) {
+      // 작업 완료 -> 스레드 병합
       this.threadMergerOnComplete.mergeThread();
     }
+
+    // 스레드 정지 상태로 변경
+    await this.thread2WorkSemaphore.acquire();
+    this.thread2Work = false;
+    this.thread2WorkSemaphore.release();
   };
 }
 
