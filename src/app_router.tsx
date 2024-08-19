@@ -1,6 +1,7 @@
 import { Route, Routes, NavigateFunction, useNavigate } from "react-router-dom";
 
 import PageTemplate from './a_template/page_template/view';
+import PageErrorNotExists from './pages/page_errorNotExists/view';
 import PageHome from './pages/page_home/view';
 import PageTemplateBasicFunctionSampleList from './pages/page_templateBasicFunctionSampleList/view';
 import PageStateAndLifecycleTest from './pages/page_stateAndLifecycleTest/view';
@@ -21,7 +22,7 @@ function AppRouter(): JSX.Element {
   navigate = useNavigate();
   return (
     <Routes location={window.location} key={window.location.pathname}>
-      <Route path="/*" element={<h1>존재하지 않는 페이지입니다.</h1>} />
+      <Route path="/*" element={<PageErrorNotExists />} />
 
       <Route path="/" element={<PageHome />} />
 

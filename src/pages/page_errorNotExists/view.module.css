@@ -1,0 +1,39 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#MainContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#GoToHomeButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#GoToHomeButton:hover {
+    background-color: #2195f3e3;
+}
