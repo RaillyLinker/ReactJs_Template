@@ -2,6 +2,7 @@ import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 
@@ -25,6 +26,14 @@ class Business extends PageBusinessBasic {
 
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "토스트 메세지 샘플");
+
+  // (토스트 컨테이너 설정)
+  // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
+  toastNewestOnTop = false;
+  // 토스트 내용을 우측정렬
+  toastRightToLeftLayout = false;
+  // 포커스 해제시 멈춤
+  toastPauseOnFocusLoss = true;
 
 
   //----------------------------------------------------------------------------
@@ -80,6 +89,85 @@ class Business extends PageBusinessBasic {
   // (토스트 메세지 생성)
   onClickToastButton = () => {
     // todo
+    toast('Default-Light', {
+      // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+      position: "top-center",
+      // 자동 닫힘 시간(밀리초)
+      autoClose: 5000,
+      // 닫힘 시간 프로그래스바 숨기기
+      hideProgressBar: false,
+      // 바로 닫기 버튼 나타내기
+      closeOnClick: true,
+      // 호버링시 진행 멈추기
+      pauseOnHover: true,
+      // 드래그로 닫기
+      draggable: true,
+      // 테마 (light, dark, colored)
+      theme: "light",
+      // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+      transition: Bounce,
+      progress: undefined
+    });
+
+    toast.info('Info', {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+
+    toast.success('Success', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+
+    toast('Default-Dark', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+
+    toast.warning('Warning', {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+
+    toast.error('Error', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
   }
 
 

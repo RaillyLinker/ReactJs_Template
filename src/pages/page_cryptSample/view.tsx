@@ -5,6 +5,8 @@ import Business from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
 import { PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrame from '../../global_components/gco_dialog_frame/view';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
 
@@ -91,7 +93,14 @@ const View: React.FC = () => {
     return (
       <div id={styles.MainView}>
         <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
-          Entering Error
+          <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+            <p>Entering Error</p>
+            <ToastContainer
+              newestOnTop={mainBusiness.toastNewestOnTop}
+              rtl={mainBusiness.toastRightToLeftLayout}
+              pauseOnFocusLoss={mainBusiness.toastPauseOnFocusLoss}
+            />
+          </GcoOuterFrame>
         </GcoDialogFrame>
       </div>
     );
@@ -154,6 +163,11 @@ const View: React.FC = () => {
 
             <div id={styles.Base64DecryptedResult} >결과 : <span>{mainBusiness.base64DecryptResult}</span></div>
           </div>
+          <ToastContainer
+            newestOnTop={mainBusiness.toastNewestOnTop}
+            rtl={mainBusiness.toastRightToLeftLayout}
+            pauseOnFocusLoss={mainBusiness.toastPauseOnFocusLoss}
+          />
         </GcoOuterFrame>
       </GcoDialogFrame>
     </div>

@@ -2,6 +2,7 @@ import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
 import { sampleNumber } from '../../global_data/gd_variable_data';
@@ -26,6 +27,14 @@ class Business extends PageBusinessBasic {
 
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "전역 변수 상태 확인 테스트");
+
+  // (토스트 컨테이너 설정)
+  // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
+  toastNewestOnTop = false;
+  // 토스트 내용을 우측정렬
+  toastRightToLeftLayout = false;
+  // 포커스 해제시 멈춤
+  toastPauseOnFocusLoss = true;
 
 
   //----------------------------------------------------------------------------
