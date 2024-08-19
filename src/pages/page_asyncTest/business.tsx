@@ -48,7 +48,7 @@ class Business extends PageBusinessBasic {
   workButtonName = "작업 시작";
 
   // (스레드 병합 객체)
-  threadMerger = new ThreadMerger(2, () => {
+  threadMergerOnComplete = new ThreadMerger(2, () => {
     // 상태 변경 및 화면 변경
     this.workState = 3;
     this.workButtonName = "초기화";
@@ -151,7 +151,7 @@ class Business extends PageBusinessBasic {
         // 완료 -> 초기화
 
         // 상태 변경 및 화면 변경
-        this.threadMerger.rewind();
+        this.threadMergerOnComplete.rewind();
         this.progress1Value = 0;
         this.progress2Value = 0;
         this.sharedCounter = 0;
@@ -184,7 +184,7 @@ class Business extends PageBusinessBasic {
       this.reRender();
     }
     if (this.progress1Value == 100) {
-      this.threadMerger.mergeThread();
+      this.threadMergerOnComplete.mergeThread();
     }
   };
 
@@ -205,7 +205,7 @@ class Business extends PageBusinessBasic {
       this.reRender();
     }
     if (this.progress2Value == 100) {
-      this.threadMerger.mergeThread();
+      this.threadMergerOnComplete.mergeThread();
     }
   };
 }

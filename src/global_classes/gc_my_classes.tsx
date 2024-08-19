@@ -26,6 +26,11 @@ export class ThreadMerger {
     // (스레드 병합 개수 +1)
     mergeThread = async () => {
         this.mergedThreadCountSemaphore.acquire()
+        // 오버플로우 방지
+        if (this.mergedThreadCount < 0) {
+            this.mergedThreadCountSemaphore.release();
+            return;
+        }
         try {
             // 스레드 병합 카운트 +1
             ++this.mergedThreadCount
