@@ -183,7 +183,9 @@ class Business extends PageBusinessBasic {
       }
       this.reRender();
     }
-    this.threadMerger.mergeThread();
+    if (this.progress1Value == 100) {
+      this.threadMerger.mergeThread();
+    }
   };
 
   // (프로그래스2 작업)
@@ -202,7 +204,9 @@ class Business extends PageBusinessBasic {
       }
       this.reRender();
     }
-    this.threadMerger.mergeThread();
+    if (this.progress2Value == 100) {
+      this.threadMerger.mergeThread();
+    }
   };
 }
 
