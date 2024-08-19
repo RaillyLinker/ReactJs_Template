@@ -28,6 +28,9 @@ class Business extends PageBusinessBasic {
   // (페이지 외곽 프레임 비즈니스)
   gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비동기 테스트");
 
+  // (컴포넌트 언마운트시 작업 중지 설정)
+  unMountPause = true;
+
   // (작업 상태 및 버튼 이름)
   // 상태 0 = 초기화, 버튼 이름 : 작업 시작
   // 상태 1 = 진행 중, 버튼 이름 : 일시 중지
@@ -41,6 +44,10 @@ class Business extends PageBusinessBasic {
   thread1WorkSemaphore = new Semaphore(1);
   thread2Work: boolean = false;
   thread2WorkSemaphore = new Semaphore(1);
+
+  // (작업 일시중지)
+  workPause = false;
+  workPauseSemaphore = new Semaphore(1);
 
   // (프로그래스 value)
   // 스레드 1이 담당
@@ -107,7 +114,29 @@ class Business extends PageBusinessBasic {
   // 이 메서드 내에서 타이머 제거, 네트워크 요청 취소, componentDidMount() 내에서 생성된 구독 해제 등 필요한 모든 정리 작업을 수행하세요.
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
-  onComponentWillUnmount = () => {
+  onComponentWillUnmount = async () => {
+    if (this.unMountPause) {
+      // 스레드가 모두 동작중이 아니라면 return
+      await this.thread1WorkSemaphore.acquire();
+      await this.thread2WorkSemaphore.acquire();
+      if (!this.thread1Work && !this.thread2Work) {
+        this.thread2WorkSemaphore.release();
+        this.thread1WorkSemaphore.release();
+        return;
+      }
+      this.thread2WorkSemaphore.release();
+      this.thread1WorkSemaphore.release();
+
+      // 작업 일시 중지
+      await this.workPauseSemaphore.acquire();
+      this.workPause = true;
+      this.workPauseSemaphore.release();
+
+      // 상태 변경 및 화면 변경
+      this.workState = 2;
+      this.workButtonName = "다시 시작";
+      this.reRender();
+    }
   }
 
 
@@ -142,13 +171,53 @@ class Business extends PageBusinessBasic {
       }
       case 1: {
         // 일시 중지 버튼 클릭(진행 중 -> 일시 중지)
-        // todo 작업 일시 중지 (일시중지 완료 될 때까지 대기)
+        // 스레드가 모두 동작중이 아니라면 return
+        await this.thread1WorkSemaphore.acquire();
+        await this.thread2WorkSemaphore.acquire();
+        if (!this.thread1Work && !this.thread2Work) {
+          this.thread2WorkSemaphore.release();
+          this.thread1WorkSemaphore.release();
+          return;
+        }
+        this.thread2WorkSemaphore.release();
+        this.thread1WorkSemaphore.release();
+
+        // 작업 일시 중지
+        await this.workPauseSemaphore.acquire();
+        this.workPause = true;
+        this.workPauseSemaphore.release();
+
+        // 상태 변경 및 화면 변경
+        this.workState = 2;
+        this.workButtonName = "다시 시작";
+        this.reRender();
 
         break;
       }
       case 2: {
         // 다시 시작 버튼 클릭(일시 중지 -> 진행중)
-        // todo
+        // 스레드가 하나라도 동작중이라면 return
+        await this.thread1WorkSemaphore.acquire();
+        await this.thread2WorkSemaphore.acquire();
+        if (this.thread1Work || this.thread2Work) {
+          this.thread2WorkSemaphore.release();
+          this.thread1WorkSemaphore.release();
+          return;
+        }
+        this.thread2WorkSemaphore.release();
+        this.thread1WorkSemaphore.release();
+
+        // 작업 일시 중지 해제
+        this.workPause = false;
+
+        // 작업 시작
+        this.work1();
+        this.work2();
+
+        // 상태 변경 및 화면 변경
+        this.workState = 1;
+        this.workButtonName = "일시 중지";
+        this.reRender();
 
         break;
       }
@@ -166,6 +235,7 @@ class Business extends PageBusinessBasic {
         this.thread1WorkSemaphore.release();
 
         // 초기화 작업
+        this.workPause = false;
         this.workState = 0;
         this.workButtonName = "작업 시작";
         this.progress1Value = 0;
@@ -186,6 +256,10 @@ class Business extends PageBusinessBasic {
   // todo 각 비동기 작업 완료시 합류 스레드 만들어서 완료 처리하기, 일시정지 처리 하기
   // (프로그래스1 작업)
   private work1 = async () => {
+    if (this.progress1Value == 100) {
+      return;
+    }
+
     // 스레드 동작 상태로 변경
     await this.thread1WorkSemaphore.acquire();
     this.thread1Work = true;
@@ -193,6 +267,13 @@ class Business extends PageBusinessBasic {
 
     // 스레드 작업
     while (this.progress1Value < 100) {
+      await this.workPauseSemaphore.acquire();
+      if (this.workPause) {
+        this.workPauseSemaphore.release();
+        break;
+      }
+      this.workPauseSemaphore.release();
+
       // 대기
       await new Promise(resolve => setTimeout(resolve, 50));
 
@@ -222,6 +303,10 @@ class Business extends PageBusinessBasic {
 
   // (프로그래스2 작업)
   private work2 = async () => {
+    if (this.progress2Value == 100) {
+      return;
+    }
+
     // 스레드 동작 상태로 변경
     await this.thread2WorkSemaphore.acquire();
     this.thread2Work = true;
@@ -229,6 +314,13 @@ class Business extends PageBusinessBasic {
 
     // 스레드 작업
     while (this.progress2Value < 100) {
+      await this.workPauseSemaphore.acquire();
+      if (this.workPause) {
+        this.workPauseSemaphore.release();
+        break;
+      }
+      this.workPauseSemaphore.release();
+
       // 대기
       await new Promise(resolve => setTimeout(resolve, 20));
 
