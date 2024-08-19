@@ -117,7 +117,7 @@ class Business extends PageBusinessBasic {
     // todo
     switch (this.workState) {
       case 0: {
-        // 초기화 -> 진행중
+        // 작업 시작 버튼 클릭(초기화 -> 진행중)
 
         // 스레드가 하나라도 동작중이라면 return
         await this.thread1WorkSemaphore.acquire();
@@ -141,19 +141,19 @@ class Business extends PageBusinessBasic {
         break;
       }
       case 1: {
-        // 진행 중 -> 일시 중지
+        // 일시 중지 버튼 클릭(진행 중 -> 일시 중지)
         // todo 작업 일시 중지 (일시중지 완료 될 때까지 대기)
 
         break;
       }
       case 2: {
-        // 일시 중지 -> 진행중
+        // 다시 시작 버튼 클릭(일시 중지 -> 진행중)
         // todo
 
         break;
       }
       case 3: {
-        // 완료 -> 초기화
+        // 초기화 버튼 클릭(완료 -> 초기화)
         // 스레드가 하나라도 동작중이라면 return
         await this.thread1WorkSemaphore.acquire();
         await this.thread2WorkSemaphore.acquire();
