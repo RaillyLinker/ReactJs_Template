@@ -14,6 +14,7 @@ import PageGlobalVariableStateTest from './pages/page_globalVariableStateTest/vi
 import PageCryptSample from './pages/page_cryptSample/view';
 import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/view';
 import PageAsyncTest from './pages/page_asyncTest/view';
+import PageToastSample from './pages/page_toastSample/view';
 
 
 // [라우터 클래스]
@@ -33,6 +34,7 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/use-ref-and-use-state-test" element={<PageUseRefAndUseStateTest />} />
       <Route path="/template-basic-function-sample-list/global-variable-state-test" element={<PageGlobalVariableStateTest />} />
       <Route path="/template-basic-function-sample-list/async-test" element={<PageAsyncTest />} />
+      <Route path="/template-basic-function-sample-list/toast-sample" element={<PageToastSample />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
