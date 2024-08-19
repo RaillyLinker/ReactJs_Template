@@ -1,0 +1,21 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+  height: 15rem;
+  width: 15rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#LoadingImage {
+  height: 4.5rem;
+  width: 4.5rem;
+}

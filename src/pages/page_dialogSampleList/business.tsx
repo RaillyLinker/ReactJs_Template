@@ -9,6 +9,8 @@ import DialogTemplate from '../../a_template/dialog_template/view';
 import DialogTemplateBusiness from '../../a_template/dialog_template/business';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -81,6 +83,16 @@ class Business extends PageBusinessBasic {
               progress: undefined
             });
           }));
+        }
+      },
+      {
+        uid: 2,
+        itemTitle: "로딩 스피너 다이얼로그",
+        itemDescription: "로딩 스피너 다이얼로그를 호출하고 2초 후 종료합니다.",
+        onItemClicked: async (): Promise<void> => {
+          this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          this.gcoDialogFrameBusiness.closeDialog();
         }
       }
     ];
