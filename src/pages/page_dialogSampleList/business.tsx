@@ -60,7 +60,27 @@ class Business extends PageBusinessBasic {
         itemTitle: "확인 다이얼로그",
         itemDescription: "버튼이 하나인 확인 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
-          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this.gcoDialogFrameBusiness, this, () => { console.log("confirm") }));
+          this.gcoDialogFrameBusiness.showDialog(false, DialogInfo, new DialogInfoBusiness(this.gcoDialogFrameBusiness, this, () => {
+            toast.info("Confirmed!", {
+              // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+              position: "bottom-center",
+              // 자동 닫힘 시간(밀리초)
+              autoClose: 5000,
+              // 닫힘 시간 프로그래스바 숨기기
+              hideProgressBar: false,
+              // 바로 닫기 버튼 나타내기
+              closeOnClick: true,
+              // 호버링시 진행 멈추기
+              pauseOnHover: true,
+              // 드래그로 닫기
+              draggable: true,
+              // 테마 (light, dark, colored)
+              theme: "light",
+              // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+              transition: Bounce,
+              progress: undefined
+            });
+          }));
         }
       }
     ];
