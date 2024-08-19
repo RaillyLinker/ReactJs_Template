@@ -1,0 +1,24 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+  cursor: pointer;
+  height: 15rem;
+  width: 15rem;
+  background-color: white;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+#MainView p {
+  font-size: 1.2rem;
+  color: black;
+}

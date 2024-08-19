@@ -11,6 +11,8 @@ import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
 import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
+import DialogStateTest from '../../dialog_components/dialog_stateTest/view';
+import DialogStateTestBusiness from '../../dialog_components/dialog_stateTest/business';
 
 
 // [비즈니스 클래스]
@@ -93,6 +95,14 @@ class Business extends PageBusinessBasic {
           this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
           await new Promise(resolve => setTimeout(resolve, 2000));
           this.gcoDialogFrameBusiness.closeDialog();
+        }
+      },
+      {
+        uid: 3,
+        itemTitle: "다이얼로그 상태 및 생명주기 테스트",
+        itemDescription: "다이얼로그 상태 및 생명주기를 테스트합니다.",
+        onItemClicked: (): void => {
+          this.gcoDialogFrameBusiness.showDialog(true, DialogStateTest, new DialogStateTestBusiness(this.gcoDialogFrameBusiness, this));
         }
       }
     ];
