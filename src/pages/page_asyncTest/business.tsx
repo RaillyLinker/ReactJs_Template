@@ -4,6 +4,7 @@ import { PathParams, QueryParams } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import { Semaphore } from 'async-mutex';
 
 
 // [비즈니스 클래스]
@@ -35,6 +36,7 @@ class Business extends PageBusinessBasic {
   // (공유 카운터)
   // 스레드 1, 2 모두 접근 (뮤텍스 처리 필요)
   sharedCounter: number = 0;
+  sharedCounterSemaphore = new Semaphore(1);
 
   // (작업 상태 및 버튼 이름)
   // 상태 0 = 초기화, 버튼 이름 : 작업 시작
@@ -43,6 +45,7 @@ class Business extends PageBusinessBasic {
   // 상태 3 = 완료, 버튼 이름 : 초기화
   workState = 0;
   workButtonName = "작업 시작";
+
 
 
   //----------------------------------------------------------------------------
@@ -161,8 +164,13 @@ class Business extends PageBusinessBasic {
       await new Promise(resolve => setTimeout(resolve, 50));
       this.progress1Value += 1;
 
-      // todo 뮤텍스 처리
-      this.sharedCounter += 1;
+      // 뮤텍스 처리
+      await this.sharedCounterSemaphore.acquire();
+      try {
+        this.sharedCounter += 1;
+      } finally {
+        this.sharedCounterSemaphore.release();
+      }
       this.reRender();
     }
   };
@@ -174,8 +182,13 @@ class Business extends PageBusinessBasic {
       await new Promise(resolve => setTimeout(resolve, 20));
       this.progress2Value += 1;
 
-      // todo 뮤텍스 처리
-      this.sharedCounter += 1;
+      // 뮤텍스 처리
+      await this.sharedCounterSemaphore.acquire();
+      try {
+        this.sharedCounter += 1;
+      } finally {
+        this.sharedCounterSemaphore.release();
+      }
       this.reRender();
     }
   };
