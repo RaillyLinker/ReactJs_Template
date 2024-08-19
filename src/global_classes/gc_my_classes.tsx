@@ -15,13 +15,13 @@ export class ThreadMerger {
     }
 
     // (병합할 스레드 총개수)
-    threadTotalCount: number;
+    private threadTotalCount: number;
     // (스레드 병합이 모두 끝나면 실행할 콜백 함수)
-    onComplete: () => void;
+    private onComplete: () => void;
 
     // (현재 병합된 스레드 개수 및 세마포어)
-    mergedThreadCount: number = 0;
-    mergedThreadCountSemaphore = new Semaphore(1);
+    private mergedThreadCount: number = 0;
+    private mergedThreadCountSemaphore = new Semaphore(1);
 
     // (스레드 병합 개수 +1)
     mergeThread = async () => {
