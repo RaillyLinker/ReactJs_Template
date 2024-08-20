@@ -45,7 +45,15 @@ header {
 #GoToHomeLogo {
   width: 2.2rem;
   height: 2.2rem;
-  padding-left: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+#GoToHomeLogo:hover {
+  background-color: rgba(0, 0, 255, 0.2);
+  filter: brightness(0.8);
 }
 
 #HeaderTitle {

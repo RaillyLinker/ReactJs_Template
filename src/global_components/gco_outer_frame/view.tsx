@@ -56,7 +56,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
     <div id={styles.MainView}>
       <header>
         <h1 id={styles.HeaderTitleContainer}>
-          <img id={styles.GoToHomeLogo} src="/logo192.png" alt="Logo" />
+          <img id={styles.GoToHomeLogo} src="/logo192.png" alt="Logo" onClick={mainBusiness.goToHome} />
           <span id={styles.HeaderTitle}>{mainBusiness.headerTitle}</span>
         </h1>
       </header>
