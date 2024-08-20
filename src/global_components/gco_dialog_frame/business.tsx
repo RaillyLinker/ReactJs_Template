@@ -72,6 +72,9 @@ class Business extends ComponentBusinessBasic {
   closeDialog = () => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
       this.dialogRef.current.close();
+      this.dialogView = () => { return (<></>) };
+      this.dialogBusiness = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
+      this.reRender();
       this.dialogOn = false;
     }
   }
