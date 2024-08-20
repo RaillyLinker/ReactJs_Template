@@ -128,7 +128,21 @@ const View: React.FC = () => {
               <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H720', '720p')}>720p</button>
 
               <h2>비디오 <span>{`(${mainBusiness.videoResolutionText})`}</span></h2>
-              <video id={styles.Video} ref={mainBusiness.videoRef} preload="auto" controls onTimeUpdate={mainBusiness.videoTimeUpdateHandler} onPause={mainBusiness.videoPauseHandler} onPlay={mainBusiness.videoPlayHandler}>
+              <video
+                id={styles.Video}
+                ref={mainBusiness.videoRef}
+                preload="auto"
+                controls
+                onTimeUpdate={mainBusiness.videoTimeUpdateHandler}
+                onPause={mainBusiness.videoPauseHandler}
+                onPlay={mainBusiness.videoPlayHandler}
+                // 다운로드 방지 방법
+                // 1. 서버에서 클라이언트를 통하지 않은 직접 다운로드를 차단합니다.
+                // 2. 아래 설정으로 다운로드 버튼 없애기
+                controlsList="nodownload"
+                // 3. 아래 설정으로 우클릭 방지
+                onContextMenu={(e) => e.preventDefault()}
+              >
                 <source
                   id="movie_src"
                   type="video/mp4"
