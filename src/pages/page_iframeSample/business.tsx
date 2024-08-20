@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "iframe 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,48 +34,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "SharedPreferences 샘플",
-        itemDescription: "SharedPreferences 사용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/shared-preferences-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "새 탭 열기 테스트",
-        itemDescription: "코드상으로 새 탭을 여는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/open-new-tap-test");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "iframe 샘플",
-        itemDescription: "iframe 표시 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/iframe-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------
