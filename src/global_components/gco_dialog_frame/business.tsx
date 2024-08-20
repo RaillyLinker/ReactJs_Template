@@ -115,40 +115,42 @@ class Business extends ComponentBusinessBasic {
   // (다이얼로그 호출, 종료 애니메이션 설정)
   /*
     (CSS 예시)
-    .open-animation {
-      animation: openDialog 0.3s forwards;
-    }
-    @keyframes openDialog {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .dialogOpenAnim_fadeIn {
+        animation: DialogOpenAnim_FadeIn 0.3s forwards;
     }
 
-    .close-animation {
-      animation: closeDialog 0.3s forwards;
-    }
-    @keyframes closeDialog {
-      from {
-        opacity: 1;
-        transform: scale(1);
-      }
+    @keyframes DialogOpenAnim_FadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
 
-      to {
-        opacity: 0;
-        transform: scale(0.9);
-      }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .dialogCloseAnim_fadeOut {
+        animation: DialogCloseAnim_fadeOut 0.3s forwards;
+    }
+
+    @keyframes DialogCloseAnim_fadeOut {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        to {
+            opacity: 0;
+            transform: scale(0.9);
+        }
     }
 
     (코드 예시)
     setDialogAnimation(
-      styles['open-animation'],
-      styles['close-animation']
+      styles['dialogOpenAnim_fadeIn'],
+      styles['dialogCloseAnim_fadeOut']
     )
   */
   setDialogAnimation = (

@@ -15,6 +15,7 @@ import PageCryptSample from './pages/page_cryptSample/view';
 import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/view';
 import PageAsyncTest from './pages/page_asyncTest/view';
 import PageToastSample from './pages/page_toastSample/view';
+import PageDialogAnimationList from './pages/page_dialogAnimationList/view';
 
 
 // [라우터 클래스]
@@ -38,6 +39,7 @@ function AppRouter(): JSX.Element {
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
+      <Route path="/dialog-example-list/dialog-animation-list" element={<PageDialogAnimationList />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
