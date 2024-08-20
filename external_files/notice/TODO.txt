@@ -7,8 +7,8 @@
 - 파일 선택
 
 (2단계)
-- 비디오 스트리밍
-- 오디오 스트리밍
+- 비디오 스트리밍 (page_videoStreamingSample)
+- 오디오 스트리밍 (page_audioStreamingSample)
 - SSE
 - Socket
 - 이미지 로딩 샘플

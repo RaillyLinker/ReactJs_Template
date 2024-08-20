@@ -21,6 +21,9 @@ import PageIframeSample from './pages/page_iframeSample/view';
 import PageNetworkSampleList from './pages/page_networkSampleList/view';
 import PageBasicNetworkRequestSampleList from './pages/page_basicNetworkRequestSampleList/view';
 import PageContextMenuSample from './pages/page_contextMenuSample/view';
+import PageStreamingSampleList from './pages/page_streamingSampleList/view';
+import PageVideoStreamingSample from './pages/page_videoStreamingSample/view';
+import PageAudioStreamingSample from './pages/page_audioStreamingSample/view';
 
 
 // [라우터 클래스]
@@ -48,6 +51,9 @@ function AppRouter(): JSX.Element {
 
       <Route path="/network-sample-list" element={<PageNetworkSampleList />} />
       <Route path="/network-sample-list/basic-network-request-sample" element={<PageBasicNetworkRequestSampleList />} />
+      <Route path="/network-sample-list/streaming-sample" element={<PageStreamingSampleList />} />
+      <Route path="/network-sample-list/streaming-sample/video-streaming-sample" element={<PageVideoStreamingSample />} />
+      <Route path="/network-sample-list/streaming-sample/audio-streaming-sample" element={<PageAudioStreamingSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
