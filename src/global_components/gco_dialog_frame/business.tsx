@@ -2,6 +2,8 @@ import { DialogProps, DialogBusinessBasic } from '../../global_classes/gc_templa
 import React from 'react';
 import { ComponentBusinessBasic, BusinessBasic, VoidDialogBusinessBasic } from '../../global_classes/gc_template_classes';
 
+import styles from './view.module.css';
+
 
 // [비즈니스 클래스]
 class Business extends ComponentBusinessBasic {
@@ -19,6 +21,9 @@ class Business extends ComponentBusinessBasic {
   dialogView: React.FC<DialogProps<any>> = () => { return (<></>) };
   // (다이얼로그 뷰 컴포넌트 비즈니스)
   dialogBusiness: DialogBusinessBasic = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
+
+  openAnimationClassName: string | null = null;
+  closeAnimationClassName: string | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -56,14 +61,32 @@ class Business extends ComponentBusinessBasic {
   // [public 함수]
   // (다이얼로그 호출 함수)
   // 다이얼로그 호출시엔 반드시 이 함수를 사용하세요.
-  showDialog = (dialogBarrierDismissible: boolean, dialogView: React.FC<DialogProps<any>>, dialogBusiness: DialogBusinessBasic) => {
+  showDialog = (
+    dialogBarrierDismissible: boolean,
+    dialogView: React.FC<DialogProps<any>>,
+    dialogBusiness: DialogBusinessBasic
+  ) => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
+      const dialog = this.dialogRef.current;
+
       this.dialogBarrierDismissible = dialogBarrierDismissible;
       this.dialogView = dialogView;
       this.dialogBusiness = dialogBusiness;
       this.reRender();
       this.dialogRef.current.showModal();
-      this.dialogOn = true;
+
+      if (this.openAnimationClassName === null) {
+        this.dialogOn = true;
+      } else {
+        dialog.classList.add(this.openAnimationClassName);
+
+        dialog.addEventListener('animationend', () => {
+          if (this.openAnimationClassName !== null) {
+            dialog.classList.remove(this.openAnimationClassName);
+          }
+          this.dialogOn = true;
+        }, { once: true });
+      }
     }
   }
 
@@ -71,11 +94,97 @@ class Business extends ComponentBusinessBasic {
   // 다이얼로그 종료시엔 반드시 이 함수를 사용하세요.
   closeDialog = () => {
     if (this.dialogRef !== null && this.dialogRef.current !== null) {
-      this.dialogRef.current.close();
-      this.dialogView = () => { return (<></>) };
-      this.dialogBusiness = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
-      this.reRender();
-      this.dialogOn = false;
+      const dialog = this.dialogRef.current;
+
+      if (this.closeAnimationClassName === null) {
+        dialog.close();
+        this.dialogOn = false;
+      } else {
+        dialog.classList.add(this.closeAnimationClassName);
+        dialog.addEventListener('animationend', () => {
+          dialog.close();
+          if (this.closeAnimationClassName !== null) {
+            dialog.classList.remove(this.closeAnimationClassName);
+          }
+          this.dialogOn = false;
+        }, { once: true });
+      }
+    }
+  }
+
+  // (다이얼로그 호출, 종료 애니메이션 설정)
+  /*
+    (CSS 예시)
+    .open-animation {
+      animation: openDialog 0.3s forwards;
+    }
+    @keyframes openDialog {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .close-animation {
+      animation: closeDialog 0.3s forwards;
+    }
+    @keyframes closeDialog {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      to {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+    }
+
+    (코드 예시)
+    setDialogAnimation(
+      styles['open-animation'],
+      styles['close-animation']
+    )
+  */
+  setDialogAnimation = (
+    openAnimationClassName: string | null | undefined,
+    closeAnimationClassName: string | null | undefined
+  ) => {
+    if (openAnimationClassName === undefined) {
+      this.openAnimationClassName = null;
+    } else {
+      this.openAnimationClassName = openAnimationClassName;
+    }
+
+    if (closeAnimationClassName === undefined) {
+      this.closeAnimationClassName = null;
+    } else {
+      this.closeAnimationClassName = closeAnimationClassName;
+    }
+  }
+
+  setDialogOpenAnimation = (
+    openAnimationClassName: string | null | undefined
+  ) => {
+    if (openAnimationClassName === undefined) {
+      this.openAnimationClassName = null;
+    } else {
+      this.openAnimationClassName = openAnimationClassName;
+    }
+  }
+
+  setDialogCloseAnimation = (
+    closeAnimationClassName: string | null | undefined
+  ) => {
+    if (closeAnimationClassName === undefined) {
+      this.closeAnimationClassName = null;
+    } else {
+      this.closeAnimationClassName = closeAnimationClassName;
     }
   }
 
