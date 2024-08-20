@@ -19,6 +19,7 @@ import PageDialogAnimationList from './pages/page_dialogAnimationList/view';
 import PageOpenNewTapTest from './pages/page_openNewTapTest/view';
 import PageIframeSample from './pages/page_iframeSample/view';
 import PageNetworkSampleList from './pages/page_networkSampleList/view';
+import PageBasicNetworkRequestSampleList from './pages/page_basicNetworkRequestSampleList/view';
 
 
 // [라우터 클래스]
@@ -45,6 +46,7 @@ function AppRouter(): JSX.Element {
       <Route path="/dialog-example-list/dialog-animation-list" element={<PageDialogAnimationList />} />
 
       <Route path="/network-sample-list" element={<PageNetworkSampleList />} />
+      <Route path="/network-sample-list/basic-network-request-sample" element={<PageBasicNetworkRequestSampleList />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
