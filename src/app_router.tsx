@@ -16,6 +16,7 @@ import PageSharedPreferencesSample from './pages/page_sharedPreferencesSample/vi
 import PageAsyncTest from './pages/page_asyncTest/view';
 import PageToastSample from './pages/page_toastSample/view';
 import PageDialogAnimationList from './pages/page_dialogAnimationList/view';
+import PageOpenNewTapTest from './pages/page_openNewTapTest/view';
 
 
 // [라우터 클래스]
@@ -44,6 +45,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
       <Route path="/etc-sample-list/shared-preferences-sample" element={<PageSharedPreferencesSample />} />
+      <Route path="/etc-sample-list/open-new-tap-test" element={<PageOpenNewTapTest />} />
     </Routes>
   );
 }

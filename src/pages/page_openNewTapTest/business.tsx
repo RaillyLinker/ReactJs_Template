@@ -5,12 +5,13 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import GcoTestBusiness from '../../global_components/gco_test/business';
 
 
 // [비즈니스 클래스]
 class Business extends PageBusinessBasic {
   // (페이지 파라미터)
-  // null 이라면 잘못된 진입
+  // null 라면 잘못된 진입
   // Path Parameter 로 받은 값
   pathParams: PathParams | null = null;
   // Query Parameter 로 받은 값
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "새 탭 열기 테스트");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,39 +36,8 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "SharedPreferences 샘플",
-        itemDescription: "SharedPreferences 사용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/shared-preferences-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "새 탭 열기 테스트",
-        itemDescription: "코드상으로 새 탭을 여는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/open-new-tap-test");
-        }
-      }
-    ];
+  // (탭 URL)
+  newTapUrl: string = "https://www.google.com";
 
 
   //----------------------------------------------------------------------------
@@ -120,6 +90,15 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (새 탭 열기)
+  openNewTap = () => {
+    window.open(this.newTapUrl, '_blank');
+  }
+
+  // (현재 탭에서 열기)
+  openInThisTap = () => {
+    window.location.href = this.newTapUrl;
+  }
 
 
   //----------------------------------------------------------------------------
