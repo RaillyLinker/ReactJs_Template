@@ -20,6 +20,7 @@ import PageOpenNewTapTest from './pages/page_openNewTapTest/view';
 import PageIframeSample from './pages/page_iframeSample/view';
 import PageNetworkSampleList from './pages/page_networkSampleList/view';
 import PageBasicNetworkRequestSampleList from './pages/page_basicNetworkRequestSampleList/view';
+import PageContextMenuSample from './pages/page_contextMenuSample/view';
 
 
 // [라우터 클래스]
@@ -53,6 +54,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/shared-preferences-sample" element={<PageSharedPreferencesSample />} />
       <Route path="/etc-sample-list/open-new-tap-test" element={<PageOpenNewTapTest />} />
       <Route path="/etc-sample-list/iframe-sample" element={<PageIframeSample />} />
+      <Route path="/etc-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
     </Routes>
   );
 }
