@@ -18,6 +18,7 @@ import PageToastSample from './pages/page_toastSample/view';
 import PageDialogAnimationList from './pages/page_dialogAnimationList/view';
 import PageOpenNewTapTest from './pages/page_openNewTapTest/view';
 import PageIframeSample from './pages/page_iframeSample/view';
+import PageNetworkSampleList from './pages/page_networkSampleList/view';
 
 
 // [라우터 클래스]
@@ -42,6 +43,8 @@ function AppRouter(): JSX.Element {
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
       <Route path="/dialog-example-list/dialog-animation-list" element={<PageDialogAnimationList />} />
+
+      <Route path="/network-sample-list" element={<PageNetworkSampleList />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />

@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "홈");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "네트워크 샘플 리스트");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -45,35 +45,10 @@ class Business extends PageBusinessBasic {
     [
       {
         uid: 0,
-        itemTitle: "템플릿 기본 기능 샘플 리스트",
-        itemDescription: "템플릿의 기본 필수 기능에 대한 샘플 리스트",
+        itemTitle: "기본 네트워크 요청 샘플",
+        itemDescription: "Get, Post, Multipart 등의 기본 네트워크 요청 샘플",
         onItemClicked: (): void => {
-          this.navigate("/template-basic-function-sample-list");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "다이얼로그 예제 리스트",
-        itemDescription: "다이얼로그 샘플 / 애니메이션 예제 리스트",
-        onItemClicked: (): void => {
-          this.navigate("/dialog-example-list");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "네트워크 샘플 리스트",
-        itemDescription: "네트워크 처리 관련 샘플 리스트",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list");
-        }
-      },
-      // todo
-      {
-        uid: 3,
-        itemTitle: "기타 샘플 리스트",
-        itemDescription: "기타 테스트 샘플을 모아둔 리스트",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list");
+          this.navigate("/network-sample-list/basic-network-request-sample");
         }
       }
     ];
