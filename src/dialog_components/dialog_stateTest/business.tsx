@@ -39,6 +39,11 @@ class Business extends DialogBusinessBasic {
     console.log("onComponentWillUnmount");
   }
 
+  // (다이얼로그 외곽을 클릭했을 때)
+  onTouchDialogBackground = (close: boolean) => {
+    console.log("onTouchDialogBackground : " + close);
+  }
+
 
   //----------------------------------------------------------------------------
   // [public 함수]

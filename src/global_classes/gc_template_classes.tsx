@@ -109,6 +109,9 @@ export abstract class DialogBusinessBasic extends BusinessBasic {
   // (다이얼로그 프레임 비즈니스)
   gcoDialogFrameBusiness: GcoDialogFrameBusiness;
 
+  // (다이얼로그 외곽을 클릭했을 때)
+  abstract onTouchDialogBackground: (close: boolean) => void;
+
   // (생성자)
   constructor(gcoDialogFrameBusiness: GcoDialogFrameBusiness, parentComponentBusiness: BusinessBasic) {
     super();
@@ -122,6 +125,7 @@ export abstract class DialogBusinessBasic extends BusinessBasic {
 export class VoidDialogBusinessBasic extends DialogBusinessBasic {
   onComponentDidMount: (firstMount: boolean) => void = () => { };
   onComponentWillUnmount: () => void = () => { };
+  onTouchDialogBackground: (close: boolean) => void = () => { };
   constructor(gcoDialogFrameBusiness: GcoDialogFrameBusiness, parentComponentBusiness: BusinessBasic) {
     super(gcoDialogFrameBusiness, parentComponentBusiness);
   }

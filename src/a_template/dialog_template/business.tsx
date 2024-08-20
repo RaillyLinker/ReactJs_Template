@@ -34,6 +34,10 @@ class Business extends DialogBusinessBasic {
   onComponentWillUnmount = () => {
   }
 
+  // (다이얼로그 외곽을 클릭했을 때)
+  onTouchDialogBackground = (close: boolean) => {
+  }
+
 
   //----------------------------------------------------------------------------
   // [public 함수]

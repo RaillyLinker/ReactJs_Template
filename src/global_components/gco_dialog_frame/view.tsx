@@ -51,7 +51,10 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
               mainBusiness.dialogBarrierDismissible
             ) {
               // 다이얼로그 종료
+              mainBusiness.dialogBusiness.onTouchDialogBackground(true);
               mainBusiness.closeDialog();
+            } else {
+              mainBusiness.dialogBusiness.onTouchDialogBackground(false);
             }
           }
         }

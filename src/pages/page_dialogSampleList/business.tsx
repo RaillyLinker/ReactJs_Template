@@ -121,7 +121,7 @@ class Business extends PageBusinessBasic {
         itemDescription: "버튼이 두개인 선택 다이얼로그를 호출합니다.",
         onItemClicked: (): void => {
           this.gcoDialogFrameBusiness.showDialog(
-            false,
+            true,
             DialogYesOrNo,
             new DialogYesOrNoBusiness(
               this.gcoDialogFrameBusiness,
@@ -131,7 +131,7 @@ class Business extends PageBusinessBasic {
               "긍정",
               "부정",
               () => {
-                toast.info("Positive!", {
+                toast.success("Positive!", {
                   // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
                   position: "bottom-center",
                   // 자동 닫힘 시간(밀리초)
@@ -152,7 +152,28 @@ class Business extends PageBusinessBasic {
                 });
               },
               () => {
-                toast.info("Negative!", {
+                toast.warning("Negative!", {
+                  // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
+                  position: "bottom-center",
+                  // 자동 닫힘 시간(밀리초)
+                  autoClose: 5000,
+                  // 닫힘 시간 프로그래스바 숨기기
+                  hideProgressBar: false,
+                  // 바로 닫기 버튼 나타내기
+                  closeOnClick: true,
+                  // 호버링시 진행 멈추기
+                  pauseOnHover: true,
+                  // 드래그로 닫기
+                  draggable: true,
+                  // 테마 (light, dark, colored)
+                  theme: "light",
+                  // 생성 애니메이션 (Bounce, Slide, Zoom, Flip)
+                  transition: Bounce,
+                  progress: undefined
+                });
+              },
+              () => {
+                toast.info("Nothing!", {
                   // 나타나는 위치 (top-left, top-right, top-center, bottom-left, bottom-right, bottom-center)
                   position: "bottom-center",
                   // 자동 닫힘 시간(밀리초)

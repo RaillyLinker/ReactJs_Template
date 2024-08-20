@@ -25,6 +25,9 @@ class Business extends DialogBusinessBasic {
   // (부정 버튼 클릭 리스너)
   negativeButtonClickListener: () => void;
 
+  // (아무 버튼도 선택하지 않은 경우)
+  notPositiveAndNegativeListener: () => void;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -38,7 +41,8 @@ class Business extends DialogBusinessBasic {
     positiveButtonTitle: string,
     negativeButtonTitle: string,
     positiveButtonClickListener: () => void,
-    negativeButtonClickListener: () => void
+    negativeButtonClickListener: () => void,
+    notPositiveAndNegativeListener: () => void
   ) {
     super(gcoDialogFrameBusiness, parentPageBusiness);
     this.title = title;
@@ -47,6 +51,7 @@ class Business extends DialogBusinessBasic {
     this.negativeButtonTitle = negativeButtonTitle;
     this.positiveButtonClickListener = positiveButtonClickListener;
     this.negativeButtonClickListener = negativeButtonClickListener;
+    this.notPositiveAndNegativeListener = notPositiveAndNegativeListener;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -62,6 +67,13 @@ class Business extends DialogBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+  }
+
+  // (다이얼로그 외곽을 클릭했을 때)
+  onTouchDialogBackground = (close: boolean) => {
+    if (close) {
+      this.notPositiveAndNegativeListener();
+    }
   }
 
 
