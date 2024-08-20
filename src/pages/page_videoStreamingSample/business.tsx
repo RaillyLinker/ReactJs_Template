@@ -35,6 +35,18 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
+  // (비디오 상태)
+  // Ref 객체
+  videoRef: React.RefObject<HTMLVideoElement> | null = null;
+  // 해상도 표시
+  videoResolutionText = "720p";
+  // 주소
+  videoSrc: string = "http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H720";
+  // 현재 재생 시간
+  videoCurrentTime: number = 0;
+  // 일시정지 여부
+  videoPaused: boolean = true;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -86,6 +98,22 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleResolutionChange = (resolution: string, resolutionText: string) => {
+    if (this.videoRef != null && this.videoRef.current) {
+      this.videoSrc = `http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=${resolution}`;
+      this.videoCurrentTime = this.videoRef.current.currentTime;
+      this.videoPaused = this.videoRef.current.paused;
+
+      this.videoRef.current.src = this.videoSrc;
+      this.videoRef.current.currentTime = this.videoCurrentTime;
+      if (!this.videoPaused) {
+        this.videoRef.current.play();
+      }
+
+      this.videoResolutionText = resolutionText;
+      this.reRender();
+    }
+  }
 
 
   //----------------------------------------------------------------------------

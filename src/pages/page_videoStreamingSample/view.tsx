@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './view.module.css';
 import { useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
@@ -80,6 +80,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -118,7 +119,24 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+
+            <div style={{ padding: '10px 20px' }}>
+              <h2>해상도 선택</h2>
+              <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H240', '240p')}>240p</button>
+              <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H360', '360p')}>360p</button>
+              <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H480', '480p')}>480p</button>
+              <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H720', '720p')}>720p</button>
+
+              <h2>비디오 <span>{`(${mainBusiness.videoResolutionText})`}</span></h2>
+              <video id={styles.Video} ref={mainBusiness.videoRef} preload="auto" controls>
+                <source
+                  id="movie_src"
+                  type="video/mp4"
+                  src={mainBusiness.videoSrc}
+                />
+              </video>
+            </div>
+
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
