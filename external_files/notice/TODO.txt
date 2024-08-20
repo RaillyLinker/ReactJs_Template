@@ -1,6 +1,5 @@
 [TODO]
 (1단계)
-- 비디오 스트리밍 (page_videoStreamingSample - 뒤로가기 후 복귀했을 때 재생 위치 기억하기)
 - 오디오 스트리밍 (page_audioStreamingSample)
 - 네트워크 요청 (page_basicNetworkRequestSampleList - ky 로 구현하기)
 - Grid 샘플

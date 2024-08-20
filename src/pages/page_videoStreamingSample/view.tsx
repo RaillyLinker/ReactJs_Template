@@ -128,7 +128,7 @@ const View: React.FC = () => {
               <button className={styles.ResolutionButton} onClick={() => mainBusiness.handleResolutionChange('H720', '720p')}>720p</button>
 
               <h2>비디오 <span>{`(${mainBusiness.videoResolutionText})`}</span></h2>
-              <video id={styles.Video} ref={mainBusiness.videoRef} preload="auto" controls>
+              <video id={styles.Video} ref={mainBusiness.videoRef} preload="auto" controls onTimeUpdate={mainBusiness.videoTimeUpdateHandler} onPause={mainBusiness.videoPauseHandler} onPlay={mainBusiness.videoPlayHandler}>
                 <source
                   id="movie_src"
                   type="video/mp4"

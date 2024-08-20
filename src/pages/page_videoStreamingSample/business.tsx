@@ -85,6 +85,25 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // 기존 비디오 정보 불러오기
+    if (this.videoRef != null && this.videoRef.current) {
+      if (!this.videoPaused) {
+        // 기존에 일시정지가 아니었다면,
+        this.videoRef.current.onloadeddata = () => {
+          // 비디오 로딩 후 실행시키기
+          if (this.videoRef != null && this.videoRef.current) {
+            this.videoRef.current.play().catch(error => {
+              console.error("Error playing video:", error);
+            });
+            this.videoRef.current.onloadeddata = null;
+          }
+        }
+      }
+      // 비디오 로딩
+      this.videoRef.current.src = this.videoSrc;
+      // 기존 비디오 시간 적용
+      this.videoRef.current.currentTime = this.videoCurrentTime;
+    }
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -98,22 +117,53 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (해상도 변경 버튼 클릭)
   handleResolutionChange = (resolution: string, resolutionText: string) => {
     if (this.videoRef != null && this.videoRef.current) {
       this.videoSrc = `http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=${resolution}`;
       this.videoCurrentTime = this.videoRef.current.currentTime;
       this.videoPaused = this.videoRef.current.paused;
 
-      this.videoRef.current.src = this.videoSrc;
-      this.videoRef.current.currentTime = this.videoCurrentTime;
       if (!this.videoPaused) {
-        this.videoRef.current.play();
+        // 기존에 일시정지가 아니었다면,
+        this.videoRef.current.onloadeddata = () => {
+          // 비디오 로딩 후 실행시키기
+          if (this.videoRef != null && this.videoRef.current) {
+            this.videoRef.current.play().catch(error => {
+              console.error("Error playing video:", error);
+            });
+            this.videoRef.current.onloadeddata = null;
+          }
+        }
       }
+      // 비디오 로딩
+      this.videoRef.current.src = this.videoSrc;
+      // 기존 비디오 시간 적용
+      this.videoRef.current.currentTime = this.videoCurrentTime;
 
+      // 해상도 표시 변경 후 리랜더링
       this.videoResolutionText = resolutionText;
       this.reRender();
     }
   }
+
+  // (비디오 정보 핸들러)
+  // 재생 시간 병경시 호출
+  videoTimeUpdateHandler = () => {
+    if (this.videoRef != null && this.videoRef.current) {
+      this.videoCurrentTime = this.videoRef.current.currentTime;
+    }
+  };
+
+  // 일시정지시 호출
+  videoPauseHandler = () => {
+    this.videoPaused = true;
+  };
+
+  // 재생시 호출
+  videoPlayHandler = () => {
+    this.videoPaused = false;
+  };
 
 
   //----------------------------------------------------------------------------
