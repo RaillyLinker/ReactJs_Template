@@ -25,6 +25,7 @@ import PageStreamingSampleList from './pages/page_streamingSampleList/view';
 import PageVideoStreamingSample from './pages/page_videoStreamingSample/view';
 import PageAudioStreamingSample from './pages/page_audioStreamingSample/view';
 import PageSseSample from './pages/page_sseSample/view';
+import PageSocketSampleList from './pages/page_socketSampleList/view';
 
 
 // [라우터 클래스]
@@ -56,6 +57,7 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list/streaming-sample/video-streaming-sample" element={<PageVideoStreamingSample />} />
       <Route path="/network-sample-list/streaming-sample/audio-streaming-sample" element={<PageAudioStreamingSample />} />
       <Route path="/network-sample-list/sse-sample" element={<PageSseSample />} />
+      <Route path="/network-sample-list/socket-sample-list" element={<PageSocketSampleList />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />

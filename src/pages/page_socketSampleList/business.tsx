@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "네트워크 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Socket 샘플 리스트");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -45,34 +45,18 @@ class Business extends PageBusinessBasic {
     [
       {
         uid: 0,
-        itemTitle: "기본 네트워크 요청 샘플",
-        itemDescription: "Get, Post, Multipart 등의 기본 네트워크 요청 샘플",
+        itemTitle: "SockJs 사용 샘플",
+        itemDescription: "SockJs 를 사용한 소켓 연결 샘플",
         onItemClicked: (): void => {
-          this.navigate("/network-sample-list/basic-network-request-sample");
+          this.navigate("/network-sample-list/socket-sample-list/sock-js-sample");
         }
       },
       {
         uid: 1,
-        itemTitle: "스트리밍 샘플",
-        itemDescription: "스트리밍 샘플",
+        itemTitle: "STOMP 사용 샘플",
+        itemDescription: "STOMP 를 사용한 소켓 연결 샘플",
         onItemClicked: (): void => {
-          this.navigate("/network-sample-list/streaming-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "SSE 샘플",
-        itemDescription: "SSE (Server-Sent-Events) 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/sse-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "Socket 샘플 리스트",
-        itemDescription: "Socket 을 사용한 양방향 네트워크 샘플 리스트",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/socket-sample-list");
+          this.navigate("/network-sample-list/socket-sample-list/stomp-sample");
         }
       }
     ];
