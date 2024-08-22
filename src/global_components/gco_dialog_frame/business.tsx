@@ -99,6 +99,9 @@ class Business extends ComponentBusinessBasic {
       if (this.closeAnimationClassName === null) {
         dialog.close();
         this.dialogOn = false;
+        this.dialogView = () => { return (<></>) };
+        this.dialogBusiness = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
+        this.reRender();
       } else {
         dialog.classList.add(this.closeAnimationClassName);
         dialog.addEventListener('animationend', () => {
@@ -107,6 +110,9 @@ class Business extends ComponentBusinessBasic {
             dialog.classList.remove(this.closeAnimationClassName);
           }
           this.dialogOn = false;
+          this.dialogView = () => { return (<></>) };
+          this.dialogBusiness = new VoidDialogBusinessBasic(this, this.parentComponentBusiness);
+          this.reRender();
         }, { once: true });
       }
     }
