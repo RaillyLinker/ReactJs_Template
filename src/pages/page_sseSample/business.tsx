@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import ky from 'ky';
 
 
 // [비즈니스 클래스]
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "네트워크 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "SSE 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,39 +36,11 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "기본 네트워크 요청 샘플",
-        itemDescription: "Get, Post, Multipart 등의 기본 네트워크 요청 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/basic-network-request-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "스트리밍 샘플",
-        itemDescription: "스트리밍 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/streaming-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "SSE 샘플",
-        itemDescription: "SSE (Server-Sent-Events) 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/sse-sample");
-        }
-      }
-    ];
+  // (SSE 객체)
+  sse: EventSource | null = null;
+
+  // (SSE 이벤트를 기록할 로그 Div Ref)
+  sseEventLogRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -107,6 +80,8 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // 초기 SSE 구독
+    this.sseSubscribe();
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -115,15 +90,71 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    if (this.sse !== null) {
+      // SSE 닫기
+      this.sse.close();
+      this.sse = null;
+    }
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (SSE 이벤트 트리거 버튼 클릭 핸들러)
+  // 버튼을 누르면 서버로 요청이 가고, 서버는 SSE 이벤트를 발행합니다.
+  handleEventTriggerClick = async () => {
+    try {
+      await ky.post('http://127.0.0.1:8080/service1/tk/v1/request-test/sse-test/event-trigger');
+    } catch (error) {
+      console.error('Failed to trigger event', error);
+    }
+  };
+
+  // (SSE 토글 버튼 클릭 핸들러)
+  // SSE 연결 / 비연결 토글링
+  handleSseToggleClick = () => {
+    if (this.sse === null) {
+      // sse 객체 null 일 때
+      this.sseSubscribe();
+    } else {
+      // sse 객체 null 이 아닐 때
+      this.sse.close();
+      this.sse = null;
+      this.reRender();
+    }
+  };
 
 
   //----------------------------------------------------------------------------
   // [private 함수]
+  // (SSE 구독 및 설정 함수)
+  private sseSubscribe = () => {
+    // SSE 연결 설정
+    const eventSource = new EventSource("http://localhost:8080/service1/tk/v1/request-test/sse-test/subscribe");
+
+    // SSE 이벤트 수신 리스너 (event type : system)
+    eventSource.addEventListener('system', (e: MessageEvent) => {
+      const receivedData = e.data;
+      if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
+        const p = document.createElement("p");
+        p.innerText = receivedData;
+        this.sseEventLogRef.current.prepend(p);
+      }
+    });
+
+    // SSE 이벤트 수신 리스너 (event type : triggerTest)
+    eventSource.addEventListener('triggerTest', (e: MessageEvent) => {
+      const receivedData = e.data;
+      if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
+        const p = document.createElement("p");
+        p.innerText = receivedData;
+        this.sseEventLogRef.current.prepend(p);
+      }
+    });
+
+    this.sse = eventSource;
+    this.reRender();
+  };
 }
 
 export default Business;
