@@ -27,6 +27,7 @@ import PageAudioStreamingSample from './pages/page_audioStreamingSample/view';
 import PageSseSample from './pages/page_sseSample/view';
 import PageSocketSampleList from './pages/page_socketSampleList/view';
 import PageSockJsSample from './pages/page_sockJsSample/view';
+import PageStompSample from './pages/page_stompSample/view';
 
 
 // [라우터 클래스]
@@ -60,6 +61,7 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list/sse-sample" element={<PageSseSample />} />
       <Route path="/network-sample-list/socket-sample-list" element={<PageSocketSampleList />} />
       <Route path="/network-sample-list/socket-sample-list/sock-js-sample" element={<PageSockJsSample />} />
+      <Route path="/network-sample-list/socket-sample-list/stomp-sample" element={<PageStompSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
