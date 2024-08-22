@@ -35,6 +35,16 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
+  // (오디오 상태)
+  // Ref 객체
+  audioRef: React.RefObject<HTMLAudioElement> | null = null;
+  // 주소
+  audioSrc: string = "http://127.0.0.1:8080/service1/tk/v1/request-test/audio-streaming";
+  // 현재 재생 시간
+  audioCurrentTime: number = 0;
+  // 일시정지 여부
+  audioPaused: boolean = true;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -73,6 +83,25 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // 기존 오디오 정보 불러오기
+    if (this.audioRef != null && this.audioRef.current) {
+      if (!this.audioPaused) {
+        // 기존에 일시정지가 아니었다면,
+        this.audioRef.current.onloadeddata = () => {
+          // 오디오 로딩 후 실행시키기
+          if (this.audioRef != null && this.audioRef.current) {
+            this.audioRef.current.play().catch(error => {
+              console.error("Error playing audio:", error);
+            });
+            this.audioRef.current.onloadeddata = null;
+          }
+        }
+      }
+      // 오디오 로딩
+      this.audioRef.current.src = this.audioSrc;
+      // 기존 오디오 시간 적용
+      this.audioRef.current.currentTime = this.audioCurrentTime;
+    }
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -86,6 +115,23 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (오디오 정보 핸들러)
+  // 재생 시간 병경시 호출
+  audioTimeUpdateHandler = () => {
+    if (this.audioRef != null && this.audioRef.current) {
+      this.audioCurrentTime = this.audioRef.current.currentTime;
+    }
+  };
+
+  // 일시정지시 호출
+  audioPauseHandler = () => {
+    this.audioPaused = true;
+  };
+
+  // 재생시 호출
+  audioPlayHandler = () => {
+    this.audioPaused = false;
+  };
 
 
   //----------------------------------------------------------------------------

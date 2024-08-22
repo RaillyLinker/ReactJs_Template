@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './view.module.css';
 import { useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
@@ -80,6 +80,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  mainBusiness.audioRef = useRef<HTMLAudioElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -118,7 +119,21 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <audio
+              src={mainBusiness.audioSrc}
+              ref={mainBusiness.audioRef}
+              preload="auto"
+              controls
+              onTimeUpdate={mainBusiness.audioTimeUpdateHandler}
+              onPause={mainBusiness.audioPauseHandler}
+              onPlay={mainBusiness.audioPlayHandler}
+              // 다운로드 방지 방법
+              // 1. 서버에서 클라이언트를 통하지 않은 직접 다운로드를 차단합니다.
+              // 2. 아래 설정으로 다운로드 버튼 없애기
+              controlsList="nodownload"
+              // 3. 아래 설정으로 우클릭 방지
+              onContextMenu={(e) => e.preventDefault()}
+            ></audio>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
