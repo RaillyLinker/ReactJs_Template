@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Socket 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "SockJs 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,32 +34,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "SockJs 샘플",
-        itemDescription: "SockJs 를 사용한 소켓 연결 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/socket-sample-list/sock-js-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "STOMP 샘플",
-        itemDescription: "STOMP 를 사용한 소켓 연결 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/socket-sample-list/stomp-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------
