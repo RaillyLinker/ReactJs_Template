@@ -35,6 +35,18 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
+  // (선택된 파일 리스트)
+  files: File[] = [];
+
+  // (파일 선택 옵션)
+  // 선택 파일 타입
+  fileType: string = 'all';
+  // 여러 파일 동시 선택
+  multiple: boolean = false;
+
+  // (파일 선택창 Ref)
+  fileInputRef: React.RefObject<HTMLInputElement> | null = null;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -86,6 +98,52 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (여러 파일 선택 플래그 변경)
+  handleMultipleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.multiple = event.target.value === 'multiple';
+    this.reRender();
+  };
+
+  // (파일 타입 변경)
+  handleFileTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    this.fileType = event.target.value;
+    this.reRender();
+  };
+
+  // (파일 타입을 MIME 타입으로 변경)
+  getMimeType = () => {
+    switch (this.fileType) {
+      case 'image':
+        return 'image/*';
+      case 'audio':
+        return 'audio/*';
+      case 'video':
+        return 'video/*';
+      case 'pdf':
+        return 'application/pdf';
+      case 'text':
+        return 'text/*';
+      default:
+        return '*/*';
+    }
+  };
+
+  // (선택 파일 변경)
+  handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      this.files = Array.from(event.target.files);
+      this.reRender();
+    }
+  };
+
+  // (파일 리스트 초기화)
+  clearFiles = () => {
+    if (this.fileInputRef !== null && this.fileInputRef.current) {
+      this.fileInputRef.current.value = '';
+    }
+    this.files = [];
+    this.reRender();
+  };
 
 
   //----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './view.module.css';
 import { useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
@@ -80,6 +80,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  mainBusiness.fileInputRef = useRef<HTMLInputElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -118,7 +119,63 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <div>
+              <h3>파일 선택 옵션</h3>
+              <div>
+                <label>
+                  <input
+                    type="radio"
+                    value="single"
+                    checked={!mainBusiness.multiple}
+                    onChange={mainBusiness.handleMultipleChange}
+                  />
+                  한 파일 선택
+                </label>
+                <label style={{ marginLeft: '20px' }}>
+                  <input
+                    type="radio"
+                    value="multiple"
+                    checked={mainBusiness.multiple}
+                    onChange={mainBusiness.handleMultipleChange}
+                  />
+                  여러 파일 선택
+                </label>
+              </div>
+              <div style={{ marginTop: '10px' }}>
+                <select value={mainBusiness.fileType} onChange={mainBusiness.handleFileTypeChange}>
+                  <option value="all">All</option>
+                  <option value="image">Image</option>
+                  <option value="audio">Audio</option>
+                  <option value="video">Video</option>
+                  <option value="pdf">PDF</option>
+                  <option value="text">Text</option>
+                </select>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
+              <input
+                type="file"
+                accept={mainBusiness.getMimeType()}
+                multiple={mainBusiness.multiple}
+                onChange={mainBusiness.handleFileChange}
+                ref={mainBusiness.fileInputRef}
+              />
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
+              <button onClick={mainBusiness.clearFiles}>파일 리스트 비우기</button>
+            </div>
+
+            <div style={{ marginTop: '20px', height: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+              <ul>
+                {mainBusiness.files.map((file, index) => (
+                  <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    {file.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
