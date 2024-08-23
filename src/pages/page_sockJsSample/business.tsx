@@ -139,6 +139,7 @@ class Business extends PageBusinessBasic {
         if (this.msgInputRef.current) {
           // 입력창 비우기
           this.msgInputRef.current.value = '';
+          this.msgInputRef.current.focus();
         }
       }
     }

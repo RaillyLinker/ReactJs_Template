@@ -121,13 +121,19 @@ const View: React.FC = () => {
           <div id={styles.MainContent}>
             <div className="col-6">
               <div className="input-group mb-3">
-                <input type="text" id="msg" ref={mainBusiness.msgInputRef} className="form-control" aria-label="Recipient's username" />
+                <input type="text" id="msg" ref={mainBusiness.msgInputRef} className="form-control" aria-label="Recipient's username" onKeyDown={
+                  (event) => {
+                    if (event.key === 'Enter') {
+                      mainBusiness.handleSend();
+                    }
+                  }
+                } />
                 <button className="btn btn-outline-secondary" type="button" id="button-send" onClick={mainBusiness.handleSend}>
                   전송
                 </button>
               </div>
             </div>
-            <div id="msgArea" className="col" 
+            <div id="msgArea" className="col"
               style={{
                 overflowY: 'scroll',
                 width: '300px',
