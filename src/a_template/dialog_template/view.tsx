@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './view.module.css';
 import Business from './business';
 import { DialogProps } from '../../global_classes/gc_template_classes';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './view.module.css';
 import { useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
