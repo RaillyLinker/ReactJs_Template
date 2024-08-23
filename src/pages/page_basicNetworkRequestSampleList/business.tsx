@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import { downloadFile } from '../../global_functions/gf_my_functions';
 
 
 // [비즈니스 클래스]
@@ -105,6 +106,14 @@ class Business extends PageBusinessBasic {
         itemDescription: "text/html 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: (): void => {
           // todo
+        }
+      },
+      {
+        uid: 8,
+        itemTitle: "네트워크 파일 다운로드 테스트",
+        itemDescription: "네트워크 파일 다운로드 테스트",
+        onItemClicked: (): void => {
+          downloadFile("http://127.0.0.1:8080/favicon.ico", "favicon.ico");
         }
       }
     ];

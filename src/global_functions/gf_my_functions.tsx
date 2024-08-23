@@ -1,5 +1,28 @@
+import ky from 'ky';
+
+
 // [전역 함수 작성 파일]
 // 프로그램 전역에서 사용할 함수들은 여기에 모아둡니다.
+// (URL 을 입력하면 파일 다운로드)
+export async function downloadFile(url: string, filename: string) {
+    try {
+        // ky를 사용하여 파일 데이터를 가져옵니다.
+        const response = await ky.get(url);
+
+        // 응답을 Blob 형태로 변환합니다.
+        const blob = await response.blob();
+
+        // Blob URL을 생성하고 다운로드 링크를 만들어 클릭합니다.
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (error) {
+        console.error('Download failed:', error);
+    }
+}
 
 // (영문, 숫자 랜덤 String 을 length 만큼의 길이로 반환)
 export function generateRandomString(length: number): string {
