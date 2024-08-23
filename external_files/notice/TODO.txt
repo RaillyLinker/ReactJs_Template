@@ -5,8 +5,6 @@
     미디어 파일을 일반 HTTP로 제공하는 대신, HLS (HTTP Live Streaming) 또는 MPEG-DASH와 같은 스트리밍 프로토콜을 사용하는 것이 좋습니다. 
     이 프로토콜들은 비디오를 작은 조각들로 스트리밍하며, 사용자가 전체 비디오 파일을 쉽게 다운로드할 수 없게 만듭니다.
     예를 들어, HLS 스트리밍을 React에서 사용하려면 video.js나 hls.js와 같은 라이브러리를 사용할 수 있습니다.
-
-- 네트워크 요청 (page_basicNetworkRequestSampleList - ky 로 구현하기)
 - Grid 샘플
 - 가로 스크롤(상단에는 무한 가로 스크롤, 하단에는 세로 스크롤과 가로 스크롤 복합)
 - 위젯 변경 애니메이션
@@ -14,6 +12,7 @@
 - Socket STOMP
 
 (2단계)
+- 네트워크 요청 (page_basicNetworkRequestSampleList - ky 로 구현하기)
 - 이미지 선택 샘플
 - 파일 압축
 
