@@ -1,10 +1,10 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/business';
 import { Bounce, toast } from 'react-toastify';
 
-import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { aes256Encrypt, aes256Decrypt, base64Encode, base64Decode } from '../../global_functions/gf_crypto';
 
 

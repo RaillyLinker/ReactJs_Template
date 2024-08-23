@@ -1,6 +1,6 @@
 import { navigate } from '../app_router';
 import { NavigateFunction } from 'react-router-dom';
-import GcoDialogFrameBusiness from '../global_components/gco_dialog_frame/business';
+import GcoDialogFrameBusiness from '../global_components/gco_dialogFrame/business';
 
 
 // [템플릿 전용 클래스 모음]

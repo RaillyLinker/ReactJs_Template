@@ -1,10 +1,10 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/business';
 import { Bounce, toast } from 'react-toastify';
 
-import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { Semaphore } from 'async-mutex';
 import { ThreadMerger } from '../../global_classes/gc_my_classes';
 

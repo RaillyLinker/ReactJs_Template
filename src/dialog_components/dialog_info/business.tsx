@@ -1,5 +1,5 @@
 import { DialogBusinessBasic, PageBusinessBasic } from '../../global_classes/gc_template_classes';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/business';
 
 
 // [비즈니스 클래스]

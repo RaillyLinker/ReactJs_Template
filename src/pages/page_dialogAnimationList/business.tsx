@@ -1,10 +1,10 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
 import { PathParams, QueryParams } from './view';
-import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/business';
+import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/business';
 
 import styles from './view.module.css';
-import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import DialogTemplate from '../../a_template/dialog_template/view';
 import DialogTemplateBusiness from '../../a_template/dialog_template/business';
 
