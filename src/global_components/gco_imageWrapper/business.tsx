@@ -24,6 +24,9 @@ class Business extends ComponentBusinessBasic {
   // (로딩 실패 화면)
   loadingFailedElement: JSX.Element;
 
+  // (외부 주입 클릭 리스너)
+  onClickListener: (event: React.MouseEvent, imageState: number) => void;
+
 
 
   //----------------------------------------------------------------------------
@@ -35,13 +38,15 @@ class Business extends ComponentBusinessBasic {
     imageSrc: string,
     imageAlt: string,
     loadingElement: JSX.Element,
-    loadingFailedElement: JSX.Element
+    loadingFailedElement: JSX.Element,
+    onClickListener: (event: React.MouseEvent, imageState: number) => void
   ) {
     super(parentComponentBusiness);
     this.imageSrc = imageSrc;
     this.imageAlt = imageAlt;
     this.loadingElement = loadingElement;
     this.loadingFailedElement = loadingFailedElement;
+    this.onClickListener = onClickListener;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -67,6 +72,11 @@ class Business extends ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (컴포넌트 클릭 리스너)
+  onClick = (event: React.MouseEvent) => {
+    this.onClickListener(event, this.imageState);
+  }
+
 
 
   //----------------------------------------------------------------------------

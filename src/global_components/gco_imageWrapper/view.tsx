@@ -32,7 +32,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <div id={styles.MainView}>
+    <div id={styles.MainView} onClick={mainBusiness.onClick}>
       {
         mainBusiness.imageState === 0 &&
         <div id={styles.LoadingElement}>{mainBusiness.loadingElement}</div>

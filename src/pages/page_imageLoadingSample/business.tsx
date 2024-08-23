@@ -43,7 +43,10 @@ class Business extends PageBusinessBasic {
       "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=3",
       "로딩 테스트 이미지",
       <div>Loading...</div>,
-      <div>Error!</div>
+      <div>Error!</div>,
+      (event: React.MouseEvent, imageState: number) => {
+        console.log(imageState);
+      }
     );
 
   // (테스트 이미지 래퍼2 비즈니스)
@@ -53,7 +56,10 @@ class Business extends PageBusinessBasic {
       "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=-1",
       "로딩 실패 테스트 이미지",
       <div>Loading...</div>,
-      <div>Error!</div>
+      <div>Error!</div>,
+      (event: React.MouseEvent, imageState: number) => {
+        console.log(imageState);
+      }
     );
 
 
