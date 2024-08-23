@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialog_frame/bus
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outer_frame/business';
+import GcoImageWrapperBusiness from '../../global_components/gco_imageWrapper/business';
 
 
 // [비즈니스 클래스]
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "페이지 템플릿");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "이미지 로딩 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,11 +36,26 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (이미지1 상태)
-  // -1 : 실패
-  // 0 : 로딩
-  // 1 : 완료
-  image1State: number = 0;
+  // (테스트 이미지 래퍼1 비즈니스)
+  gcoTestImageWrapper1Business: GcoImageWrapperBusiness =
+    new GcoImageWrapperBusiness(
+      this,
+      "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=3",
+      "로딩 테스트 이미지",
+      <div>Loading...</div>,
+      <div>Error!</div>
+    );
+
+  // (테스트 이미지 래퍼2 비즈니스)
+  gcoTestImageWrapper2Business: GcoImageWrapperBusiness =
+    new GcoImageWrapperBusiness(
+      this,
+      "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=-1",
+      "로딩 실패 테스트 이미지",
+      <div>Loading...</div>,
+      <div>Error!</div>
+    );
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]

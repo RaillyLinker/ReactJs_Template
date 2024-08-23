@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import GcoOuterFrame from '../../global_components/gco_outer_frame/view';
+import GcoImageWrapper from '../../global_components/gco_imageWrapper/view';
 
 
 // [뷰 함수]
@@ -118,22 +119,11 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <div style={{ position: 'relative', width: '14rem', height: '14rem', border: '2px solid black' }}>
-              {mainBusiness.image1State === 0 && <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{<div>Loading...</div>}</div>}
-              {mainBusiness.image1State === -1 && <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{<div>Error!</div>}</div>}
-              <img
-                src={"http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=5"}
-                alt={"로딩 테스트 이미지"}
-                onLoad={() => {
-                  mainBusiness.image1State = 1;
-                  mainBusiness.reRender();
-                }}
-                onError={() => {
-                  mainBusiness.image1State = -1;
-                  mainBusiness.reRender();
-                }}
-                style={{ display: mainBusiness.image1State === 0 || mainBusiness.image1State === -1 ? 'none' : 'block', width: '100%', height: '100%' }}
-              />
+            <div id={styles.TestImage1}>
+              <GcoImageWrapper business={mainBusiness.gcoTestImageWrapper1Business} />
+            </div>
+            <div id={styles.TestImage2}>
+              <GcoImageWrapper business={mainBusiness.gcoTestImageWrapper2Business} />
             </div>
           </div>
           <ToastContainer
