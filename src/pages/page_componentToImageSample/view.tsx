@@ -145,7 +145,7 @@ const View: React.FC = () => {
               <p>This is a sample text.</p>
             </div>
 
-            <button onClick={mainBusiness.captureAndDownload} style={{ marginTop: '1rem' }}>Capture and Download Image</button>
+            <button onClick={mainBusiness.captureAndDownload} style={{ marginTop: '1rem' }}>컴포넌트 캡쳐</button>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
