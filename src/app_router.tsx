@@ -33,6 +33,7 @@ import PageFileChoiceSample from './pages/page_fileChoiceSample/view';
 import PageMediaSampleList from './pages/page_mediaSampleList/view';
 import PageStringToImageSample from './pages/page_stringToImageSample/view';
 import PageSimpleDrawSample from './pages/page_simpleDrawSample/view';
+import PageComponentToImageSample from './pages/page_componentToImageSample/view';
 
 
 // [라우터 클래스]
@@ -71,6 +72,7 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list" element={<PageMediaSampleList />} />
       <Route path="/media-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />
       <Route path="/media-sample-list/simple-draw-sample" element={<PageSimpleDrawSample />} />
+      <Route path="/media-sample-list/component-to-image-sample" element={<PageComponentToImageSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />

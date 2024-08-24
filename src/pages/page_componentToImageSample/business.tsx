@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import html2canvas from 'html2canvas';
 
 
 // [비즈니스 클래스]
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "미디어 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Component to Image 변환 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,39 +36,9 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/string-to-image-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "기본 그림판 샘플",
-        itemDescription: "마우스로 그림을 그리는 간단한 그림판 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/simple-draw-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "Component to Image 변환 샘플",
-        itemDescription: "HTML 의 특정 Component 를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/component-to-image-sample");
-        }
-      }
-    ];
+  // (캡쳐 영역 Ref)
+  // 캡쳐 영역을 화면 전체로 잡으면 전체 캡쳐가 됩니다.
+  captureRef: React.RefObject<HTMLDivElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -120,6 +91,18 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (캡쳐 영역을 캡쳐)
+  captureAndDownload = () => {
+    if (this.captureRef !== null && this.captureRef.current) {
+      html2canvas(this.captureRef.current, { useCORS: true }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = 'captured-image.png';
+        link.click();
+      });
+    }
+  };
 
 
   //----------------------------------------------------------------------------
