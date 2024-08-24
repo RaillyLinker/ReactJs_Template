@@ -98,14 +98,6 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/etc-sample-list/file-choice-sample");
         }
-      },
-      {
-        uid: 7,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/string-to-image-sample");
-        }
       }
     ];
 

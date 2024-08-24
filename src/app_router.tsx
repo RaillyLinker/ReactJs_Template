@@ -30,6 +30,7 @@ import PageSockJsSample from './pages/page_sockJsSample/view';
 import PageStompSample from './pages/page_stompSample/view';
 import PageImageLoadingSample from './pages/page_imageLoadingSample/view';
 import PageFileChoiceSample from './pages/page_fileChoiceSample/view';
+import PageMediaSampleList from './pages/page_mediaSampleList/view';
 import PageStringToImageSample from './pages/page_stringToImageSample/view';
 
 
@@ -66,6 +67,9 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list/socket-sample-list/sock-js-sample" element={<PageSockJsSample />} />
       <Route path="/network-sample-list/socket-sample-list/stomp-sample" element={<PageStompSample />} />
 
+      <Route path="/media-sample-list" element={<PageMediaSampleList />} />
+      <Route path="/media-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />
+
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
       <Route path="/etc-sample-list/shared-preferences-sample" element={<PageSharedPreferencesSample />} />
@@ -74,7 +78,6 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
       <Route path="/etc-sample-list/image-loading-sample" element={<PageImageLoadingSample />} />
       <Route path="/etc-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
-      <Route path="/etc-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />
     </Routes>
   );
 }
