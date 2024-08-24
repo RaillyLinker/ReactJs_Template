@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "String to Image 변환 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,79 +35,8 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "SharedPreferences 샘플",
-        itemDescription: "SharedPreferences 사용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/shared-preferences-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "새 탭 열기 테스트",
-        itemDescription: "코드상으로 새 탭을 여는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/open-new-tap-test");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "iframe 샘플",
-        itemDescription: "iframe 표시 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/iframe-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "Context Menu 샘플",
-        itemDescription: "Context Menu 처리 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/context-menu-sample");
-        }
-      },
-      {
-        uid: 5,
-        itemTitle: "이미지 로딩 샘플",
-        itemDescription: "이미지 로딩 처리 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/image-loading-sample");
-        }
-      },
-      {
-        uid: 6,
-        itemTitle: "파일 선택 샘플",
-        itemDescription: "로컬 파일을 선택하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/file-choice-sample");
-        }
-      },
-      {
-        uid: 7,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/string-to-image-sample");
-        }
-      }
-    ];
+  // (이미지로 생성할 텍스트)
+  srcText: string = "";
 
 
   //----------------------------------------------------------------------------
@@ -160,6 +89,76 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (텍스트 입력창 변경 리스너)
+  textInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.srcText = e.target.value;
+    this.reRender();
+  }
+
+  // (서명 생성)
+  handleGenerateSignature = () => {
+    // 설정 데이터
+    const fontSize = 24;
+    const fontFamily = 'Cursive';
+    const fontColorConfig = 'black';
+    const canvasColorConfig = 'rgba(255, 255, 255, 0)';
+    const widthMargin = 20;
+    const heightMargin = 10;
+
+    // 이미지 생성 시작
+    const fontConfig = `${fontSize}px ${fontFamily}`;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    if (context) {
+      context.font = fontConfig;
+
+      // 폰트 크기에 비례한 캔버스 높이 설정
+      const lineHeight = fontSize * 1.2; // 폰트 크기에 따른 라인 높이
+      canvas.width = context.measureText(this.srcText).width + widthMargin; // 여백 포함
+      canvas.height = lineHeight + heightMargin; // 위아래 여백 포함
+
+      // 캔버스 배경 색상 설정
+      context.fillStyle = canvasColorConfig;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 텍스트 그리기
+      context.fillStyle = fontColorConfig;
+      context.font = fontConfig;
+      // 텍스트 위치 중앙 조정
+      context.fillText(this.srcText, 10, lineHeight);
+
+      // 캔버스를 이미지로 변환
+      const dataURL = canvas.toDataURL('image/png');
+
+      // 이미지를 네트워크 전송
+      // canvas.toBlob(async (blob) => {
+      //   if (blob) {
+      //     // Blob을 FormData에 추가
+      //     const formData = new FormData();
+      //     formData.append('signature', blob, 'signature.png');
+
+      //     try {
+      //       // POST 요청 보내기
+      //       const response = await ky.post('https://example.com/upload', {
+      //         body: formData,
+      //       });
+
+      //       // 서버의 응답 처리
+      //       console.log('Image uploaded successfully', await response.json());
+      //     } catch (error) {
+      //       console.error('Error uploading image:', error);
+      //     }
+      //   }
+      // }, 'image/png');
+
+      // 이미지 다운로드
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'signature.png';
+      link.click();
+    }
+  };
 
 
   //----------------------------------------------------------------------------

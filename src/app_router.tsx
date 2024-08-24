@@ -30,6 +30,7 @@ import PageSockJsSample from './pages/page_sockJsSample/view';
 import PageStompSample from './pages/page_stompSample/view';
 import PageImageLoadingSample from './pages/page_imageLoadingSample/view';
 import PageFileChoiceSample from './pages/page_fileChoiceSample/view';
+import PageStringToImageSample from './pages/page_stringToImageSample/view';
 
 
 // [라우터 클래스]
@@ -73,6 +74,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
       <Route path="/etc-sample-list/image-loading-sample" element={<PageImageLoadingSample />} />
       <Route path="/etc-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
+      <Route path="/etc-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />
     </Routes>
   );
 }
