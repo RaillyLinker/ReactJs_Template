@@ -93,6 +93,9 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    // 파일 리스트는 유지되지 않음.
+    this.files = [];
+    this.reRender();
   }
 
 

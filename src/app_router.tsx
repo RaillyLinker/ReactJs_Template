@@ -54,6 +54,12 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/global-variable-state-test" element={<PageGlobalVariableStateTest />} />
       <Route path="/template-basic-function-sample-list/async-test" element={<PageAsyncTest />} />
       <Route path="/template-basic-function-sample-list/toast-sample" element={<PageToastSample />} />
+      <Route path="/template-basic-function-sample-list/shared-preferences-sample" element={<PageSharedPreferencesSample />} />
+      <Route path="/template-basic-function-sample-list/open-new-tap-test" element={<PageOpenNewTapTest />} />
+      <Route path="/template-basic-function-sample-list/iframe-sample" element={<PageIframeSample />} />
+      <Route path="/template-basic-function-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
+      <Route path="/template-basic-function-sample-list/image-loading-sample" element={<PageImageLoadingSample />} />
+      <Route path="/template-basic-function-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
@@ -76,12 +82,6 @@ function AppRouter(): JSX.Element {
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
-      <Route path="/etc-sample-list/shared-preferences-sample" element={<PageSharedPreferencesSample />} />
-      <Route path="/etc-sample-list/open-new-tap-test" element={<PageOpenNewTapTest />} />
-      <Route path="/etc-sample-list/iframe-sample" element={<PageIframeSample />} />
-      <Route path="/etc-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
-      <Route path="/etc-sample-list/image-loading-sample" element={<PageImageLoadingSample />} />
-      <Route path="/etc-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
     </Routes>
   );
 }

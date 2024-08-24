@@ -106,6 +106,54 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/template-basic-function-sample-list/toast-sample");
         }
+      },
+      {
+        uid: 8,
+        itemTitle: "SharedPreferences 샘플",
+        itemDescription: "SharedPreferences 사용 샘플",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/shared-preferences-sample");
+        }
+      },
+      {
+        uid: 9,
+        itemTitle: "새 탭 열기 테스트",
+        itemDescription: "코드상으로 새 탭을 여는 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/open-new-tap-test");
+        }
+      },
+      {
+        uid: 10,
+        itemTitle: "iframe 샘플",
+        itemDescription: "iframe 표시 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/iframe-sample");
+        }
+      },
+      {
+        uid: 11,
+        itemTitle: "Context Menu 샘플",
+        itemDescription: "Context Menu 처리 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/context-menu-sample");
+        }
+      },
+      {
+        uid: 12,
+        itemTitle: "이미지 로딩 샘플",
+        itemDescription: "이미지 로딩 처리 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/image-loading-sample");
+        }
+      },
+      {
+        uid: 13,
+        itemTitle: "파일 선택 샘플",
+        itemDescription: "로컬 파일을 선택하는 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/file-choice-sample");
+        }
       }
     ];
 
