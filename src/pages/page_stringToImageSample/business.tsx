@@ -128,10 +128,7 @@ class Business extends PageBusinessBasic {
       // 텍스트 위치 중앙 조정
       context.fillText(this.srcText, 10, lineHeight);
 
-      // 캔버스를 이미지로 변환
-      const dataURL = canvas.toDataURL('image/png');
-
-      // 이미지를 네트워크 전송
+      // // 이미지를 네트워크 전송
       // canvas.toBlob(async (blob) => {
       //   if (blob) {
       //     // Blob을 FormData에 추가
@@ -153,6 +150,7 @@ class Business extends PageBusinessBasic {
       // }, 'image/png');
 
       // 이미지 다운로드
+      const dataURL = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.href = dataURL;
       link.download = 'signature.png';

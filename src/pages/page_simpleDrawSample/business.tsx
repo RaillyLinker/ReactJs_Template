@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import { MouseEvent } from 'react';
 
 
 // [비즈니스 클래스]
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "미디어 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기본 그림판 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,31 +36,11 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/string-to-image-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "기본 그림판 샘플",
-        itemDescription: "마우스로 그림을 그리는 간단한 그림판 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/simple-draw-sample");
-        }
-      }
-    ];
+  // (그림판 캔버스 Ref)
+  canvasRef: React.RefObject<HTMLCanvasElement> | null = null;
+
+  // (그림판 상태)
+  isDrawing: boolean = false;
 
 
   //----------------------------------------------------------------------------
@@ -99,6 +80,18 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    if (this.canvasRef === null) return;
+    const canvas = this.canvasRef.current;
+    if (canvas) {
+      canvas.width = 800;
+      canvas.height = 600;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'black';
+      }
+    }
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -112,6 +105,76 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (캔버스 콜백)
+  // onMouseDown = 마우스 누를 때 = 그림 그리기 시작
+  startDrawing = (e: MouseEvent<HTMLCanvasElement>) => {
+    if (this.canvasRef === null) return;
+    const canvas = this.canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    }
+    this.isDrawing = true;
+    this.reRender();
+  };
+
+  // onMouseMove = 마우스 이동시 = 그림 그리는 중
+  draw = (e: MouseEvent<HTMLCanvasElement>) => {
+    // 마우스를 누르지 않고 움직이면 무시하기
+    if (!this.isDrawing) return;
+    if (this.canvasRef === null) return;
+    const canvas = this.canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+      ctx.stroke();
+    }
+  };
+
+  // onMouseUp = 마우스 떼기 = 그림 그리기 종료
+  stopDrawing = () => {
+    this.isDrawing = false;
+    this.reRender();
+  };
+
+  // (캔버스에 그린 그림 저장하기)
+  saveDrawing = () => {
+    if (this.canvasRef === null) return;
+    const canvas = this.canvasRef.current;
+    if (canvas) {
+      // // 이미지를 네트워크 전송
+      // canvas.toBlob(async (blob) => {
+      //   if (blob) {
+      //     // Blob을 FormData에 추가
+      //     const formData = new FormData();
+      //     formData.append('signature', blob, 'signature.png');
+
+      //     try {
+      //       // POST 요청 보내기
+      //       const response = await ky.post('https://example.com/upload', {
+      //         body: formData,
+      //       });
+
+      //       // 서버의 응답 처리
+      //       console.log('Image uploaded successfully', await response.json());
+      //     } catch (error) {
+      //       console.error('Error uploading image:', error);
+      //     }
+      //   }
+      // }, 'image/png');
+
+      const dataURL = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'drawing.png';
+      link.click();
+    }
+  };
 
 
   //----------------------------------------------------------------------------
