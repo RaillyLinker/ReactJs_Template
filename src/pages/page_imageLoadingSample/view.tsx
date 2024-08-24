@@ -119,10 +119,10 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <div id={styles.TestImage1}>
+            <div id={styles.TestImage1} title='이미지 리로드'>
               <GcoImageWrapper business={mainBusiness.gcoTestImageWrapper1Business} />
             </div>
-            <div id={styles.TestImage2}>
+            <div id={styles.TestImage2} title='이미지 주소 변경'>
               <GcoImageWrapper business={mainBusiness.gcoTestImageWrapper2Business} />
             </div>
           </div>

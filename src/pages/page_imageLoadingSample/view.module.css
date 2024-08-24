@@ -26,6 +26,7 @@
     width: 14rem;
     height: 14rem;
     border: 2px solid black;
+    cursor: pointer
 }
 
 #TestImage2 {
@@ -33,4 +34,5 @@
     height: 14rem;
     border: 2px solid black;
     margin-left: 1rem;
+    cursor: pointer
 }

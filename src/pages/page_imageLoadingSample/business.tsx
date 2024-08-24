@@ -42,10 +42,9 @@ class Business extends PageBusinessBasic {
       this,
       "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=2",
       "로딩 테스트 이미지",
-      <div>Loading...</div>,
-      <div>Error!</div>,
+      <img src={process.env.PUBLIC_URL + '/images/image_placeholder.png'} style={{ width: '100%', height: '100%' }} />,
+      <img src={process.env.PUBLIC_URL + '/images/warning_icon.png'} style={{ width: '20%', height: '20%' }} />,
       (event: React.MouseEvent, imageState: number) => {
-        console.log(imageState);
         this.gcoTestImageWrapper1Business.reload();
       }
     );
@@ -56,10 +55,10 @@ class Business extends PageBusinessBasic {
       this,
       "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=-1",
       "로딩 실패 테스트 이미지",
-      <div>Loading...</div>,
-      <div>Error!</div>,
+      <img src={process.env.PUBLIC_URL + '/images/image_placeholder.png'} style={{ width: '100%', height: '100%' }} />,
+      <img src={process.env.PUBLIC_URL + '/images/warning_icon.png'} style={{ width: '20%', height: '20%' }} />,
       (event: React.MouseEvent, imageState: number) => {
-        console.log(imageState);
+        this.gcoTestImageWrapper2Business.changeSrc("http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=0", "주소 변경 이미지");
       }
     );
 

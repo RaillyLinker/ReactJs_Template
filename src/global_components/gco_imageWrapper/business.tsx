@@ -44,7 +44,12 @@ class Business extends ComponentBusinessBasic {
     onClickListener: (event: React.MouseEvent, imageState: number) => void
   ) {
     super(parentComponentBusiness);
-    this.imageSrc = imageSrc;
+    if (imageSrc === "") {
+      // imageSrc 는 "" 를 허용하지 않으므로 "/" 로 변경
+      this.imageSrc = "/";
+    } else {
+      this.imageSrc = imageSrc;
+    }
     this.imageAlt = imageAlt;
     this.loadingElement = loadingElement;
     this.loadingFailedElement = loadingFailedElement;
@@ -75,19 +80,24 @@ class Business extends ComponentBusinessBasic {
   //----------------------------------------------------------------------------
   // [public 함수]
   // (이미지 태그 콜백)
+  // 이미지 로딩 완료
   imgOnLoad = () => {
+    // 완료 상태로 변경
     this.imageState = 1;
     this.reRender();
   }
 
+  // 이미지 로딩 실패
   imgOnError = () => {
     if (this.imageSrc === "") {
+      // 이미지 리로드를 위하여 임의로 에러 발생시 => 임시 저장한 원래 src 로딩
       this.imageState = 0;
       this.imageSrc = this.imageSrcTemp;
       this.reRender();
       return
     }
 
+    // 에러 상태로 변경
     this.imageState = -1;
     this.reRender();
   }
@@ -101,7 +111,10 @@ class Business extends ComponentBusinessBasic {
   // 이미지를 다시 this.imageState = 0 에서부터 this.imageState = 1 이나 this.imageState = -1 까지 불러오기
   reload = () => {
     if (this.imageSrc !== "") {
+      // 이미지 리로드 처리중이 아닌 경우
+      // 이미지 원래 src 저장
       this.imageSrcTemp = this.imageSrc;
+      // 재 로딩을 위하여 임의로 에러가 발생하도록 처리
       this.imageSrc = "";
       this.reRender();
     }
@@ -109,8 +122,10 @@ class Business extends ComponentBusinessBasic {
 
   // (이미지 변경)
   // 이미지 src 를 변경하여 리로드
-  changeSrc = (src: string) => {
-    // todo
+  changeSrc = (src: string, alt: string) => {
+    this.imageSrc = src;
+    this.imageAlt = alt;
+    this.reload();
   }
 
 
