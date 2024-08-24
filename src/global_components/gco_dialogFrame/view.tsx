@@ -40,6 +40,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
       {props.children}
 
       <dialog
+        id={styles.Dialog}
         ref={mainBusiness.dialogRef}
         onClick={
           // 다이얼로그 외곽 클릭
@@ -57,8 +58,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
               mainBusiness.dialogBusiness.onTouchDialogBackground(false);
             }
           }
-        }
-        style={{ backgroundColor: 'transparent', outline: 'none', border: 'none' }}>
+        }>
         <div onClick={(event) => { event.stopPropagation(); }}>
           <mainBusiness.dialogView business={mainBusiness.dialogBusiness!} />
         </div>

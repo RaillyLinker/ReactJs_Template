@@ -40,12 +40,13 @@ class Business extends PageBusinessBasic {
   gcoTestImageWrapper1Business: GcoImageWrapperBusiness =
     new GcoImageWrapperBusiness(
       this,
-      "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=3",
+      "http://127.0.0.1:8080/service1/tk/v1/file-test/client-image-test?delayTimeSecond=2",
       "로딩 테스트 이미지",
       <div>Loading...</div>,
       <div>Error!</div>,
       (event: React.MouseEvent, imageState: number) => {
         console.log(imageState);
+        this.gcoTestImageWrapper1Business.reload();
       }
     );
 

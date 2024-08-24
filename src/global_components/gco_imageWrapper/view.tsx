@@ -44,14 +44,8 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
       <img
         src={mainBusiness.imageSrc}
         alt={mainBusiness.imageAlt}
-        onLoad={() => {
-          mainBusiness.imageState = 1;
-          mainBusiness.reRender();
-        }}
-        onError={() => {
-          mainBusiness.imageState = -1;
-          mainBusiness.reRender();
-        }}
+        onLoad={mainBusiness.imgOnLoad}
+        onError={mainBusiness.imgOnError}
         style={{ display: mainBusiness.imageState === 0 || mainBusiness.imageState === -1 ? 'none' : 'block', width: '100%', height: '100%' }}
       />
     </div>

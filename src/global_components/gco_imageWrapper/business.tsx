@@ -27,6 +27,8 @@ class Business extends ComponentBusinessBasic {
   // (외부 주입 클릭 리스너)
   onClickListener: (event: React.MouseEvent, imageState: number) => void;
 
+  imageSrcTemp: string = "";
+
 
 
   //----------------------------------------------------------------------------
@@ -72,9 +74,43 @@ class Business extends ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (이미지 태그 콜백)
+  imgOnLoad = () => {
+    this.imageState = 1;
+    this.reRender();
+  }
+
+  imgOnError = () => {
+    if (this.imageSrc === "") {
+      this.imageState = 0;
+      this.imageSrc = this.imageSrcTemp;
+      this.reRender();
+      return
+    }
+
+    this.imageState = -1;
+    this.reRender();
+  }
+
   // (컴포넌트 클릭 리스너)
   onClick = (event: React.MouseEvent) => {
     this.onClickListener(event, this.imageState);
+  }
+
+  // (이미지 리로드)
+  // 이미지를 다시 this.imageState = 0 에서부터 this.imageState = 1 이나 this.imageState = -1 까지 불러오기
+  reload = () => {
+    if (this.imageSrc !== "") {
+      this.imageSrcTemp = this.imageSrc;
+      this.imageSrc = "";
+      this.reRender();
+    }
+  }
+
+  // (이미지 변경)
+  // 이미지 src 를 변경하여 리로드
+  changeSrc = (src: string) => {
+    // todo
   }
 
 
