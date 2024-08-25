@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { SpwTemplate, SpwTemplateVo } from '../../a_template/spw_template';
+import { SpwTest, SpwTestVo } from '../../repositories/spws/spw_test';
+import { isNumber } from '../../global_functions/gf_my_functions';
 
 
 // [비즈니스 클래스]
@@ -36,7 +38,7 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (Base64 테스트 암호화할 평문 입력창)
+  // (SpwTemplate 값 입력창)
   SpwTemplateInputValue: string = "";
   onChangeSpwTemplateInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.SpwTemplateInputValue = event.target.value;
@@ -45,6 +47,16 @@ class Business extends PageBusinessBasic {
 
   // (SpwTemplate 값)
   spwTemplateValue: string = "";
+
+  // (SpwTest 값 입력창)
+  SpwTestInputValue: string = "";
+  onChangeSpwTestInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.SpwTestInputValue = event.target.value;
+    this.reRender();
+  }
+
+  // (SpwTest 값)
+  spwTestValue: string = "";
 
 
   //----------------------------------------------------------------------------
@@ -84,7 +96,8 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    this.getSpwValue();
+    this.getSpwTemplateValue();
+    this.getSpwTestValue();
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -101,25 +114,49 @@ class Business extends PageBusinessBasic {
   // (SpwTemplate 값 저장)
   saveSpwTemplate = () => {
     SpwTemplate.set(new SpwTemplateVo(this.SpwTemplateInputValue));
-    this.getSpwValue();
+    this.getSpwTemplateValue();
 
   }
 
   // (SpwTemplate 값 삭제)
   deleteSpwTemplate = () => {
     SpwTemplate.set(null);
-    this.getSpwValue();
+    this.getSpwTemplateValue();
+  }
+
+  // (SpwTest 값 저장)
+  saveSpwTest = () => {
+    if (isNumber(this.SpwTestInputValue)) {
+      SpwTest.set(new SpwTestVo(Number(this.SpwTestInputValue)));
+      this.getSpwTestValue();
+    }
+  }
+
+  // (SpwTemplate 값 삭제)
+  deleteSpwTest = () => {
+    SpwTest.set(null);
+    this.getSpwTestValue();
   }
 
 
   //----------------------------------------------------------------------------
   // [private 함수]
-  private getSpwValue = () => {
+  private getSpwTemplateValue = () => {
     const spwTemplateValue = SpwTemplate.get();
     if (spwTemplateValue === null) {
       this.spwTemplateValue = "null";
     } else {
       this.spwTemplateValue = spwTemplateValue.sampleString;
+    }
+    this.reRender();
+  }
+
+  private getSpwTestValue = () => {
+    const spwTestValue = SpwTest.get();
+    if (spwTestValue === null) {
+      this.spwTestValue = "null";
+    } else {
+      this.spwTestValue = spwTestValue.testNumber.toString();
     }
     this.reRender();
   }

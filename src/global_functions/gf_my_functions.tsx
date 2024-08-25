@@ -36,3 +36,15 @@ export function generateRandomString(length: number): string {
 
     return result;
 }
+
+// (string 을 정수로 변환 가능한지 확인)
+export function isInteger(value: string): boolean {
+    const num = Number(value);
+    return !isNaN(num);
+}
+
+// (string 을 실수로 변환 가능한지 확인)
+export function isNumber(value: string): boolean {
+    const num = parseFloat(value);
+    return !isNaN(num);
+}

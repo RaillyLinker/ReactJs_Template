@@ -131,6 +131,21 @@ const View: React.FC = () => {
               <button id={styles.SpwTemplateDeleteButton} onClick={mainBusiness.deleteSpwTemplate}>값 삭제</button>
             </div>
           </div>
+
+          <div id={styles.SpwTestContainer}>
+            <h2>spw_test</h2>
+            <div id={styles.SpwTestValueLabel} >값 :</div>
+            <div id={styles.SpwTestValue} >{"{"} testNumber : {mainBusiness.spwTestValue} {"}"} </div>
+
+            <div id={styles.SpwTestInputValueLabel} >입력값 : </div>
+            <div id={styles.SpwTestInputValueGroup}>
+              <input type="number" id={styles.SpwTestInputValue} placeholder="숫자 입력" value={mainBusiness.SpwTestInputValue} onChange={mainBusiness.onChangeSpwTestInputValue} />
+            </div>
+            <div id={styles.SpwTestButtonContainer}>
+              <button id={styles.SpwTestSaveButton} onClick={mainBusiness.saveSpwTest}>값 저장</button>
+              <button id={styles.SpwTestDeleteButton} onClick={mainBusiness.deleteSpwTest}>값 삭제</button>
+            </div>
+          </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
             rtl={mainBusiness.toastRightToLeftLayout}

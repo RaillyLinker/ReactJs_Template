@@ -1,12 +1,12 @@
-import { aes256Encrypt, aes256Decrypt } from '../global_functions/gf_crypto';
+import { aes256Encrypt, aes256Decrypt } from '../../global_functions/gf_crypto';
 
 
 // [Shared Preference Wrapper(SPW) 클래스]
-export class SpwTemplate {
+export class SpwTest {
     // (전역 키 이름)
     // !!!전역 키 이름 설정!!!
     // 적용 구역이 전역이므로 중복되지 않도록 spws 안의 파일명을 적을 것
-    static globalKeyName = "spw_template";
+    static globalKeyName = "spw_test";
 
     // (저장 데이터 암호 설정)
     // !!!AES256 에서 사용할 secretKey, secretIv 설정!!!
@@ -18,7 +18,7 @@ export class SpwTemplate {
     static secretIv = "aaaaaaaaaabbbbbb";
 
     // (SPW 값 가져오기)
-    static get(): SpwTemplateVo | null {
+    static get(): SpwTestVo | null {
         // 키를 사용하여 저장된 jsonString 가져오기
         const savedJsonString = localStorage.getItem(this.globalKeyName) || "";
 
@@ -33,7 +33,7 @@ export class SpwTemplate {
                 // Map 을 Object 로 변경
                 const map = JSON.parse(decryptedJsonString);
                 // !!!map 변수명 변경!!!
-                const resultObject = new SpwTemplateVo(map.sampleString);
+                const resultObject = new SpwTestVo(map.testNumber);
                 return resultObject;
             } catch (e) {
                 // 복호화시 에러가 난 경우를 가정
@@ -47,14 +47,14 @@ export class SpwTemplate {
     }
 
     // (SPW 값 저장하기)
-    static async set(value: SpwTemplateVo | null): Promise<void> {
+    static async set(value: SpwTestVo | null): Promise<void> {
         if (value === null) {
             // 값을 null로 설정
             localStorage.setItem(this.globalKeyName, "");
         } else {
             // Object 를 Map 으로 변경
             // !!!map 변수 할당!!!
-            const map = { sampleString: value.sampleString };
+            const map = { testNumber: value.testNumber };
 
             // 값 암호화
             const encryptedJsonString = aes256Encrypt(JSON.stringify(map), this.secretKey, this.secretIv);
@@ -66,11 +66,11 @@ export class SpwTemplate {
 }
 
 // !!!저장 정보 데이터 형태 작성!!!
-export class SpwTemplateVo {
-    constructor(sampleString: string) {
-        this.sampleString = sampleString;
+export class SpwTestVo {
+    constructor(testNumber: number) {
+        this.testNumber = testNumber;
     }
 
     // 샘플 int 데이터
-    sampleString: string
+    testNumber: number
 }
