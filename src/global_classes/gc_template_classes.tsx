@@ -1,6 +1,7 @@
 import { navigate } from '../app_router';
 import { NavigateFunction } from 'react-router-dom';
 import GcoDialogFrameBusiness from '../global_components/gco_dialogFrame/business';
+import { AxiosResponse } from 'axios';
 
 
 // [템플릿 전용 클래스 모음]
@@ -142,4 +143,37 @@ export interface DialogProps<Business extends DialogBusinessBasic> {
   // 위와 같이 태그와 태그 사이에 입력한 컴포넌트는 여기서 받습니다.
   // 만약 <MyTag /> 이렇게 태그 사이를 설정하지 않았다면 null 로 받습니다.
   children?: React.ReactNode;
+}
+
+// (네트워크 응답)
+export class NetworkResponse<ResponseHeader, ResponseBody> {
+  constructor(
+    responseOk: NetworkResponseOk<ResponseHeader, ResponseBody> | null,
+    error: unknown | null
+  ) {
+    this.responseOk = responseOk;
+    this.error = error;
+  }
+
+  // 에러가 발생하지 않은 경우 응답 정보
+  responseOk: NetworkResponseOk<ResponseHeader, ResponseBody> | null;
+  // 에러 발생 정보
+  error: unknown | null;
+}
+
+// (OK 일 때 네트워크 응답)
+export class NetworkResponseOk<ResponseHeader, ResponseBody> {
+  constructor(
+    statusCode: number,
+    responseHeader: ResponseHeader | null,
+    responseBody: ResponseBody | null
+  ) {
+    this.statusCode = statusCode;
+    this.responseHeader = responseHeader;
+    this.responseBody = responseBody;
+  }
+
+  statusCode: number;
+  responseHeader: ResponseHeader | null;
+  responseBody: ResponseBody | null;
 }

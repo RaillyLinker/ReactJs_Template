@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import { getService1TkV1RequestTestGetRequestAsync } from '../../repositories/network/apis/api_mainServer';
 
 
 // [비즈니스 클래스]
@@ -73,6 +74,24 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // todo 완료후 삭제
+    getService1TkV1RequestTestGetRequestAsync(
+      {},
+      {
+        "queryParamString": "test",
+        "queryParamStringNullable": null,
+        "queryParamInt": 10,
+        "queryParamIntNullable": null,
+        "queryParamDouble": 10.1,
+        "queryParamDoubleNullable": null,
+        "queryParamBoolean": true,
+        "queryParamBooleanNullable": null,
+        "queryParamStringList": ["test"],
+        "queryParamStringListNullable": null
+      }
+    ).then((response) => {
+      console.log(response)
+    });
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
