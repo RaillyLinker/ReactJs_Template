@@ -2,6 +2,7 @@ import { mainServerRequestObj } from "../network_repositories";
 import { NetworkResponse, NetworkResponseOk } from "../../../global_classes/gc_template_classes";
 import { isDebugMode } from "../../../global_data/gd_const_config";
 import qs from 'qs';
+import qstr from 'query-string';
 
 
 // (Get 요청 테스트 (Query Parameter))
@@ -170,4 +171,97 @@ export type PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBo
     "requestBodyBooleanNullable": boolean | null;
     "requestBodyStringList": string[];
     "requestBodyStringListNullable": string[] | null;
+}
+
+
+// (Post 요청 테스트 (x-www-form-urlencoded))
+export async function postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsync(
+    requestHeader: PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        // requestHeader에 'Content-Type'을 추가합니다.
+        const combinedRequestHeader = {
+            ...requestHeader,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        };
+
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+                serverUrl,
+                qstr.stringify(requestBody),
+                {
+                    headers: combinedRequestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        networkError = error;
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+}
+
+export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
 }
