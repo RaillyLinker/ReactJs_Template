@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/react-window": "^1.8.8",
-    "@types/sockjs-client": "^1.5.4"
+    "@types/sockjs-client": "^1.5.4",
+    "axios-logger": "^2.8.1"
   }
 }
