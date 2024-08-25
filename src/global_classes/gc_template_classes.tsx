@@ -154,10 +154,14 @@ export class NetworkResponse<ResponseHeader, ResponseBody> {
     this.error = error;
   }
 
-  // 에러가 발생하지 않은 경우 응답 정보
+  // 네트워크 에러가 발생하지 않은 경우 응답 정보(status 가 무엇이 되었건 응답은 받은 경우)
   responseOk: NetworkResponseOk<ResponseHeader, ResponseBody> | null;
   // 에러 발생 정보
   error: unknown | null;
+
+  // responseOk 와 error 는 동시에 같이 존재할 수 없으며, 반드시 하나가 not null 이고 나머지는 null 입니다.
+  // 고로 응답 처리를 할 때에는 error 가 존재하는지를 먼저 살펴서 존재한다면 네트워크 에러로 간주하고,
+  // error 가 null 이라면 responseOk 에서 status 코드별 처리를 하면 됩니다.
 }
 
 // (OK 일 때 네트워크 응답)

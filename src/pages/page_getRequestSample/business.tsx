@@ -89,8 +89,8 @@ class Business extends PageBusinessBasic {
         "queryParamStringList": ["test"],
         "queryParamStringListNullable": null
       }
-    ).then((response) => {
-      console.log(response)
+    ).then((requestResult) => {
+      console.log(requestResult)
     });
   }
 

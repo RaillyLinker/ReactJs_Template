@@ -3,6 +3,7 @@ import { NetworkResponse, NetworkResponseOk } from "../../../global_classes/gc_t
 import { isDebugMode } from "../../../global_data/gd_const_config";
 import qs from 'qs';
 import qstr from 'query-string';
+import axios from "axios";
 
 
 // (Get 요청 테스트 (Query Parameter))
@@ -39,12 +40,23 @@ export async function getService1TkV1RequestTestGetRequestAsync(
             response.status,
             // !!!응답 헤더 매핑!!!
             {
-                "conten-type": response.headers["content-type"]
+                "content-type": response.headers["content-type"]
             },
             response.data
         );
     } catch (error) {
-        networkError = error;
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
     }
 
     return new NetworkResponse<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
@@ -70,7 +82,7 @@ export type GetService1TkV1RequestTestGetRequestAsyncRequestQueryType = {
 }
 
 export type GetService1TkV1RequestTestGetRequestAsyncResponseHeader = {
-    "conten-type": string;
+    "content-type": string;
 }
 
 export type GetService1TkV1RequestTestGetRequestAsyncResponseBody = {
@@ -128,7 +140,18 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonAsync
             response.data
         );
     } catch (error) {
-        networkError = error;
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
     }
 
     return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
@@ -221,7 +244,18 @@ export async function postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAs
             response.data
         );
     } catch (error) {
-        networkError = error;
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
     }
 
     return new NetworkResponse<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(

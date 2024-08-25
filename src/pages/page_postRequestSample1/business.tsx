@@ -90,8 +90,8 @@ class Business extends PageBusinessBasic {
         "requestBodyStringList": ["test"],
         "requestBodyStringListNullable": null
       }
-    ).then((response) => {
-      console.log(response)
+    ).then((requestResult) => {
+      console.log(requestResult)
     });
   }
 
