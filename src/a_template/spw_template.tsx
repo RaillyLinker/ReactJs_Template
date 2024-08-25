@@ -33,7 +33,7 @@ export class SpwTemplate {
                 // Map 을 Object 로 변경
                 const map = JSON.parse(decryptedJsonString);
                 // !!!map 변수명 변경!!!
-                const resultObject = new SpwTemplateVo(map.sampleString);
+                const resultObject: SpwTemplateVo = { "sampleString": map.sampleString };
                 return resultObject;
             } catch (e) {
                 // 복호화시 에러가 난 경우를 가정
@@ -66,11 +66,7 @@ export class SpwTemplate {
 }
 
 // !!!저장 정보 데이터 형태 작성!!!
-export class SpwTemplateVo {
-    constructor(sampleString: string) {
-        this.sampleString = sampleString;
-    }
-
+export type SpwTemplateVo = {
     // 샘플 int 데이터
-    sampleString: string
+    "sampleString": string
 }

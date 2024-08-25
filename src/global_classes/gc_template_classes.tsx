@@ -1,7 +1,6 @@
 import { navigate } from '../app_router';
 import { NavigateFunction } from 'react-router-dom';
 import GcoDialogFrameBusiness from '../global_components/gco_dialogFrame/business';
-import { AxiosResponse } from 'axios';
 
 
 // [템플릿 전용 클래스 모음]

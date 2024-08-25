@@ -33,7 +33,7 @@ export class SpwTest {
                 // Map 을 Object 로 변경
                 const map = JSON.parse(decryptedJsonString);
                 // !!!map 변수명 변경!!!
-                const resultObject = new SpwTestVo(map.testNumber);
+                const resultObject: SpwTestVo = { "testNumber": map.testNumber };
                 return resultObject;
             } catch (e) {
                 // 복호화시 에러가 난 경우를 가정
@@ -66,11 +66,7 @@ export class SpwTest {
 }
 
 // !!!저장 정보 데이터 형태 작성!!!
-export class SpwTestVo {
-    constructor(testNumber: number) {
-        this.testNumber = testNumber;
-    }
-
+export type SpwTestVo = {
     // 샘플 int 데이터
-    testNumber: number
+    "testNumber": number
 }

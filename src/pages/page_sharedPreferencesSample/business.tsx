@@ -113,7 +113,7 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (SpwTemplate 값 저장)
   saveSpwTemplate = () => {
-    SpwTemplate.set(new SpwTemplateVo(this.SpwTemplateInputValue));
+    SpwTemplate.set({ "sampleString": this.SpwTemplateInputValue });
     this.getSpwTemplateValue();
 
   }
@@ -127,7 +127,7 @@ class Business extends PageBusinessBasic {
   // (SpwTest 값 저장)
   saveSpwTest = () => {
     if (isNumber(this.SpwTestInputValue)) {
-      SpwTest.set(new SpwTestVo(Number(this.SpwTestInputValue)));
+      SpwTest.set({ "testNumber": Number(this.SpwTestInputValue) });
       this.getSpwTestValue();
     }
   }

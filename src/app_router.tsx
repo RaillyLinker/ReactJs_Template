@@ -35,6 +35,7 @@ import PageStringToImageSample from './pages/page_stringToImageSample/view';
 import PageSimpleDrawSample from './pages/page_simpleDrawSample/view';
 import PageComponentToImageSample from './pages/page_componentToImageSample/view';
 import PageGetRequestSample from './pages/page_getRequestSample/view';
+import PagePostRequestSample1 from './pages/page_postRequestSample1/view';
 
 
 // [라우터 클래스]
@@ -69,6 +70,7 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list" element={<PageNetworkSampleList />} />
       <Route path="/network-sample-list/basic-network-request-sample" element={<PageBasicNetworkRequestSampleList />} />
       <Route path="/network-sample-list/basic-network-request-sample/get-request-sample" element={<PageGetRequestSample />} />
+      <Route path="/network-sample-list/basic-network-request-sample/post-request-sample1" element={<PagePostRequestSample1 />} />
       <Route path="/network-sample-list/streaming-sample" element={<PageStreamingSampleList />} />
       <Route path="/network-sample-list/streaming-sample/video-streaming-sample" element={<PageVideoStreamingSample />} />
       <Route path="/network-sample-list/streaming-sample/audio-streaming-sample" element={<PageAudioStreamingSample />} />

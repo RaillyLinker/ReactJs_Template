@@ -5,7 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
-import { getService1TkV1RequestTestGetRequestAsync } from '../../repositories/network/apis/api_mainServer';
+import { postService1TkV1RequestTestPostRequestApplicationJsonAsync, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncRequestBody } from '../../repositories/network/apis/api_mainServer';
 
 
 // [비즈니스 클래스]
@@ -26,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Get 메소드 요청 샘플");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Post 메소드 요청 샘플 1 (application/json)");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -75,19 +75,20 @@ class Business extends PageBusinessBasic {
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
     // todo 완료후 삭제
-    getService1TkV1RequestTestGetRequestAsync(
+    postService1TkV1RequestTestPostRequestApplicationJsonAsync(
+      {},
       {},
       {
-        "queryParamString": "test",
-        "queryParamStringNullable": null,
-        "queryParamInt": 10,
-        "queryParamIntNullable": null,
-        "queryParamDouble": 10.1,
-        "queryParamDoubleNullable": null,
-        "queryParamBoolean": true,
-        "queryParamBooleanNullable": null,
-        "queryParamStringList": ["test"],
-        "queryParamStringListNullable": null
+        "requestBodyString": "test",
+        "requestBodyStringNullable": null,
+        "requestBodyInt": 10,
+        "requestBodyIntNullable": null,
+        "requestBodyDouble": 10.1,
+        "requestBodyDoubleNullable": null,
+        "requestBodyBoolean": true,
+        "requestBodyBooleanNullable": null,
+        "requestBodyStringList": ["test"],
+        "requestBodyStringListNullable": null
       }
     ).then((response) => {
       console.log(response)
