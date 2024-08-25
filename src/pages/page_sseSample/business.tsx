@@ -5,7 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
-import ky from 'ky';
+import axios from 'axios';
 
 
 // [비즈니스 클래스]
@@ -104,7 +104,8 @@ class Business extends PageBusinessBasic {
   // 버튼을 누르면 서버로 요청이 가고, 서버는 SSE 이벤트를 발행합니다.
   handleEventTriggerClick = async () => {
     try {
-      await ky.post('http://127.0.0.1:8080/service1/tk/v1/request-test/sse-test/event-trigger');
+      await axios.post('http://127.0.0.1:8080/service1/tk/v1/request-test/sse-test/event-trigger');
+      console.log('Event triggered successfully');
     } catch (error) {
       console.error('Failed to trigger event', error);
     }

@@ -1,4 +1,4 @@
-import ky from 'ky';
+import axios from 'axios';
 
 
 // [전역 함수 작성 파일]
@@ -6,11 +6,13 @@ import ky from 'ky';
 // (URL 을 입력하면 파일 다운로드)
 export async function downloadFile(url: string, filename: string) {
     try {
-        // ky를 사용하여 파일 데이터를 가져옵니다.
-        const response = await ky.get(url);
+        // axios를 사용하여 파일 데이터를 가져옵니다.
+        const response = await axios.get(url, {
+            responseType: 'blob' // 응답 데이터를 Blob 형태로 처리
+        });
 
         // 응답을 Blob 형태로 변환합니다.
-        const blob = await response.blob();
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
 
         // Blob URL을 생성하고 다운로드 링크를 만들어 클릭합니다.
         const link = document.createElement('a');
