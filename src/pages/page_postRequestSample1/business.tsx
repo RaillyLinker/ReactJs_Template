@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { postService1TkV1RequestTestPostRequestApplicationJsonAsync } from '../../repositories/network/apis/api_mainServer';
+import DialogInfo from '../../dialog_components/dialog_info/view';
+import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 
 
 // [비즈니스 클래스]
@@ -35,6 +37,20 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
+
+  // (네트워크 요청 바디)
+  requestBody = {
+    "requestBodyString": "test",
+    "requestBodyStringNullable": null,
+    "requestBodyInt": 10,
+    "requestBodyIntNullable": null,
+    "requestBodyDouble": 10.1,
+    "requestBodyDoubleNullable": null,
+    "requestBodyBoolean": true,
+    "requestBodyBooleanNullable": null,
+    "requestBodyStringList": ["test"],
+    "requestBodyStringListNullable": null
+  };
 
 
   //----------------------------------------------------------------------------
@@ -74,25 +90,6 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    // todo 완료후 삭제
-    postService1TkV1RequestTestPostRequestApplicationJsonAsync(
-      {},
-      {},
-      {
-        "requestBodyString": "test",
-        "requestBodyStringNullable": null,
-        "requestBodyInt": 10,
-        "requestBodyIntNullable": null,
-        "requestBodyDouble": 10.1,
-        "requestBodyDoubleNullable": null,
-        "requestBodyBoolean": true,
-        "requestBodyBooleanNullable": null,
-        "requestBodyStringList": ["test"],
-        "requestBodyStringListNullable": null
-      }
-    ).then((requestResult) => {
-      console.log(requestResult)
-    });
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -106,6 +103,44 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (네트워크 요청 버튼 클릭)
+  onClickRequest = async () => {
+    const requestResult = await postService1TkV1RequestTestPostRequestApplicationJsonAsync(
+      {},
+      {},
+      this.requestBody
+    );
+
+    if (requestResult.responseOk === null) {
+      this.gcoDialogFrameBusiness.showDialog(
+        false,
+        DialogInfo,
+        new DialogInfoBusiness(
+          this.gcoDialogFrameBusiness,
+          this,
+          "요청 결과",
+          "요청 경로 :\n" +
+          "/service1/tk/v1/request-test/post-request-application-json\n\n" +
+          "에러 메시지 :\n" +
+          JSON.stringify(requestResult.error, null, 2),
+          () => { }));
+    } else {
+      this.gcoDialogFrameBusiness.showDialog(
+        false,
+        DialogInfo,
+        new DialogInfoBusiness(
+          this.gcoDialogFrameBusiness,
+          this,
+          "요청 결과",
+          "요청 경로 :\n" +
+          "/service1/tk/v1/request-test/post-request-application-json\n\n" +
+          "응답 코드 :\n" +
+          requestResult.responseOk.statusCode + "\n\n" +
+          "응답 바디 :\n" +
+          JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+          () => { }));
+    }
+  }
 
 
   //----------------------------------------------------------------------------

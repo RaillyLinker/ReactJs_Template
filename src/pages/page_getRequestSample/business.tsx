@@ -103,8 +103,8 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (네트워크 요청 버튼 클릭)
   onClickRequest = async () => {
-
     const requestResult = await getService1TkV1RequestTestGetRequestAsync(
       {},
       this.requestQuery

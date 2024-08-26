@@ -118,7 +118,11 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <div id={styles.MainContent}>
+              <h3>요청 폼 파라미터</h3>
+              <div id={styles.RequestQuery}>{JSON.stringify(mainBusiness.requestForm, null, 2)}</div>
+              <button id={styles.RequestButton} onClick={mainBusiness.onClickRequest}>네트워크 요청</button>
+            </div>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
