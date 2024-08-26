@@ -127,7 +127,7 @@ class Business extends PageBusinessBasic {
           this,
           "요청 결과",
           "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+          "/service1/tk/v1/request-test/post-request-multipart-form-data2\n\n" +
           "에러 메시지 :\n" +
           JSON.stringify(requestResult.error, null, 2),
           () => { }));
@@ -140,7 +140,7 @@ class Business extends PageBusinessBasic {
           this,
           "요청 결과",
           "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+          "/service1/tk/v1/request-test/post-request-multipart-form-data2\n\n" +
           "응답 코드 :\n" +
           requestResult.responseOk.statusCode + "\n\n" +
           "응답 바디 :\n" +

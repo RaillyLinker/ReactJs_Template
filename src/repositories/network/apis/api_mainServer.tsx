@@ -623,3 +623,109 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRespons
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
 }
+
+
+// (Post 요청 테스트 (application-json, 객체 파라미터 포함))
+export async function postService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsync(
+    requestHeader: PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-application-json-with-object-param";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-application-json-with-object-param";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+                serverUrl,
+                requestBody,
+                {
+                    headers: requestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBody = {
+    "objectVo": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVo;
+    "objectVoList": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVo[];
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVo = {
+    "requestBodyString": string;
+    "requestBodyStringList": string[];
+    "subObjectVo": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVoSubObjectVo;
+    "subObjectVoList": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVoSubObjectVo[];
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVoSubObjectVo = {
+    "requestBodyString": string;
+    "requestBodyStringList": string[];
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody = {
+    "objectVo": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVo;
+    "objectVoList": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVo[];
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVo = {
+    "requestBodyString": string;
+    "requestBodyStringList": string[];
+    "subObjectVo": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVoSubObjectVo;
+    "subObjectVoList": PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVoSubObjectVo[];
+}
+
+export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBodyObjectVoSubObjectVo = {
+    "requestBodyString": string;
+    "requestBodyStringList": string[];
+}

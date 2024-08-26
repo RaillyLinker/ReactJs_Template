@@ -5,7 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
-import { postService1TkV1RequestTestPostRequestMultipartFormDataJsonAsync, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBody, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBodyJsonStringType } from '../../repositories/network/apis/api_mainServer';
+import { postService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsync } from '../../repositories/network/apis/api_mainServer';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 
@@ -28,7 +28,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Post 메소드 요청 샘플 4 (multipart/form-data - JsonString)");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Post 메소드 요청 샘플 1 (application/json)");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -38,21 +38,57 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (네트워크 요청 폼)
-  requestForm: PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBodyJsonStringType = {
-    "requestFormString": "test",
-    "requestFormStringNullable": null,
-    "requestFormInt": 10,
-    "requestFormIntNullable": null,
-    "requestFormDouble": 10.1,
-    "requestFormDoubleNullable": null,
-    "requestFormBoolean": true,
-    "requestFormBooleanNullable": null,
-    "requestFormStringList": ["test1", "test2"],
-    "requestFormStringListNullable": null
+  // (네트워크 요청 바디)
+  requestBody = {
+    "objectVo": {
+      "requestBodyString": "testString",
+      "requestBodyStringList": [
+        "testString1",
+        "testString2"
+      ],
+      "subObjectVo": {
+        "requestBodyString": "testString",
+        "requestBodyStringList": [
+          "testString1",
+          "testString2"
+        ]
+      },
+      "subObjectVoList": [
+        {
+          "requestBodyString": "testString",
+          "requestBodyStringList": [
+            "testString1",
+            "testString2"
+          ]
+        }
+      ]
+    },
+    "objectVoList": [
+      {
+        "requestBodyString": "testString",
+        "requestBodyStringList": [
+          "testString1",
+          "testString2"
+        ],
+        "subObjectVo": {
+          "requestBodyString": "testString",
+          "requestBodyStringList": [
+            "testString1",
+            "testString2"
+          ]
+        },
+        "subObjectVoList": [
+          {
+            "requestBodyString": "testString",
+            "requestBodyStringList": [
+              "testString1",
+              "testString2"
+            ]
+          }
+        ]
+      }
+    ]
   };
-
-  requestFormImple: PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBody | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -100,7 +136,6 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
-    this.requestFormImple = null;
   }
 
 
@@ -108,14 +143,10 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (네트워크 요청 버튼 클릭)
   onClickRequest = async () => {
-    if (this.requestFormImple === null) {
-      return;
-    }
-
-    const requestResult = await postService1TkV1RequestTestPostRequestMultipartFormDataJsonAsync(
+    const requestResult = await postService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsync(
       {},
       {},
-      this.requestFormImple
+      this.requestBody
     );
 
     if (requestResult.responseOk === null) {
@@ -127,7 +158,7 @@ class Business extends PageBusinessBasic {
           this,
           "요청 결과",
           "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/post-request-multipart-form-data-json\n\n" +
+          "/service1/tk/v1/request-test/post-request-application-json-with-object-param\n\n" +
           "에러 메시지 :\n" +
           JSON.stringify(requestResult.error, null, 2),
           () => { }));
@@ -140,7 +171,7 @@ class Business extends PageBusinessBasic {
           this,
           "요청 결과",
           "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/post-request-multipart-form-data-json\n\n" +
+          "/service1/tk/v1/request-test/post-request-application-json-with-object-param\n\n" +
           "응답 코드 :\n" +
           requestResult.responseOk.statusCode + "\n\n" +
           "응답 바디 :\n" +
@@ -148,20 +179,6 @@ class Business extends PageBusinessBasic {
           () => { }));
     }
   }
-
-  // (파일 선택)
-  handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0] || null;
-    if (selectedFile) {
-      this.requestFormImple = {
-        jsonString: JSON.stringify(this.requestForm),
-        multipartFile: selectedFile,
-        multipartFileNullable: null
-      }
-    } else {
-      this.requestFormImple = null;
-    }
-  };
 
 
   //----------------------------------------------------------------------------
