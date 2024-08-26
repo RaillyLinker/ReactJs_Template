@@ -5,7 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
-import { getService1TkV1RequestTestGetRequestAsync } from '../../repositories/network/apis/api_mainServer';
+import { postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsync } from '../../repositories/network/apis/api_mainServer';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 
@@ -28,7 +28,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Get 메소드 요청 샘플");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Post 메소드 요청 샘플 3 (multipart/form-data)");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -38,18 +38,18 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (네트워크 요청 쿼리)
-  requestQuery = {
-    "queryParamString": "test",
-    "queryParamStringNullable": null,
-    "queryParamInt": 10,
-    "queryParamIntNullable": null,
-    "queryParamDouble": 10.1,
-    "queryParamDoubleNullable": null,
-    "queryParamBoolean": true,
-    "queryParamBooleanNullable": null,
-    "queryParamStringList": ["test"],
-    "queryParamStringListNullable": null
+  // (네트워크 요청 폼)
+  requestForm = {
+    "requestFormString": "test",
+    "requestFormStringNullable": null,
+    "requestFormInt": 10,
+    "requestFormIntNullable": null,
+    "requestFormDouble": 10.1,
+    "requestFormDoubleNullable": null,
+    "requestFormBoolean": true,
+    "requestFormBooleanNullable": null,
+    "requestFormStringList": ["test"],
+    "requestFormStringListNullable": null
   };
 
 
@@ -105,41 +105,52 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (네트워크 요청 버튼 클릭)
   onClickRequest = async () => {
-    const requestResult = await getService1TkV1RequestTestGetRequestAsync(
-      {},
-      this.requestQuery
-    );
+    // const requestResult = await postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsync(
+    //   {},
+    //   {},
+    //   this.requestForm
+    // );
 
-    if (requestResult.responseOk === null) {
-      this.gcoDialogFrameBusiness.showDialog(
-        true,
-        DialogInfo,
-        new DialogInfoBusiness(
-          this.gcoDialogFrameBusiness,
-          this,
-          "요청 결과",
-          "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/get-request\n\n" +
-          "에러 메시지 :\n" +
-          JSON.stringify(requestResult.error, null, 2),
-          () => { }));
-    } else {
-      this.gcoDialogFrameBusiness.showDialog(
-        true,
-        DialogInfo,
-        new DialogInfoBusiness(
-          this.gcoDialogFrameBusiness,
-          this,
-          "요청 결과",
-          "요청 경로 :\n" +
-          "/service1/tk/v1/request-test/get-request\n\n" +
-          "응답 코드 :\n" +
-          requestResult.responseOk.statusCode + "\n\n" +
-          "응답 바디 :\n" +
-          JSON.stringify(requestResult.responseOk.responseBody, null, 2),
-          () => { }));
-    }
+    // if (requestResult.responseOk === null) {
+    //   this.gcoDialogFrameBusiness.showDialog(
+    //     true,
+    //     DialogInfo,
+    //     new DialogInfoBusiness(
+    //       this.gcoDialogFrameBusiness,
+    //       this,
+    //       "요청 결과",
+    //       "요청 경로 :\n" +
+    //       "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+    //       "에러 메시지 :\n" +
+    //       JSON.stringify(requestResult.error, null, 2),
+    //       () => { }));
+    // } else {
+    //   this.gcoDialogFrameBusiness.showDialog(
+    //     true,
+    //     DialogInfo,
+    //     new DialogInfoBusiness(
+    //       this.gcoDialogFrameBusiness,
+    //       this,
+    //       "요청 결과",
+    //       "요청 경로 :\n" +
+    //       "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+    //       "응답 코드 :\n" +
+    //       requestResult.responseOk.statusCode + "\n\n" +
+    //       "응답 바디 :\n" +
+    //       JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+    //       () => { }));
+    // }
   }
+
+  // (파일 선택)
+  handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    // setFile(selectedFile);
+    // setRequestForm(prev => ({
+    //   ...prev,
+    //   multipartFile: selectedFile || prev.multipartFile,
+    // }));
+  };
 
 
   //----------------------------------------------------------------------------

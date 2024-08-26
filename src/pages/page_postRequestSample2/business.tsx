@@ -113,7 +113,7 @@ class Business extends PageBusinessBasic {
 
     if (requestResult.responseOk === null) {
       this.gcoDialogFrameBusiness.showDialog(
-        false,
+        true,
         DialogInfo,
         new DialogInfoBusiness(
           this.gcoDialogFrameBusiness,
@@ -126,7 +126,7 @@ class Business extends PageBusinessBasic {
           () => { }));
     } else {
       this.gcoDialogFrameBusiness.showDialog(
-        false,
+        true,
         DialogInfo,
         new DialogInfoBusiness(
           this.gcoDialogFrameBusiness,
