@@ -881,3 +881,143 @@ export type PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader = {
 }
 
 export type PostService1TkV1RequestTestGenerateErrorAsyncResponseBody = {}
+
+
+// (text/string 반환 샘플)
+export async function getService1TkV1RequestTestReturnTextStringAsync(
+    requestHeader: GetService1TkV1RequestTestReturnTextStringAsyncRequestHeaderType,
+    requestQuery: GetService1TkV1RequestTestReturnTextStringAsyncRequestQueryType
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/return-text-string";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/return-text-string";
+    }
+
+    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        const response =
+            await mainServerRequestObj.get<string>(
+                serverUrl,
+                {
+                    headers: requestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type GetService1TkV1RequestTestReturnTextStringAsyncRequestHeaderType = {
+}
+
+export type GetService1TkV1RequestTestReturnTextStringAsyncRequestQueryType = {
+}
+
+export type GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader = {
+    "content-type": string;
+}
+
+
+// (text/html 반환 샘플)
+export async function getService1TkV1RequestTestReturnTextHtmlAsync(
+    requestHeader: GetService1TkV1RequestTestReturnTextHtmlAsyncRequestHeaderType,
+    requestQuery: GetService1TkV1RequestTestReturnTextHtmlAsyncRequestQueryType
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/return-text-html";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/return-text-html";
+    }
+
+    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        const response =
+            await mainServerRequestObj.get<string>(
+                serverUrl,
+                {
+                    headers: requestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type GetService1TkV1RequestTestReturnTextHtmlAsyncRequestHeaderType = {
+}
+
+export type GetService1TkV1RequestTestReturnTextHtmlAsyncRequestQueryType = {
+}
+
+export type GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader = {
+    "content-type": string;
+}

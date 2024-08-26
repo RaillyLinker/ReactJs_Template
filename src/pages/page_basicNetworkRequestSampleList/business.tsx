@@ -8,7 +8,7 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/busine
 import { downloadFile } from '../../global_functions/gf_my_functions';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
-import { postService1TkV1RequestTestGenerateErrorAsync } from '../../repositories/network/apis/api_mainServer';
+import { postService1TkV1RequestTestGenerateErrorAsync, getService1TkV1RequestTestReturnTextStringAsync, getService1TkV1RequestTestReturnTextHtmlAsync } from '../../repositories/network/apis/api_mainServer';
 
 
 // [비즈니스 클래스]
@@ -157,16 +157,82 @@ class Business extends PageBusinessBasic {
         uid: 9,
         itemTitle: "String 타입 응답 테스트",
         itemDescription: "text/string 타입의 응답값을 반환하는 API 에 대한 테스트",
-        onItemClicked: (): void => {
-          // todo
+        onItemClicked: async () => {
+          const requestResult = await getService1TkV1RequestTestReturnTextStringAsync(
+            {},
+            {}
+          );
+
+          if (requestResult.responseOk === null) {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/return-text-string\n\n" +
+                "에러 메시지 :\n" +
+                JSON.stringify(requestResult.error, null, 2),
+                () => { }));
+          } else {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/return-text-string\n\n" +
+                "응답 코드 :\n" +
+                requestResult.responseOk.statusCode + "\n\n" +
+                "응답 바디 :\n" +
+                JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+                () => { }));
+          }
         }
       },
       {
         uid: 10,
         itemTitle: "HTML 타입 응답 테스트",
         itemDescription: "text/html 타입의 응답값을 반환하는 API 에 대한 테스트",
-        onItemClicked: (): void => {
-          // todo
+        onItemClicked: async () => {
+          const requestResult = await getService1TkV1RequestTestReturnTextHtmlAsync(
+            {},
+            {}
+          );
+
+          if (requestResult.responseOk === null) {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/return-text-html\n\n" +
+                "에러 메시지 :\n" +
+                JSON.stringify(requestResult.error, null, 2),
+                () => { }));
+          } else {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/return-text-html\n\n" +
+                "응답 코드 :\n" +
+                requestResult.responseOk.statusCode + "\n\n" +
+                "응답 바디 :\n" +
+                JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+                () => { }));
+          }
         }
       },
       {
