@@ -48,7 +48,7 @@ class Business extends PageBusinessBasic {
     "requestBodyDoubleNullable": null,
     "requestBodyBoolean": true,
     "requestBodyBooleanNullable": null,
-    "requestBodyStringList": ["test"],
+    "requestBodyStringList": ["test1", "test2"],
     "requestBodyStringListNullable": null
   };
 

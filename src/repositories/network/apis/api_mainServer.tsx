@@ -4,6 +4,7 @@ import { isDebugMode } from "../../../global_data/gd_const_config";
 import qs from 'qs';
 import qstr from 'query-string';
 import axios from "axios";
+import { objectToFormData } from "../../../global_functions/gf_templateFunction";
 
 
 // (Get 요청 테스트 (Query Parameter))
@@ -327,37 +328,10 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataAsy
             'Content-Type': 'multipart/form-data',
         };
 
-        // !!!Form 데이터 매핑!!!
-        const formData = new FormData();
-        formData.append('requestFormString', requestBody.requestFormString);
-        if (requestBody.requestFormStringNullable) {
-            formData.append('requestFormStringNullable', requestBody.requestFormStringNullable);
-        }
-        formData.append('requestFormInt', requestBody.requestFormInt.toString());
-        if (requestBody.requestFormIntNullable) {
-            formData.append('requestFormIntNullable', requestBody.requestFormIntNullable.toString());
-        }
-        formData.append('requestFormDouble', requestBody.requestFormDouble.toString());
-        if (requestBody.requestFormDoubleNullable) {
-            formData.append('requestFormDoubleNullable', requestBody.requestFormDoubleNullable.toString());
-        }
-        formData.append('requestFormBoolean', requestBody.requestFormBoolean.toString());
-        if (requestBody.requestFormBooleanNullable) {
-            formData.append('requestFormBooleanNullable', requestBody.requestFormBooleanNullable.toString());
-        }
-        formData.append('requestFormStringList', JSON.stringify(requestBody.requestFormStringList));
-        if (requestBody.requestFormStringListNullable) {
-            formData.append('requestFormStringListNullable', JSON.stringify(requestBody.requestFormStringListNullable));
-        }
-        formData.append('multipartFile', requestBody.multipartFile);
-        if (requestBody.multipartFileNullable) {
-            formData.append('multipartFileNullable', requestBody.multipartFileNullable);
-        }
-
         const response =
             await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
                 serverUrl,
-                formData,
+                objectToFormData(requestBody),
                 {
                     headers: combinedRequestHeader,
                     params: requestQuery,

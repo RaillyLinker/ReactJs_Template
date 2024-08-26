@@ -48,7 +48,7 @@ class Business extends PageBusinessBasic {
     "queryParamDoubleNullable": null,
     "queryParamBoolean": true,
     "queryParamBooleanNullable": null,
-    "queryParamStringList": ["test"],
+    "queryParamStringList": ["test1", "test2"],
     "queryParamStringListNullable": null
   };
 

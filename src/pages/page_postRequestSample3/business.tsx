@@ -48,7 +48,7 @@ class Business extends PageBusinessBasic {
     "requestFormDoubleNullable": null,
     "requestFormBoolean": true,
     "requestFormBooleanNullable": null,
-    "requestFormStringList": ["test"],
+    "requestFormStringList": ["test1", "test2"],
     "requestFormStringListNullable": null
   };
 
