@@ -1,6 +1,7 @@
 import { navigate } from '../app_router';
 import { NavigateFunction } from 'react-router-dom';
 import GcoDialogFrameBusiness from '../global_components/gco_dialogFrame/business';
+import { AxiosResponseHeaders, RawAxiosResponseHeaders } from 'axios';
 
 
 // [템플릿 전용 클래스 모음]
@@ -145,9 +146,9 @@ export interface DialogProps<Business extends DialogBusinessBasic> {
 }
 
 // (네트워크 응답)
-export class NetworkResponse<ResponseHeader, ResponseBody> {
+export class NetworkResponse<ResponseBody> {
   constructor(
-    responseOk: NetworkResponseOk<ResponseHeader, ResponseBody> | null,
+    responseOk: NetworkResponseOk<ResponseBody> | null,
     error: unknown | null
   ) {
     this.responseOk = responseOk;
@@ -155,7 +156,7 @@ export class NetworkResponse<ResponseHeader, ResponseBody> {
   }
 
   // 네트워크 에러가 발생하지 않은 경우 응답 정보(status 가 무엇이 되었건 응답은 받은 경우)
-  responseOk: NetworkResponseOk<ResponseHeader, ResponseBody> | null;
+  responseOk: NetworkResponseOk<ResponseBody> | null;
   // 에러 발생 정보
   error: unknown | null;
 
@@ -165,10 +166,10 @@ export class NetworkResponse<ResponseHeader, ResponseBody> {
 }
 
 // (OK 일 때 네트워크 응답)
-export class NetworkResponseOk<ResponseHeader, ResponseBody> {
+export class NetworkResponseOk<ResponseBody> {
   constructor(
     statusCode: number,
-    responseHeader: ResponseHeader | null,
+    responseHeader: RawAxiosResponseHeaders | AxiosResponseHeaders,
     responseBody: ResponseBody | null
   ) {
     this.statusCode = statusCode;
@@ -177,6 +178,6 @@ export class NetworkResponseOk<ResponseHeader, ResponseBody> {
   }
 
   statusCode: number;
-  responseHeader: ResponseHeader | null;
+  responseHeader: RawAxiosResponseHeaders | AxiosResponseHeaders;
   responseBody: ResponseBody | null;
 }

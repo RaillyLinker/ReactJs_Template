@@ -22,7 +22,7 @@ export async function getService1TkV1RequestTestGetRequestAsync(
         serverUrl = "/service1/tk/v1/request-test/get-request";
     }
 
-    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -37,22 +37,16 @@ export async function getService1TkV1RequestTestGetRequestAsync(
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -60,7 +54,7 @@ export async function getService1TkV1RequestTestGetRequestAsync(
         }
     }
 
-    return new NetworkResponse<GetService1TkV1RequestTestGetRequestAsyncResponseHeader, GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
+    return new NetworkResponse<GetService1TkV1RequestTestGetRequestAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -80,10 +74,6 @@ export type GetService1TkV1RequestTestGetRequestAsyncRequestQueryType = {
     "queryParamBooleanNullable": boolean | null;
     "queryParamStringList": string[];
     "queryParamStringListNullable": string[] | null;
-}
-
-export type GetService1TkV1RequestTestGetRequestAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type GetService1TkV1RequestTestGetRequestAsyncResponseBody = {
@@ -116,7 +106,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonAsync
         serverUrl = "/service1/tk/v1/request-test/post-request-application-json";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -132,22 +122,16 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonAsync
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -155,7 +139,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonAsync
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -178,10 +162,6 @@ export type PostService1TkV1RequestTestPostRequestApplicationJsonAsyncRequestBod
     "requestBodyBooleanNullable": boolean | null;
     "requestBodyStringList": string[];
     "requestBodyStringListNullable": string[] | null;
-}
-
-export type PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBody = {
@@ -214,7 +194,7 @@ export async function postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAs
         serverUrl = "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -236,22 +216,16 @@ export async function postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAs
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -259,7 +233,7 @@ export async function postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAs
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader, PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -282,10 +256,6 @@ export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequest
     "requestFormBooleanNullable": boolean | null;
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
-}
-
-export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBody = {
@@ -318,7 +288,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataAsy
         serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -340,22 +310,16 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataAsy
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -363,7 +327,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataAsy
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -388,10 +352,6 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestB
     "requestFormStringListNullable": string[] | null;
     "multipartFile": File;
     "multipartFileNullable": File | null;
-}
-
-export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody = {
@@ -425,7 +385,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataJso
         serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data-json";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -447,22 +407,16 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataJso
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -470,7 +424,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormDataJso
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -499,10 +453,6 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequ
     "requestFormBooleanNullable": boolean | null;
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
-}
-
-export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody = {
@@ -535,7 +485,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormData2As
         serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data2";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -557,22 +507,16 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormData2As
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -580,7 +524,7 @@ export async function postService1TkV1RequestTestPostRequestMultipartFormData2As
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -605,10 +549,6 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequest
     "requestFormStringListNullable": string[] | null;
     "multipartFileList": File[];
     "multipartFileNullableList": File[] | null;
-}
-
-export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody = {
@@ -641,7 +581,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithO
         serverUrl = "/service1/tk/v1/request-test/post-request-application-json-with-object-param";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -657,22 +597,16 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithO
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -680,7 +614,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithO
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -707,10 +641,6 @@ export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParam
 export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncRequestBodyObjectVoSubObjectVo = {
     "requestBodyString": string;
     "requestBodyStringList": string[];
-}
-
-export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseHeader = {
-    "content-type": string;
 }
 
 export type PostService1TkV1RequestTestPostRequestApplicationJsonWithObjectParamAsyncResponseBody = {
@@ -747,7 +677,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithN
         serverUrl = "/service1/tk/v1/request-test/post-request-application-json-with-no-param";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -763,22 +693,16 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithN
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -786,7 +710,7 @@ export async function postService1TkV1RequestTestPostRequestApplicationJsonWithN
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseHeader, PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -799,10 +723,6 @@ export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyn
 }
 
 export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncRequestBody = {}
-
-export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseHeader = {
-    "content-type": string;
-}
 
 export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody = {}
 
@@ -823,7 +743,7 @@ export async function postService1TkV1RequestTestGenerateErrorAsync(
         serverUrl = "/service1/tk/v1/request-test/generate-error";
     }
 
-    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody> | null = null;
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseBody> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -839,22 +759,16 @@ export async function postService1TkV1RequestTestGenerateErrorAsync(
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -862,7 +776,7 @@ export async function postService1TkV1RequestTestGenerateErrorAsync(
         }
     }
 
-    return new NetworkResponse<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+    return new NetworkResponse<PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
         networkResponseOk,
         networkError
     );
@@ -875,10 +789,6 @@ export type PostService1TkV1RequestTestGenerateErrorAsyncRequestQueryType = {
 }
 
 export type PostService1TkV1RequestTestGenerateErrorAsyncRequestBody = {}
-
-export type PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader = {
-    "content-type": string;
-}
 
 export type PostService1TkV1RequestTestGenerateErrorAsyncResponseBody = {}
 
@@ -898,7 +808,7 @@ export async function getService1TkV1RequestTestReturnTextStringAsync(
         serverUrl = "/service1/tk/v1/request-test/return-text-string";
     }
 
-    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string> | null = null;
+    let networkResponseOk: NetworkResponseOk<string> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -913,22 +823,16 @@ export async function getService1TkV1RequestTestReturnTextStringAsync(
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+        networkResponseOk = new NetworkResponseOk<string>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+            networkResponseOk = new NetworkResponseOk<string>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -936,7 +840,7 @@ export async function getService1TkV1RequestTestReturnTextStringAsync(
         }
     }
 
-    return new NetworkResponse<GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader, string>(
+    return new NetworkResponse<string>(
         networkResponseOk,
         networkError
     );
@@ -946,10 +850,6 @@ export type GetService1TkV1RequestTestReturnTextStringAsyncRequestHeaderType = {
 }
 
 export type GetService1TkV1RequestTestReturnTextStringAsyncRequestQueryType = {
-}
-
-export type GetService1TkV1RequestTestReturnTextStringAsyncResponseHeader = {
-    "content-type": string;
 }
 
 
@@ -968,7 +868,7 @@ export async function getService1TkV1RequestTestReturnTextHtmlAsync(
         serverUrl = "/service1/tk/v1/request-test/return-text-html";
     }
 
-    let networkResponseOk: NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string> | null = null;
+    let networkResponseOk: NetworkResponseOk<string> | null = null;
     let networkError: unknown | null = null;
 
     try {
@@ -983,22 +883,16 @@ export async function getService1TkV1RequestTestReturnTextHtmlAsync(
                 }
             );
 
-        networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+        networkResponseOk = new NetworkResponseOk<string>(
             response.status,
-            // !!!응답 헤더 매핑!!!
-            {
-                "content-type": response.headers["content-type"]
-            },
+            response.headers,
             response.data
         );
     } catch (error) {
         if (axios.isAxiosError(error) && error.response !== undefined) {
-            networkResponseOk = new NetworkResponseOk<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+            networkResponseOk = new NetworkResponseOk<string>(
                 error.response.status,
-                // !!!응답 헤더 매핑!!!
-                {
-                    "content-type": error.response.headers["content-type"]
-                },
+                error.response.headers,
                 error.response.data
             );
         } else {
@@ -1006,7 +900,7 @@ export async function getService1TkV1RequestTestReturnTextHtmlAsync(
         }
     }
 
-    return new NetworkResponse<GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader, string>(
+    return new NetworkResponse<string>(
         networkResponseOk,
         networkError
     );
@@ -1016,8 +910,4 @@ export type GetService1TkV1RequestTestReturnTextHtmlAsyncRequestHeaderType = {
 }
 
 export type GetService1TkV1RequestTestReturnTextHtmlAsyncRequestQueryType = {
-}
-
-export type GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeader = {
-    "content-type": string;
 }
