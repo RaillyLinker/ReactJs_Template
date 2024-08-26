@@ -5,7 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
-import { postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsync } from '../../repositories/network/apis/api_mainServer';
+import { postService1TkV1RequestTestPostRequestMultipartFormDataAsync, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestBody } from '../../repositories/network/apis/api_mainServer';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 
@@ -51,6 +51,8 @@ class Business extends PageBusinessBasic {
     "requestFormStringList": ["test"],
     "requestFormStringListNullable": null
   };
+
+  requestFormImple: PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestBody | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -98,6 +100,7 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    this.requestFormImple = null;
   }
 
 
@@ -105,51 +108,59 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (네트워크 요청 버튼 클릭)
   onClickRequest = async () => {
-    // const requestResult = await postService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsync(
-    //   {},
-    //   {},
-    //   this.requestForm
-    // );
+    if (this.requestFormImple === null) {
+      return;
+    }
 
-    // if (requestResult.responseOk === null) {
-    //   this.gcoDialogFrameBusiness.showDialog(
-    //     true,
-    //     DialogInfo,
-    //     new DialogInfoBusiness(
-    //       this.gcoDialogFrameBusiness,
-    //       this,
-    //       "요청 결과",
-    //       "요청 경로 :\n" +
-    //       "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
-    //       "에러 메시지 :\n" +
-    //       JSON.stringify(requestResult.error, null, 2),
-    //       () => { }));
-    // } else {
-    //   this.gcoDialogFrameBusiness.showDialog(
-    //     true,
-    //     DialogInfo,
-    //     new DialogInfoBusiness(
-    //       this.gcoDialogFrameBusiness,
-    //       this,
-    //       "요청 결과",
-    //       "요청 경로 :\n" +
-    //       "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
-    //       "응답 코드 :\n" +
-    //       requestResult.responseOk.statusCode + "\n\n" +
-    //       "응답 바디 :\n" +
-    //       JSON.stringify(requestResult.responseOk.responseBody, null, 2),
-    //       () => { }));
-    // }
+    const requestResult = await postService1TkV1RequestTestPostRequestMultipartFormDataAsync(
+      {},
+      {},
+      this.requestFormImple
+    );
+
+    if (requestResult.responseOk === null) {
+      this.gcoDialogFrameBusiness.showDialog(
+        true,
+        DialogInfo,
+        new DialogInfoBusiness(
+          this.gcoDialogFrameBusiness,
+          this,
+          "요청 결과",
+          "요청 경로 :\n" +
+          "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+          "에러 메시지 :\n" +
+          JSON.stringify(requestResult.error, null, 2),
+          () => { }));
+    } else {
+      this.gcoDialogFrameBusiness.showDialog(
+        true,
+        DialogInfo,
+        new DialogInfoBusiness(
+          this.gcoDialogFrameBusiness,
+          this,
+          "요청 결과",
+          "요청 경로 :\n" +
+          "/service1/tk/v1/request-test/post-request-x-www-form-urlencoded\n\n" +
+          "응답 코드 :\n" +
+          requestResult.responseOk.statusCode + "\n\n" +
+          "응답 바디 :\n" +
+          JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+          () => { }));
+    }
   }
 
   // (파일 선택)
   handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
-    // setFile(selectedFile);
-    // setRequestForm(prev => ({
-    //   ...prev,
-    //   multipartFile: selectedFile || prev.multipartFile,
-    // }));
+    if (selectedFile) {
+      this.requestFormImple = {
+        ...this.requestForm,
+        multipartFile: selectedFile,
+        multipartFileNullable: null
+      }
+    } else {
+      this.requestFormImple = null;
+    }
   };
 
 

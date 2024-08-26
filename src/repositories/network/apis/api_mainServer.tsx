@@ -299,3 +299,136 @@ export type PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRespons
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
 }
+
+
+// (Post 요청 테스트 (multipart/form-data))
+export async function postService1TkV1RequestTestPostRequestMultipartFormDataAsync(
+    requestHeader: PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        // requestHeader에 'Content-Type'을 추가합니다.
+        const combinedRequestHeader = {
+            ...requestHeader,
+            'Content-Type': 'multipart/form-data',
+        };
+
+        // !!!Form 데이터 매핑!!!
+        const formData = new FormData();
+        formData.append('requestFormString', requestBody.requestFormString);
+        if (requestBody.requestFormStringNullable) {
+            formData.append('requestFormStringNullable', requestBody.requestFormStringNullable);
+        }
+        formData.append('requestFormInt', requestBody.requestFormInt.toString());
+        if (requestBody.requestFormIntNullable) {
+            formData.append('requestFormIntNullable', requestBody.requestFormIntNullable.toString());
+        }
+        formData.append('requestFormDouble', requestBody.requestFormDouble.toString());
+        if (requestBody.requestFormDoubleNullable) {
+            formData.append('requestFormDoubleNullable', requestBody.requestFormDoubleNullable.toString());
+        }
+        formData.append('requestFormBoolean', requestBody.requestFormBoolean.toString());
+        if (requestBody.requestFormBooleanNullable) {
+            formData.append('requestFormBooleanNullable', requestBody.requestFormBooleanNullable.toString());
+        }
+        formData.append('requestFormStringList', JSON.stringify(requestBody.requestFormStringList));
+        if (requestBody.requestFormStringListNullable) {
+            formData.append('requestFormStringListNullable', JSON.stringify(requestBody.requestFormStringListNullable));
+        }
+        formData.append('multipartFile', requestBody.multipartFile);
+        if (requestBody.multipartFileNullable) {
+            formData.append('multipartFileNullable', requestBody.multipartFileNullable);
+        }
+
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+                serverUrl,
+                formData,
+                {
+                    headers: combinedRequestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+    "multipartFile": File;
+    "multipartFileNullable": File | null;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+}
