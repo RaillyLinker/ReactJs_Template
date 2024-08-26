@@ -36,6 +36,7 @@
 
 (시간 날 때)
 - next js 로 바꾸는 방법
+- electron 데스크톱 앱
 - 오디오 / 비디오 다운로드 방지 처리
     미디어 스트리밍 프로토콜 사용 (HLS 또는 DASH)
     미디어 파일을 일반 HTTP로 제공하는 대신, HLS (HTTP Live Streaming) 또는 MPEG-DASH와 같은 스트리밍 프로토콜을 사용하는 것이 좋습니다. 
