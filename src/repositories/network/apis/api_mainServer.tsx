@@ -805,3 +805,79 @@ export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyn
 }
 
 export type PostService1TkV1RequestTestPostRequestApplicationJsonWithNoParamAsyncResponseBody = {}
+
+
+// (인위적 에러 수신 테스트)
+export async function postService1TkV1RequestTestGenerateErrorAsync(
+    requestHeader: PostService1TkV1RequestTestGenerateErrorAsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestGenerateErrorAsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestGenerateErrorAsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/generate-error";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/generate-error";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+                serverUrl,
+                requestBody,
+                {
+                    headers: requestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader, PostService1TkV1RequestTestGenerateErrorAsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestGenerateErrorAsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestGenerateErrorAsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestGenerateErrorAsyncRequestBody = {}
+
+export type PostService1TkV1RequestTestGenerateErrorAsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestGenerateErrorAsyncResponseBody = {}

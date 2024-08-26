@@ -6,6 +6,9 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { downloadFile } from '../../global_functions/gf_my_functions';
+import DialogInfo from '../../dialog_components/dialog_info/view';
+import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
+import { postService1TkV1RequestTestGenerateErrorAsync } from '../../repositories/network/apis/api_mainServer';
 
 
 // [비즈니스 클래스]
@@ -112,8 +115,42 @@ class Business extends PageBusinessBasic {
         uid: 8,
         itemTitle: "네트워크 요청 에러 발생 테스트",
         itemDescription: "네트워크 요청에 500 에러가 발생했을 시에 대한 테스트",
-        onItemClicked: (): void => {
-          // todo
+        onItemClicked: async () => {
+          const requestResult = await postService1TkV1RequestTestGenerateErrorAsync(
+            {},
+            {},
+            {}
+          );
+
+          if (requestResult.responseOk === null) {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/post-request-application-json-with-no-param\n\n" +
+                "에러 메시지 :\n" +
+                JSON.stringify(requestResult.error, null, 2),
+                () => { }));
+          } else {
+            this.gcoDialogFrameBusiness.showDialog(
+              true,
+              DialogInfo,
+              new DialogInfoBusiness(
+                this.gcoDialogFrameBusiness,
+                this,
+                "요청 결과",
+                "요청 경로 :\n" +
+                "/service1/tk/v1/request-test/post-request-application-json-with-no-param\n\n" +
+                "응답 코드 :\n" +
+                requestResult.responseOk.statusCode + "\n\n" +
+                "응답 바디 :\n" +
+                JSON.stringify(requestResult.responseOk.responseBody, null, 2),
+                () => { }));
+          }
         }
       },
       {
