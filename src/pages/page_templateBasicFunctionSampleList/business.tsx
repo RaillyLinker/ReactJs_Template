@@ -154,6 +154,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/template-basic-function-sample-list/file-choice-sample");
         }
+      },
+      {
+        uid: 14,
+        itemTitle: "Grid 샘플",
+        itemDescription: "Grid 사용 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/grid-sample");
+        }
       }
     ];
 

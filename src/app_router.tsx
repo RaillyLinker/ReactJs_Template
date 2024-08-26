@@ -42,6 +42,7 @@ import PagePostRequestSample4 from './pages/page_postRequestSample4/view';
 import PagePostRequestSample5 from './pages/page_postRequestSample5/view';
 import PagePostRequestSample6 from './pages/page_postRequestSample6/view';
 import PagePostRequestSample7 from './pages/page_postRequestSample7/view';
+import PageGridSample from './pages/page_gridSample/view';
 
 
 // [라우터 클래스]
@@ -68,6 +69,7 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/context-menu-sample" element={<PageContextMenuSample />} />
       <Route path="/template-basic-function-sample-list/image-loading-sample" element={<PageImageLoadingSample />} />
       <Route path="/template-basic-function-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
+      <Route path="/template-basic-function-sample-list/grid-sample" element={<PageGridSample />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
