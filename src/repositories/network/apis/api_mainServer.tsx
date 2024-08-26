@@ -406,3 +406,114 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponse
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
 }
+
+
+// (Post 요청 테스트 (multipart/form-data - JsonString))
+// Multipart File 과 함께 객체 타입 리스트를 받고 싶을 때 서버측에서는 이런 형식으로 API 를 설계합니다.
+export async function postService1TkV1RequestTestPostRequestMultipartFormDataJsonAsync(
+    requestHeader: PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data-json";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data-json";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        // requestHeader에 'Content-Type'을 추가합니다.
+        const combinedRequestHeader = {
+            ...requestHeader,
+            'Content-Type': 'multipart/form-data',
+        };
+
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+                serverUrl,
+                objectToFormData(requestBody),
+                {
+                    headers: combinedRequestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBody = {
+    "jsonString": string;
+    "multipartFile": File;
+    "multipartFileNullable": File | null;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBodyJsonStringType = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+}
