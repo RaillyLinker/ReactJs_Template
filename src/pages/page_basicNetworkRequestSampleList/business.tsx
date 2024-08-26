@@ -86,6 +86,14 @@ class Business extends PageBusinessBasic {
       },
       {
         uid: 5,
+        itemTitle: "Post 메소드 요청 샘플 5 (application/json - Object Param)",
+        itemDescription: "Post 요청 테스트 (Request Body - Object Parameter 받기)",
+        onItemClicked: (): void => {
+          this.navigate("/network-sample-list/basic-network-request-sample/post-request-sample5");
+        }
+      },
+      {
+        uid: 6,
         itemTitle: "네트워크 요청 에러 발생 테스트",
         itemDescription: "네트워크 요청에 500 에러가 발생했을 시에 대한 테스트",
         onItemClicked: (): void => {
@@ -93,7 +101,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 6,
+        uid: 7,
         itemTitle: "String 타입 응답 테스트",
         itemDescription: "text/string 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: (): void => {
@@ -101,7 +109,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 7,
+        uid: 8,
         itemTitle: "HTML 타입 응답 테스트",
         itemDescription: "text/html 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: (): void => {
@@ -109,7 +117,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 8,
+        uid: 9,
         itemTitle: "네트워크 파일 다운로드 테스트",
         itemDescription: "네트워크 파일 다운로드 테스트",
         onItemClicked: (): void => {
