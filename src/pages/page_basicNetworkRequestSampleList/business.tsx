@@ -102,6 +102,14 @@ class Business extends PageBusinessBasic {
       },
       {
         uid: 7,
+        itemTitle: "Post 메소드 요청 샘플 7 (입출력값 없음)",
+        itemDescription: "Post 요청 테스트 (입출력값 없음)",
+        onItemClicked: (): void => {
+          this.navigate("/network-sample-list/basic-network-request-sample/post-request-sample7");
+        }
+      },
+      {
+        uid: 8,
         itemTitle: "네트워크 요청 에러 발생 테스트",
         itemDescription: "네트워크 요청에 500 에러가 발생했을 시에 대한 테스트",
         onItemClicked: (): void => {
@@ -109,7 +117,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 8,
+        uid: 9,
         itemTitle: "String 타입 응답 테스트",
         itemDescription: "text/string 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: (): void => {
@@ -117,7 +125,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 9,
+        uid: 10,
         itemTitle: "HTML 타입 응답 테스트",
         itemDescription: "text/html 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: (): void => {
@@ -125,7 +133,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 10,
+        uid: 11,
         itemTitle: "네트워크 파일 다운로드 테스트",
         itemDescription: "네트워크 파일 다운로드 테스트",
         onItemClicked: (): void => {
