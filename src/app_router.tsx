@@ -39,6 +39,7 @@ import PagePostRequestSample1 from './pages/page_postRequestSample1/view';
 import PagePostRequestSample2 from './pages/page_postRequestSample2/view';
 import PagePostRequestSample3 from './pages/page_postRequestSample3/view';
 import PagePostRequestSample4 from './pages/page_postRequestSample4/view';
+import PagePostRequestSample5 from './pages/page_postRequestSample5/view';
 
 
 // [라우터 클래스]
@@ -77,6 +78,7 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list/basic-network-request-sample/post-request-sample2" element={<PagePostRequestSample2 />} />
       <Route path="/network-sample-list/basic-network-request-sample/post-request-sample3" element={<PagePostRequestSample3 />} />
       <Route path="/network-sample-list/basic-network-request-sample/post-request-sample4" element={<PagePostRequestSample4 />} />
+      <Route path="/network-sample-list/basic-network-request-sample/post-request-sample5" element={<PagePostRequestSample5 />} />
       <Route path="/network-sample-list/streaming-sample" element={<PageStreamingSampleList />} />
       <Route path="/network-sample-list/streaming-sample/video-streaming-sample" element={<PageVideoStreamingSample />} />
       <Route path="/network-sample-list/streaming-sample/audio-streaming-sample" element={<PageAudioStreamingSample />} />

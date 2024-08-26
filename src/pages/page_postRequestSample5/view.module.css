@@ -1,0 +1,55 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#MainContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#RequestButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+#RequestButton:hover {
+    background-color: #2195f3e3;
+}
+
+#RequestQuery {
+    width: 300px;
+    height: 150px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-break: break-word;
+    white-space: pre-line;
+}
+
+#fileChoice {
+    margin-top: 0.5rem;
+}

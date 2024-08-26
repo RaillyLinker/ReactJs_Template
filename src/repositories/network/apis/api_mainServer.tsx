@@ -517,3 +517,109 @@ export type PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResp
     "requestFormStringList": string[];
     "requestFormStringListNullable": string[] | null;
 }
+
+
+// (Post 요청 테스트 (multipart/form-data, File List))
+export async function postService1TkV1RequestTestPostRequestMultipartFormData2Async(
+    requestHeader: PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestHeaderType,
+    requestQuery: PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestQueryType,
+    requestBody: PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestBody
+) {
+    // !!!요청 경로 작성!!!
+    let serverUrl: string
+    if (isDebugMode) {
+        // 개발 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data2";
+    } else {
+        // 배포 환경
+        serverUrl = "/service1/tk/v1/request-test/post-request-multipart-form-data2";
+    }
+
+    let networkResponseOk: NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody> | null = null;
+    let networkError: unknown | null = null;
+
+    try {
+        // requestHeader에 'Content-Type'을 추가합니다.
+        const combinedRequestHeader = {
+            ...requestHeader,
+            'Content-Type': 'multipart/form-data',
+        };
+
+        const response =
+            await mainServerRequestObj.post<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+                serverUrl,
+                objectToFormData(requestBody),
+                {
+                    headers: combinedRequestHeader,
+                    params: requestQuery,
+                    // 쿼리 파라미터에서 array 를 직렬화
+                    paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
+                }
+            );
+
+        networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+            response.status,
+            // !!!응답 헤더 매핑!!!
+            {
+                "content-type": response.headers["content-type"]
+            },
+            response.data
+        );
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response !== undefined) {
+            networkResponseOk = new NetworkResponseOk<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+                error.response.status,
+                // !!!응답 헤더 매핑!!!
+                {
+                    "content-type": error.response.headers["content-type"]
+                },
+                error.response.data
+            );
+        } else {
+            networkError = error;
+        }
+    }
+
+    return new NetworkResponse<PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader, PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody>(
+        networkResponseOk,
+        networkError
+    );
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestHeaderType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestQueryType = {
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncRequestBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+    "multipartFileList": File[];
+    "multipartFileNullableList": File[] | null;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseHeader = {
+    "content-type": string;
+}
+
+export type PostService1TkV1RequestTestPostRequestMultipartFormData2AsyncResponseBody = {
+    "requestFormString": string;
+    "requestFormStringNullable": string | null;
+    "requestFormInt": number;
+    "requestFormIntNullable": number | null;
+    "requestFormDouble": number;
+    "requestFormDoubleNullable": number | null;
+    "requestFormBoolean": boolean;
+    "requestFormBooleanNullable": boolean | null;
+    "requestFormStringList": string[];
+    "requestFormStringListNullable": string[] | null;
+}
