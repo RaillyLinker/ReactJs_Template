@@ -5,6 +5,8 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import SockJS from 'sockjs-client';
+import { CompatClient, Stomp } from '@stomp/stompjs';
 
 
 // [비즈니스 클래스]
@@ -25,7 +27,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "페이지 템플릿");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "STOMP 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,6 +36,15 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
+
+  // (STOMP 클라이언트 객체)
+  stompClient: CompatClient | null = null;
+
+  // (소켓 전달 메세지)
+  messages: string[] = [];
+
+  // (소켓 전송 메세지 입력창 Ref)
+  msgInputRef: React.RefObject<HTMLInputElement> | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -73,6 +84,21 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    const socket = new SockJS('http://localhost:8080/stomp');
+    const client = Stomp.over(socket);
+    client.connect({}, (frame: string) => {
+      const systemMessage = "<b>System: 서버와 연결되었습니다.</b>";
+      this.messages.unshift(systemMessage);
+      this.reRender();
+
+      client.subscribe('/topic', (greeting) => {
+        const receivedMessage = `<b>Server: ${JSON.parse(greeting.body).content}</b>`;
+        this.messages.unshift(receivedMessage);
+        this.reRender();
+      });
+    });
+    this.stompClient = client;
+    this.reRender();
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -81,11 +107,39 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    if (this.stompClient) {
+      this.stompClient.disconnect(() => {
+        const systemMessage = "<b>System: 서버와의 연결이 해제되었습니다.</b>";
+        this.messages.unshift(systemMessage);
+        this.reRender();
+      });
+    }
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (전송 버튼 클릭)
+  handleSend = () => {
+    if (this.msgInputRef !== null && this.msgInputRef.current && this.stompClient !== null) {
+      // 입력 메세지 가져오기
+      const msg = this.msgInputRef.current?.value;
+      if (msg) {
+        this.stompClient.send("/app/test", {}, JSON.stringify({ chat: msg }));
+
+        // 내가 전송한 메세지를 로그에 표시
+        const clientMessage = `<b>Client: ${msg}</b>`;
+        this.messages.unshift(clientMessage);
+        this.reRender();
+
+        if (this.msgInputRef.current) {
+          // 입력창 비우기
+          this.msgInputRef.current.value = '';
+          this.msgInputRef.current.focus();
+        }
+      }
+    }
+  };
 
 
   //----------------------------------------------------------------------------

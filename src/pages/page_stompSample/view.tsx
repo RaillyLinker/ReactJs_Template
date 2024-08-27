@@ -80,6 +80,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  mainBusiness.msgInputRef = useRef<HTMLInputElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -118,7 +119,34 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <div className="col-6">
+              <div className="input-group mb-3">
+                <input type="text" id="msg" ref={mainBusiness.msgInputRef} className="form-control" aria-label="Recipient's username" onKeyDown={
+                  (event) => {
+                    if (event.key === 'Enter') {
+                      mainBusiness.handleSend();
+                    }
+                  }
+                } />
+                <button className="btn btn-outline-secondary" type="button" id="button-send" onClick={mainBusiness.handleSend}>
+                  전송
+                </button>
+              </div>
+            </div>
+            <div id="msgArea" className="col"
+              style={{
+                overflowY: 'scroll',
+                width: '300px',
+                height: '150px',
+                padding: '4px',
+                border: '1px solid #000',
+              }}>
+              {mainBusiness.messages.map((msg, index) => (
+                <div className="col-6" key={index}>
+                  <div className="alert alert-warning" dangerouslySetInnerHTML={{ __html: msg }} />
+                </div>
+              ))}
+            </div>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
