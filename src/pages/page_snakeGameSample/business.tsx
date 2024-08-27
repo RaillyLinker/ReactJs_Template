@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "뱀 게임 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,39 +35,19 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "뱀 게임 샘플",
-        itemDescription: "기본 뱀 게임 구현 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/snake-game-sample");
-        }
-      }
-    ];
+  // (게임 설정)
+  GRID_SIZE: number = 20;
+  INIT_SNAKE: Point[] = [{ x: 8, y: 8 }];
+  INIT_DIRECTION: Point = { x: 1, y: 0 };
+  INIT_FOOD: Point = { x: 5, y: 5 };
+
+  // (게임 상태)
+  snake: Point[] = this.INIT_SNAKE;
+  direction: Point = this.INIT_DIRECTION;
+  food: Point = this.INIT_FOOD;
+  isGameOver: boolean = false;
+  handleKeyDown: (e: KeyboardEvent) => void = () => { };
+  intervalId: NodeJS.Timer | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -107,6 +87,78 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    this.handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowUp':
+          if (this.direction.y === 0) {
+            this.direction = { x: 0, y: -1 };
+            this.reRender();
+          };
+          break;
+        case 'ArrowDown':
+          if (this.direction.y === 0) {
+            this.direction = { x: 0, y: 1 };
+            this.reRender();
+          };
+          break;
+        case 'ArrowLeft':
+          if (this.direction.x === 0) {
+            this.direction = { x: -1, y: 0 };
+            this.reRender();
+          };
+          break;
+        case 'ArrowRight':
+          if (this.direction.x === 0) {
+            this.direction = { x: 1, y: 0 };
+            this.reRender();
+          };
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', this.handleKeyDown);
+
+
+    if (this.isGameOver) return;
+
+    const moveSnake = () => {
+      const newSnake = [...this.snake];
+      const head = {
+        x: newSnake[0].x + this.direction.x,
+        y: newSnake[0].y + this.direction.y,
+      };
+
+      if (head.x < 0 || head.x >= this.GRID_SIZE || head.y < 0 || head.y >= this.GRID_SIZE) {
+        this.isGameOver = true;
+        this.reRender();
+        return;
+      }
+
+      for (let i = 1; i < newSnake.length; i++) {
+        if (newSnake[i].x === head.x && newSnake[i].y === head.y) {
+          this.isGameOver = true;
+          this.reRender();
+          return;
+        }
+      }
+
+      newSnake.unshift(head);
+
+      if (head.x === this.food.x && head.y === this.food.y) {
+        this.food = {
+          x: Math.floor(Math.random() * this.GRID_SIZE),
+          y: Math.floor(Math.random() * this.GRID_SIZE),
+        };
+        this.reRender();
+      } else {
+        newSnake.pop();
+      }
+
+      this.snake = newSnake;
+      this.reRender();
+    };
+
+    this.intervalId = setInterval(moveSnake, 200);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -115,15 +167,31 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    window.removeEventListener('keydown', this.handleKeyDown);
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  resetGame = () => {
+    this.snake = this.INIT_SNAKE;
+    this.direction = this.INIT_DIRECTION;
+    this.food = this.INIT_FOOD;
+    this.isGameOver = false;
+    this.reRender();
+  };
 
 
   //----------------------------------------------------------------------------
   // [private 함수]
+}
+
+interface Point {
+  x: number;
+  y: number;
 }
 
 export default Business;
