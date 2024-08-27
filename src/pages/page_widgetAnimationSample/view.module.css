@@ -1,0 +1,210 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+/*(FadeIn / Out 애니메이션)*/
+.Anim_fadeIn {
+    animation: Anim_FadeIn 0.3s forwards;
+}
+
+@keyframes Anim_FadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.Anim_fadeOut {
+    animation: Anim_fadeOut 0.3s forwards;
+}
+
+@keyframes Anim_fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+/*(slideIn / Out Top 애니메이션)*/
+.Anim_slideInTop {
+    animation: Anim_SlideInTop 0.3s forwards;
+}
+
+@keyframes Anim_SlideInTop {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.Anim_slideOutTop {
+    animation: Anim_SlideOutTop 0.3s forwards;
+}
+
+@keyframes Anim_SlideOutTop {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+/*(zoomIn / Out 애니메이션)*/
+.Anim_zoomIn {
+    animation: Anim_ZoomIn 0.3s forwards;
+}
+
+@keyframes Anim_ZoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.Anim_zoomOut {
+    animation: Anim_ZoomOut 0.3s forwards;
+}
+
+@keyframes Anim_ZoomOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+/*(Rotate In / Out 애니메이션)*/
+.Anim_rotateIn {
+    animation: Anim_RotateIn 0.5s forwards;
+}
+
+@keyframes Anim_RotateIn {
+    from {
+        transform: rotate(-200deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+.Anim_rotateOut {
+    animation: Anim_RotateOut 0.5s forwards;
+}
+
+@keyframes Anim_RotateOut {
+    from {
+        transform: rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: rotate(200deg);
+        opacity: 0;
+    }
+}
+
+/*(Flip In / Out 애니메이션)*/
+.Anim_flipIn {
+    animation: Anim_FlipIn 0.5s forwards;
+}
+
+@keyframes Anim_FlipIn {
+    from {
+        transform: perspective(400px) rotateY(-90deg);
+        opacity: 0;
+    }
+
+    to {
+        transform: perspective(400px) rotateY(0);
+        opacity: 1;
+    }
+}
+
+.Anim_flipOut {
+    animation: Anim_FlipOut 0.5s forwards;
+}
+
+@keyframes Anim_FlipOut {
+    from {
+        transform: perspective(400px) rotateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: perspective(400px) rotateY(90deg);
+        opacity: 0;
+    }
+}
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#MainContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#Square {
+    width: 10rem;
+    height: 10rem;
+    background-color: black;
+}
+
+#AnimationButton {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+#AnimationButton:hover {
+    background-color: #2195f3e3;
+}

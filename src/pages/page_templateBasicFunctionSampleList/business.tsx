@@ -162,6 +162,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/template-basic-function-sample-list/grid-sample");
         }
+      },
+      {
+        uid: 15,
+        itemTitle: "위젯 애니메이션 샘플",
+        itemDescription: "위젯에 CSS 애니메이션을 적용하는 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/widget-animation-sample");
+        }
       }
     ];
 
