@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import * as THREE from 'three';
 
 
 // [비즈니스 클래스]
@@ -25,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "페이지 템플릿");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -35,31 +36,8 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
-      }
-    ];
+  mountRef: React.RefObject<HTMLDivElement> | null = null;
+  renderer: THREE.WebGLRenderer | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -99,6 +77,38 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    if (this.mountRef !== null && this.mountRef.current) {
+      // 1. Scene, Camera, Renderer 생성
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      this.renderer = new THREE.WebGLRenderer();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.mountRef.current.appendChild(this.renderer.domElement);
+
+      // 2. 간단한 큐브 추가
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      // 3. 카메라 위치 설정
+      camera.position.z = 5;
+
+      // 4. 애니메이션 함수
+      const animate = () => {
+        requestAnimationFrame(animate);
+
+        // 큐브 회전 애니메이션
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+
+        if (this.renderer !== null) {
+          this.renderer.render(scene, camera);
+        }
+      };
+
+      animate();
+    }
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -107,6 +117,9 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    if (this.mountRef !== null && this.mountRef.current && this.renderer !== null) {
+      this.mountRef.current.removeChild(this.renderer.domElement);
+    }
   }
 
 

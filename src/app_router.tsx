@@ -45,6 +45,7 @@ import PagePostRequestSample7 from './pages/page_postRequestSample7/view';
 import PageGridSample from './pages/page_gridSample/view';
 import PageWidgetAnimationSample from './pages/page_widgetAnimationSample/view';
 import PageImageResizingSample from './pages/page_imageResizingSample/view';
+import PageThreeDimensionSample from './pages/page_threeDimensionSample/view';
 
 
 // [라우터 클래스]
@@ -104,6 +105,7 @@ function AppRouter(): JSX.Element {
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
+      <Route path="/etc-sample-list/three-dimension-sample" element={<PageThreeDimensionSample />} />
     </Routes>
   );
 }
