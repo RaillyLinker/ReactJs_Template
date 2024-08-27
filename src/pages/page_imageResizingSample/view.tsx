@@ -118,7 +118,7 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <h2>Image Resizer</h2>
+            <h3>지원 포멧 :<br />(JPEG, PNG, WEBP, BMP, GIF)</h3>
             <input type="file" accept="image/*" onChange={mainBusiness.onFileChange} />
             <div>
               <label>
@@ -145,8 +145,10 @@ const View: React.FC = () => {
                 >
                   <option value="jpeg">JPEG</option>
                   <option value="png">PNG</option>
-                  <option value="webp">WEBP</option>
                   <option value="bmp">BMP</option>
+                  <option value="gif">GIF</option>
+                  <option value="webp">WEBP</option>
+                  <option value="avif">AVIF</option>
                 </select>
               </label>
             </div>
