@@ -146,6 +146,7 @@ const View: React.FC = () => {
                   <option value="jpeg">JPEG</option>
                   <option value="png">PNG</option>
                   <option value="webp">WEBP</option>
+                  <option value="bmp">BMP</option>
                 </select>
               </label>
             </div>
