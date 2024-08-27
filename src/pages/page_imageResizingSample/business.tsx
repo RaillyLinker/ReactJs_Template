@@ -36,9 +36,8 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // ()
+  // (선택한 파일)
   selectedFile: File | null = null;
-  resizedFile: File | null = null;
   width: number = 300;
   height: number = 300;
   quality: number = 1;
@@ -90,6 +89,7 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    this.selectedFile = null;
   }
 
 
@@ -97,7 +97,18 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+      const file = event.target.files[0];
+      const validFormats = ["image/jpeg", "image/png", "image/webp", "image/bmp", "image/gif", "image/avif"];
+
+      if (validFormats.includes(file.type)) {
+        this.selectedFile = file;
+      } else {
+        this.selectedFile = null;
+        // 파일 선택을 취소하기 위해 input 값을 비워줍니다.
+        event.target.value = "";
+        toast.error("Unsupported file format. Please select a JPEG, PNG, WEBP, BMP, GIF, or AVIF image.");
+      }
+
       this.reRender();
     }
   };
@@ -106,20 +117,13 @@ class Business extends PageBusinessBasic {
     if (this.selectedFile) {
       try {
         const resized = await resizeImage(this.selectedFile, this.width, this.height, this.format, this.quality);
-        this.resizedFile = resized;
-        this.reRender();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(resized);
+        link.download = resized.name;
+        link.click();
       } catch (error) {
         console.error('Error resizing image:', error);
       }
-    }
-  };
-
-  onDownload = () => {
-    if (this.resizedFile) {
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(this.resizedFile);
-      link.download = this.resizedFile.name;
-      link.click();
     }
   };
 

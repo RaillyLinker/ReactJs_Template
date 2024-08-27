@@ -120,10 +120,11 @@ const View: React.FC = () => {
           <div id={styles.MainContent}>
             <h3>지원 포멧 :<br />(JPEG, PNG, WEBP, BMP, GIF, AVIF)</h3>
             <input type="file" accept="image/*" onChange={mainBusiness.onFileChange} />
-            <div>
+            <div style={{ marginTop: '0.5rem' }}>
               <label>
                 Width:
                 <input
+                  style={{ marginLeft: '0.5rem' }}
                   type="number"
                   value={mainBusiness.width}
                   onChange={(e) => {
@@ -133,11 +134,11 @@ const View: React.FC = () => {
                 />
               </label>
             </div>
-            <div>
-
-              <label style={{ marginLeft: '10px' }}>
+            <div style={{ marginTop: '0.5rem' }}>
+              <label >
                 Height:
                 <input
+                  style={{ marginLeft: '0.5rem' }}
                   type="number"
                   value={mainBusiness.height}
                   onChange={(e) => {
@@ -147,10 +148,11 @@ const View: React.FC = () => {
                 />
               </label>
             </div>
-            <div>
-              <label style={{ marginLeft: '10px' }}>
+            <div style={{ marginTop: '0.5rem' }}>
+              <label >
                 Format:
                 <select
+                  style={{ marginLeft: '0.5rem' }}
                   value={mainBusiness.format}
                   onChange={(e) => {
                     mainBusiness.format = e.target.value;
@@ -166,10 +168,11 @@ const View: React.FC = () => {
                 </select>
               </label>
             </div>
-            <div>
-              <label style={{ marginLeft: '10px' }}>
+            <div style={{ marginTop: '0.5rem' }}>
+              <label >
                 Quality:
                 <input
+                  style={{ marginLeft: '0.5rem' }}
                   type="number"
                   value={mainBusiness.quality}
                   min="0"
@@ -192,23 +195,9 @@ const View: React.FC = () => {
                 />
               </label>
             </div>
-            <button onClick={mainBusiness.onResize} style={{ margin: '10px 0' }}>
+            <button onClick={mainBusiness.onResize} style={{ margin: '1rem' }}>
               Resize Image
             </button>
-            {mainBusiness.resizedFile && (
-              <>
-                <div>
-                  <img
-                    src={URL.createObjectURL(mainBusiness.resizedFile)}
-                    alt="Resized"
-                    style={{ maxWidth: '100%' }}
-                  />
-                </div>
-                <button onClick={mainBusiness.onDownload} style={{ marginTop: '10px' }}>
-                  Download Resized Image
-                </button>
-              </>
-            )}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
