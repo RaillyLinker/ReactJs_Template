@@ -118,7 +118,7 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <h3>지원 포멧 :<br />(JPEG, PNG, WEBP, BMP, GIF)</h3>
+            <h3>지원 포멧 :<br />(JPEG, PNG, WEBP, BMP, GIF, AVIF)</h3>
             <input type="file" accept="image/*" onChange={mainBusiness.onFileChange} />
             <div>
               <label>
@@ -126,22 +126,36 @@ const View: React.FC = () => {
                 <input
                   type="number"
                   value={mainBusiness.width}
-                  onChange={(e) => { mainBusiness.width = parseInt(e.target.value); mainBusiness.reRender(); }}
+                  onChange={(e) => {
+                    mainBusiness.width = parseInt(e.target.value);
+                    mainBusiness.reRender();
+                  }}
                 />
               </label>
+            </div>
+            <div>
+
               <label style={{ marginLeft: '10px' }}>
                 Height:
                 <input
                   type="number"
                   value={mainBusiness.height}
-                  onChange={(e) => { mainBusiness.height = parseInt(e.target.value); mainBusiness.reRender(); }}
+                  onChange={(e) => {
+                    mainBusiness.height = parseInt(e.target.value);
+                    mainBusiness.reRender();
+                  }}
                 />
               </label>
+            </div>
+            <div>
               <label style={{ marginLeft: '10px' }}>
                 Format:
                 <select
                   value={mainBusiness.format}
-                  onChange={(e) => { mainBusiness.format = e.target.value; mainBusiness.reRender(); }}
+                  onChange={(e) => {
+                    mainBusiness.format = e.target.value;
+                    mainBusiness.reRender();
+                  }}
                 >
                   <option value="jpeg">JPEG</option>
                   <option value="png">PNG</option>
@@ -150,6 +164,32 @@ const View: React.FC = () => {
                   <option value="webp">WEBP</option>
                   <option value="avif">AVIF</option>
                 </select>
+              </label>
+            </div>
+            <div>
+              <label style={{ marginLeft: '10px' }}>
+                Quality:
+                <input
+                  type="number"
+                  value={mainBusiness.quality}
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  onChange={(e) => {
+                    let value = parseFloat(e.target.value);
+
+                    if (isNaN(value)) {
+                      value = 0;
+                    } else if (value < 0) {
+                      value = 0;
+                    } else if (value > 1) {
+                      value = 1;
+                    }
+
+                    mainBusiness.quality = value;
+                    mainBusiness.reRender();
+                  }}
+                />
               </label>
             </div>
             <button onClick={mainBusiness.onResize} style={{ margin: '10px 0' }}>

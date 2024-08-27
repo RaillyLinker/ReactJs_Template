@@ -41,6 +41,7 @@ class Business extends PageBusinessBasic {
   resizedFile: File | null = null;
   width: number = 300;
   height: number = 300;
+  quality: number = 1;
   format: string = "jpeg";
 
 
@@ -104,7 +105,7 @@ class Business extends PageBusinessBasic {
   onResize = async () => {
     if (this.selectedFile) {
       try {
-        const resized = await resizeImage(this.selectedFile, this.width, this.height, this.format);
+        const resized = await resizeImage(this.selectedFile, this.width, this.height, this.format, this.quality);
         this.resizedFile = resized;
         this.reRender();
       } catch (error) {
