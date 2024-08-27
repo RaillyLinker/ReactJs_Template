@@ -44,6 +44,7 @@ import PagePostRequestSample6 from './pages/page_postRequestSample6/view';
 import PagePostRequestSample7 from './pages/page_postRequestSample7/view';
 import PageGridSample from './pages/page_gridSample/view';
 import PageWidgetAnimationSample from './pages/page_widgetAnimationSample/view';
+import PageImageResizingSample from './pages/page_imageResizingSample/view';
 
 
 // [라우터 클래스]
@@ -99,6 +100,7 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />
       <Route path="/media-sample-list/simple-draw-sample" element={<PageSimpleDrawSample />} />
       <Route path="/media-sample-list/component-to-image-sample" element={<PageComponentToImageSample />} />
+      <Route path="/media-sample-list/image-resizing-sample" element={<PageImageResizingSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
