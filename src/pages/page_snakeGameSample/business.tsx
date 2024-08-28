@@ -61,6 +61,9 @@ class Business extends PageBusinessBasic {
   handleKeyDown: (e: KeyboardEvent) => void = () => { };
   intervalId: NodeJS.Timer | null = null;
 
+  // (게임 상태)
+  isPaused: boolean = true; // 게임 시작 전에는 일시 정지 상태
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -99,93 +102,61 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    // (키보드 핸들러 처리)
-    // 방향버튼에 따라 다음 이동 방향 설정
     this.handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case 'ArrowUp':
-          if (this.direction.y === 0) {
-            this.direction = { x: 0, y: -1 };
-            this.reRender();
-          };
-          break;
-        case 'ArrowDown':
-          if (this.direction.y === 0) {
-            this.direction = { x: 0, y: 1 };
-            this.reRender();
-          };
-          break;
-        case 'ArrowLeft':
-          if (this.direction.x === 0) {
-            this.direction = { x: -1, y: 0 };
-            this.reRender();
-          };
-          break;
-        case 'ArrowRight':
-          if (this.direction.x === 0) {
-            this.direction = { x: 1, y: 0 };
-            this.reRender();
-          };
-          break;
+      if (e.key === 'Escape') {
+        if (this.isGameOver) {
+          this.snake = this.INIT_SNAKE;
+          this.direction = this.INIT_DIRECTION;
+          this.food = this.INIT_FOOD;
+          this.isGameOver = false;
+          this.reRender();
+          this.startGame(); // 게임 시작
+        } else {
+          this.isPaused ? this.startGame() : this.pauseGame();
+        }
+      } else {
+        if (this.isPaused) {
+          this.startGame(); // 게임 시작
+        } else if (this.isGameOver) {
+          this.snake = this.INIT_SNAKE;
+          this.direction = this.INIT_DIRECTION;
+          this.food = this.INIT_FOOD;
+          this.isGameOver = false;
+          this.reRender();
+          this.startGame(); // 게임 시작
+        }
+
+        // 기존 방향키 처리 로직
+        switch (e.key) {
+          case 'ArrowUp':
+            if (this.direction.y === 0) {
+              this.direction = { x: 0, y: -1 };
+              this.reRender();
+            }
+            break;
+          case 'ArrowDown':
+            if (this.direction.y === 0) {
+              this.direction = { x: 0, y: 1 };
+              this.reRender();
+            }
+            break;
+          case 'ArrowLeft':
+            if (this.direction.x === 0) {
+              this.direction = { x: -1, y: 0 };
+              this.reRender();
+            }
+            break;
+          case 'ArrowRight':
+            if (this.direction.x === 0) {
+              this.direction = { x: 1, y: 0 };
+              this.reRender();
+            }
+            break;
+        }
       }
     };
 
     window.addEventListener('keydown', this.handleKeyDown);
-
-    // 게임오버가 아니라면 게임 시작하기
-    if (this.isGameOver) return;
-
-    // 1 프레임 마다 게임을 진행하는 코드
-    const moveSnake = () => {
-      // 이전 뱀 위치 가져오기
-      const newSnake = [...this.snake];
-      // 새 머리 위치 이동
-      const head = {
-        x: newSnake[0].x + this.direction.x,
-        y: newSnake[0].y + this.direction.y,
-      };
-
-      // 이번 뱀 머리가 게임판을 나갔는지 확인
-      if (head.x < 0 || head.x >= this.GRID_SIZE || head.y < 0 || head.y >= this.GRID_SIZE) {
-        this.isGameOver = true;
-        this.reRender();
-        return;
-      }
-
-      // 이번 뱀 머리가 뱀 몸에 닿았는지 확인
-      for (let i = 1; i < newSnake.length; i++) {
-        if (newSnake[i].x === head.x && newSnake[i].y === head.y) {
-          this.isGameOver = true;
-          this.reRender();
-          return;
-        }
-      }
-
-      // 뱀 머리를 리스트 앞에 추가
-      newSnake.unshift(head);
-
-      // 먹이를 먹었는지 확인
-      if (head.x === this.food.x && head.y === this.food.y) {
-        // 먹이를 먹었다면 새로 생성
-        if (!this.generateFoodPosition(newSnake)) {
-          // 더이상 생성 불가시 게임 오버
-          this.isGameOver = true;
-          this.reRender();
-          return;
-        }
-        this.reRender();
-      } else {
-        // 먹이를 먹지 않았다면 기존 꼬리 제거
-        newSnake.pop();
-      }
-
-      // 새 뱀 위치를 화면에 표시하기
-      this.snake = newSnake;
-      this.reRender();
-    };
-
-    // 1 프레임마다 게임 진행을 반복
-    this.intervalId = setInterval(moveSnake, this.frameDelay);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -205,13 +176,62 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (게임 재시작)
-  // 초기화 후 재시작
-  resetGame = () => {
-    this.snake = this.INIT_SNAKE;
-    this.direction = this.INIT_DIRECTION;
-    this.food = this.INIT_FOOD;
-    this.isGameOver = false;
+  // (게임 시작 및 일시 정지 관리)
+  startGame = () => {
+    if (this.isPaused) {
+      this.isPaused = false;
+      this.intervalId = setInterval(this.moveSnake, this.frameDelay);
+    }
+  };
+
+  pauseGame = () => {
+    this.isPaused = true;
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+    this.reRender();
+  };
+
+  // (게임 진행)
+  moveSnake = () => {
+    if (this.isPaused || this.isGameOver) return;
+
+    // 기존의 moveSnake 로직을 여기에 옮깁니다.
+    const newSnake = [...this.snake];
+    const head = {
+      x: newSnake[0].x + this.direction.x,
+      y: newSnake[0].y + this.direction.y,
+    };
+
+    if (head.x < 0 || head.x >= this.GRID_SIZE || head.y < 0 || head.y >= this.GRID_SIZE) {
+      this.isGameOver = true;
+      this.reRender();
+      return;
+    }
+
+    for (let i = 1; i < newSnake.length; i++) {
+      if (newSnake[i].x === head.x && newSnake[i].y === head.y) {
+        this.isGameOver = true;
+        this.reRender();
+        return;
+      }
+    }
+
+    newSnake.unshift(head);
+
+    if (head.x === this.food.x && head.y === this.food.y) {
+      if (!this.generateFoodPosition(newSnake)) {
+        this.isGameOver = true;
+        this.reRender();
+        return;
+      }
+      this.reRender();
+    } else {
+      newSnake.pop();
+    }
+
+    this.snake = newSnake;
     this.reRender();
   };
 

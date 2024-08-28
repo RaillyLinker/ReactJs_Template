@@ -83,7 +83,7 @@ const View: React.FC = () => {
   const paddleWidth = 10;
   const paddleHeight = 100;
   const ballSize = 10;
-  const ballSpeed = 10; // 공의 속도를 설정합니다.
+  const ballSpeed = 1; // 공의 속도를 설정합니다.
   const canvasRef: React.MutableRefObject<HTMLCanvasElement | null> = useRef<HTMLCanvasElement | null>(null);
   const [playerY, setPlayerY] = useState<number>(0);
   const [ballX, setBallX] = useState<number>(100);

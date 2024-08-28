@@ -116,16 +116,23 @@ const View: React.FC = () => {
   return (
     <div id={styles.MainView}>
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
-        <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
+        <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness}>
           <div id={styles.MainContent}>
             <div className={styles.gameArea}>
-              {mainBusiness.isGameOver ? (
-                <div className={styles.gameOver}>
-                  <h2>Game Over</h2>
-                  <div className={styles.score}>Score : {mainBusiness.snake.length}</div>
-                  <button onClick={mainBusiness.resetGame}>Restart</button>
+              {mainBusiness.isPaused && !mainBusiness.isGameOver && (
+                <div className={styles.pauseMessage}>
+                  <p>Press any key to start</p>
                 </div>
-              ) : (
+              )}
+              {!mainBusiness.isPaused && mainBusiness.isGameOver && (
+                <div className={styles.pauseMessage}>
+                  <h3>Game Over</h3>
+                  <div className={styles.score}>Score : {mainBusiness.snake.length}</div>
+                  <div>Press any key to start</div>
+                </div>
+              )}
+
+              {(
                 <>
                   {Array.from(Array(mainBusiness.GRID_SIZE)).map((_, row) => (
                     <div key={row} className={styles.row}>
