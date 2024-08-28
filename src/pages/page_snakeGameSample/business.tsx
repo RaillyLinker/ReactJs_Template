@@ -97,6 +97,7 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // (키보드 핸들러 처리)
     this.handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowUp':
@@ -128,9 +129,10 @@ class Business extends PageBusinessBasic {
 
     window.addEventListener('keydown', this.handleKeyDown);
 
-
+    // 게임오버가 아니라면 게임 시작하기
     if (this.isGameOver) return;
 
+    // 1 프레임 마다 게임을 진행하는 코드
     const moveSnake = () => {
       const newSnake = [...this.snake];
       const head = {
@@ -155,10 +157,11 @@ class Business extends PageBusinessBasic {
       newSnake.unshift(head);
 
       if (head.x === this.food.x && head.y === this.food.y) {
-        this.food = {
-          x: Math.floor(Math.random() * this.GRID_SIZE),
-          y: Math.floor(Math.random() * this.GRID_SIZE),
-        };
+        if (!this.generateFoodPosition()) {
+          this.isGameOver = true;
+          this.reRender();
+          return;
+        }
         this.reRender();
       } else {
         newSnake.pop();
@@ -168,6 +171,7 @@ class Business extends PageBusinessBasic {
       this.reRender();
     };
 
+    // 1 프레임마다 게임 진행을 반복
     this.intervalId = setInterval(moveSnake, 200);
   }
 
@@ -177,8 +181,10 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    // 키보드 핸들러 지우기
     window.removeEventListener('keydown', this.handleKeyDown);
     if (this.intervalId) {
+      // 게임 멈추기
       clearInterval(this.intervalId);
     }
   }
@@ -199,6 +205,29 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
+  private generateFoodPosition = (): Point | null => {
+    const availablePositions: Point[] = [];
+
+    for (let x = 0; x < this.GRID_SIZE; x++) {
+      for (let y = 0; y < this.GRID_SIZE; y++) {
+        const position: Point = { x, y };
+        const isOnSnake = this.snake.some(
+          (segment) => segment.x === position.x && segment.y === position.y
+        );
+        if (!isOnSnake) {
+          availablePositions.push(position);
+        }
+      }
+    }
+
+    if (availablePositions.length === 0) {
+      return null; // 가능한 위치가 없는 경우
+    }
+
+    const randomIndex = Math.floor(Math.random() * availablePositions.length);
+    this.food = availablePositions[randomIndex];
+    return this.food;
+  };
 }
 
 interface Point {
