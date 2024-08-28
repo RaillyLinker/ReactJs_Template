@@ -5,6 +5,7 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import JSZip from 'jszip';
 
 
 // [비즈니스 클래스]
@@ -16,6 +17,10 @@ class Business extends PageBusinessBasic {
   // Query Parameter 로 받은 값
   queryParams: QueryParams | null = null;
 
+  // (파일 리스트)
+  files: ExtractedFile[] = [];
+  error: string | null = null;
+
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
@@ -25,7 +30,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "압축 풀기 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,56 +39,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "뱀 게임 샘플",
-        itemDescription: "기본 뱀 게임 구현 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/snake-game-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "파일 압축 샘플",
-        itemDescription: "파일들을 선택해서 압축하는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/files-to-zip-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "압축 풀기 샘플",
-        itemDescription: "압축 파일을 선택해서 압축을 푸는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/zip-to-files-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------
@@ -136,10 +91,48 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
+
+    try {
+      const zip = new JSZip();
+      const zipContent = await zip.loadAsync(selectedFile);
+
+      const extractedFiles: ExtractedFile[] = [];
+
+      for (const [relativePath, file] of Object.entries(zipContent.files)) {
+        if (!file.dir) {
+          const content = await file.async('blob');
+          extractedFiles.push({ name: relativePath, blob: content });
+        }
+      }
+
+      this.files = extractedFiles;
+      this.error = null;
+      this.reRender();
+    } catch (err) {
+      this.files = [];
+      this.error = 'Failed to unzip the file.';
+      this.reRender();
+    }
+  };
+
+  handleFileDownload = (file: ExtractedFile) => {
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(file.blob);
+    link.download = file.name;
+    link.click();
+  };
 
 
   //----------------------------------------------------------------------------
   // [private 함수]
+}
+
+interface ExtractedFile {
+  name: string;
+  blob: Blob;
 }
 
 export default Business;
