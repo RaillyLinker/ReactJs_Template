@@ -118,12 +118,24 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <div id={styles.MainContent}>
-              <h3>요청 폼 파라미터</h3>
-              <div id={styles.RequestQuery}>{JSON.stringify(mainBusiness.requestForm, null, 2)}</div>
-              <input id={styles.fileChoice} type="file" onChange={mainBusiness.handleFileChange} required />
-              <button id={styles.RequestButton} onClick={mainBusiness.onClickRequest}>네트워크 요청</button>
-            </div>
+            <input
+              type="file"
+              accept="image/*"
+              // 모바일 환경에서 카메라를 사용 (user : 전면 카메라, environment : 후면 카메라)
+              capture="environment"
+              onChange={mainBusiness.handleCapture}
+              style={{ display: 'block', margin: '20px auto' }}
+            />
+            {mainBusiness.image && (
+              <div>
+                <h2>Your Image:</h2>
+                <img
+                  src={mainBusiness.image}
+                  alt="Captured"
+                  style={{ maxWidth: '100%', height: 'auto', marginTop: '20px' }}
+                />
+              </div>
+            )}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}

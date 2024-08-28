@@ -47,6 +47,7 @@ import PageWidgetAnimationSample from './pages/page_widgetAnimationSample/view';
 import PageImageResizingSample from './pages/page_imageResizingSample/view';
 import PageThreeDimensionSample from './pages/page_threeDimensionSample/view';
 import PageSnakeGameSample from './pages/page_snakeGameSample/view';
+import PageMobileCameraSample from './pages/page_mobileCameraSample/view';
 
 
 // [라우터 클래스]
@@ -103,6 +104,7 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list/simple-draw-sample" element={<PageSimpleDrawSample />} />
       <Route path="/media-sample-list/component-to-image-sample" element={<PageComponentToImageSample />} />
       <Route path="/media-sample-list/image-resizing-sample" element={<PageImageResizingSample />} />
+      <Route path="/media-sample-list/mobile-camera-sample" element={<PageMobileCameraSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />

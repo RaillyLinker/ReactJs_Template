@@ -121,7 +121,7 @@ const View: React.FC = () => {
             <div id={styles.MainContent}>
               <h3>요청 폼 파라미터</h3>
               <div id={styles.RequestQuery}>{JSON.stringify(mainBusiness.requestForm, null, 2)}</div>
-              <input id={styles.fileChoice} type="file" onChange={mainBusiness.handleFileChange} multiple />
+              <input id={styles.fileChoice} type="file" onChange={mainBusiness.handleFileChange} multiple required />
               <button id={styles.RequestButton} onClick={mainBusiness.onClickRequest}>네트워크 요청</button>
             </div>
           </div>
