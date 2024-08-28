@@ -1,10 +1,5 @@
 [TODO]
 (1단계)
-- 템플릿 샘플 : 가로 스크롤
-    1. 광고판 같은 무한 스크롤 좌우 버튼, 아래 버튼 존재, 한 아이템이 한 페이지 차지 및 버튼으로만 이동 가능, 시간 지나면 자동 이동, 
-    2. 클릭으로 드래그 가능한 무한 가로 스크롤, 
-    3. 휠로 이동 가능한 세로 스크롤과 드래그로 이동 가능한 가로 스크롤 복합
-    위 모든 스크롤들의 위치 상태 저장
 - 미디어 샘플 : Gif 프레임 분리 -> 이미지 프레임 리스트를 Gif 로 합치기
 - 미디어 샘플 : webp 프레임 분리 -> 이미지 프레임 리스트를 webp 로 합치기
 - 미디어 샘플 : avif 프레임 분리 -> 이미지 프레임 리스트를 avif 로 합치기
@@ -21,6 +16,7 @@
 - 기타 샘플 : 이미지 선택 샘플 (로컬에서 이미지 선택시 썸네일 표시. 누르면 전체 표시)
 - 기타 샘플 : 동영상 선택 샘플 (로컬에서 영상 선택시 썸네일 표시. 누르면 재생됨)
 - 기타 샘플 : pdf 생성(게시판 글 작성 샘플에 작성된 글에 대한 옵션)
+- 템플릿 샘플 : 광고판 같은 무한 가로 스크롤 좌우 버튼, 아래 버튼 존재, 한 아이템이 한 페이지 차지 및 버튼으로만 이동 가능, 시간 지나면 자동 이동, 
 
 (3단계)
 - 미디어 샘플 : Gif 재생 조작 샘플 - 호버링하면 재생, 벗어나면 정지, Gif 를 동영상으로 만들고, 그것을 비디오로 표시한 후 이것으로 재생시간 조작 가능
@@ -196,3 +192,110 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+(복잡한 스크롤 샘플)
+- 템플릿 샘플 : 복잡한 스크롤 샘플 - 가로 세로 스크롤 복합 및 스크롤 위치 저장히기(스크롤 처리의 기본형태 구축)
+import React, { useRef } from 'react';
+
+type ScrollMatrixType = {
+  id: number;
+  items: string[];
+};
+
+const scrollMatrix: ScrollMatrixType[] = [
+  { id: 1, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 2, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 3, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 4, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 5, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 6, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 7, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 8, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 9, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 10, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 11, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 12, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 13, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 14, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 15, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 16, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 17, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 18, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 19, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+  { id: 20, items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8', 'Item 9', 'Item 10', 'Item 11', 'Item 12', 'Item 13', 'Item 14', 'Item 15', 'Item 16', 'Item 17', 'Item 18', 'Item 19', 'Item 20'] },
+];
+
+const ScrollableRow: React.FC<{ items: string[] }> = ({ items }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  let isDragging = false;
+  let startX: number;
+  let scrollLeft: number;
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    isDragging = true;
+    startX = e.pageX - (containerRef.current?.offsetLeft || 0);
+    scrollLeft = containerRef.current?.scrollLeft || 0;
+  };
+
+  const onMouseLeaveOrUp = () => {
+    isDragging = false;
+  };
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (containerRef.current?.offsetLeft || 0);
+    const walk = x - startX;
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  return (
+    <div
+      className="scrollable-row"
+      ref={containerRef}
+      onMouseDown={onMouseDown}
+      onMouseLeave={onMouseLeaveOrUp}
+      onMouseUp={onMouseLeaveOrUp}
+      onMouseMove={onMouseMove}
+      style={{
+        display: 'flex',
+        overflowX: 'auto',
+        cursor: 'grab',
+        whiteSpace: 'nowrap',
+        userSelect: 'none',
+      }}
+    >
+      {items.map((item, index) => (
+        <div
+          key={index}
+          style={{
+            flex: '0 0 auto',
+            padding: '10px',
+            border: '1px solid #ccc',
+            margin: '5px',
+            minWidth: '100px',
+            textAlign: 'center',
+          }}
+        >
+          {item}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <div style={{ height: '100vh', overflowY: 'auto' }}>
+      {scrollMatrix.map((row) => (
+        <ScrollableRow key={row.id} items={row.items} />
+      ))}
+    </div>
+  );
+};
+
+export default App;
+
