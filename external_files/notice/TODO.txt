@@ -40,8 +40,9 @@
 - 모바일 환경에서 확인하기 : 페이지 전부 반응형으로 만들기 및 CSS 개선
 - 게임 샘플 추가 : 테트리스, 리듬게임, 퐁, 벽돌깨기, 크롬 공룡게임, 지뢰찾기, 갤러그
 
-- 미디어 샘플 : 캠 영상 촬영 및 녹화
+
 (캠 샘플)
+- 미디어 샘플 : 캠 영상 촬영 및 녹화
 import React, { useState, useRef, useEffect } from 'react';
 
 const App: React.FC = () => {
