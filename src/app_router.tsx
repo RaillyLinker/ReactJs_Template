@@ -48,6 +48,7 @@ import PageImageResizingSample from './pages/page_imageResizingSample/view';
 import PageThreeDimensionSample from './pages/page_threeDimensionSample/view';
 import PageSnakeGameSample from './pages/page_snakeGameSample/view';
 import PageMobileCameraSample from './pages/page_mobileCameraSample/view';
+import PageFilesToZipSample from './pages/page_filesToZipSample/view';
 
 
 // [라우터 클래스]
@@ -110,6 +111,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
       <Route path="/etc-sample-list/three-dimension-sample" element={<PageThreeDimensionSample />} />
       <Route path="/etc-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
+      <Route path="/etc-sample-list/files-to-zip-sample" element={<PageFilesToZipSample />} />
     </Routes>
   );
 }
