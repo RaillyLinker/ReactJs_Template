@@ -51,6 +51,7 @@ import PageMobileCameraSample from './pages/page_mobileCameraSample/view';
 import PageFilesToZipSample from './pages/page_filesToZipSample/view';
 import PageZipToFilesSample from './pages/page_zipToFilesSample/view';
 import PageGameSampleList from './pages/page_gameSampleList/view';
+import PagePongGameSample from './pages/page_pongGameSample/view';
 
 
 // [라우터 클래스]
@@ -111,6 +112,7 @@ function AppRouter(): JSX.Element {
 
       <Route path="/game-sample-list" element={<PageGameSampleList />} />
       <Route path="/game-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
+      <Route path="/game-sample-list/pong-game-sample" element={<PagePongGameSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />

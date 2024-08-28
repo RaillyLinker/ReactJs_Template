@@ -1,5 +1,6 @@
 [TODO]
 (1단계)
+- pong 개선
 - 템플릿 샘플 : 복잡한 스크롤 샘플 - 가로 세로 스크롤 복합 및 스크롤 위치 저장히기(스크롤 처리의 기본형태 구축)
 - 미디어 샘플 : 캠 영상 촬영 및 녹화
 - 기타 샘플 : 지도 샘플
@@ -36,7 +37,7 @@
     이 프로토콜들은 비디오를 작은 조각들로 스트리밍하며, 사용자가 전체 비디오 파일을 쉽게 다운로드할 수 없게 만듭니다.
     예를 들어, HLS 스트리밍을 React에서 사용하려면 video.js나 hls.js와 같은 라이브러리를 사용할 수 있습니다.
 - 모바일 환경에서 확인하기 : 페이지 전부 반응형으로 만들기 및 CSS 개선
-- 게임 샘플 추가 : 테트리스, 리듬게임, 퐁, 벽돌깨기, 크롬 공룡게임, 지뢰찾기, 갤러그
+- 게임 샘플 추가 : 테트리스, 리듬게임, 벽돌깨기, 크롬 공룡게임, 지뢰찾기, 갤러그
 
 
 (캠 샘플)
@@ -300,109 +301,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-(퐁 게임)
-import React, { useRef, useEffect, useState } from 'react';
-
-const canvasStyle: React.CSSProperties = {
-  display: 'block',
-  margin: '0 auto',
-  background: '#000',
-};
-
-const paddleWidth = 10;
-const paddleHeight = 100;
-const ballSize = 10;
-const ballSpeed = 12; // 공의 속도를 설정합니다.
-
-const PongGame: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [playerY, setPlayerY] = useState<number>(0);
-  const [ballX, setBallX] = useState<number>(100);
-  const [ballY, setBallY] = useState<number>(100);
-  const [ballSpeedX, setBallSpeedX] = useState<number>(ballSpeed);
-  const [ballSpeedY, setBallSpeedY] = useState<number>(ballSpeed);
-  const [computerY, setComputerY] = useState<number>(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const y = e.clientY - rect.top - paddleHeight / 2;
-      setPlayerY(Math.max(0, Math.min(y, canvas.height - paddleHeight)));
-    };
-
-    canvas.addEventListener('mousemove', handleMouseMove);
-
-    let animationFrameId: number;
-
-    const gameLoop = () => {
-      // Update ball position
-      setBallX((prevBallX) => {
-        const newBallX = prevBallX + ballSpeedX;
-        if (newBallX <= paddleWidth) {
-          if (ballY >= playerY && ballY <= playerY + paddleHeight) {
-            setBallSpeedX(-ballSpeedX);
-          } else {
-            setBallX(100);
-            setBallY(100);
-            setBallSpeedX(ballSpeed);
-            setBallSpeedY(ballSpeed);
-          }
-        } else if (newBallX >= canvas.width - ballSize) {
-          setBallSpeedX(-ballSpeedX);
-        }
-        return newBallX;
-      });
-
-      setBallY((prevBallY) => {
-        const newBallY = prevBallY + ballSpeedY;
-        if (newBallY <= 0 || newBallY >= canvas.height - ballSize) {
-          setBallSpeedY(-ballSpeedY);
-        }
-        return newBallY;
-      });
-
-      // Update computer paddle position
-      setComputerY((prevComputerY) => {
-        const newComputerY = ballY - paddleHeight / 2;
-        return Math.max(0, Math.min(newComputerY, canvas.height - paddleHeight));
-      });
-
-      // Clear canvas and redraw
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw player paddle
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, playerY, paddleWidth, paddleHeight);
-
-      // Draw computer paddle
-      ctx.fillRect(canvas.width - paddleWidth, computerY, paddleWidth, paddleHeight);
-
-      // Draw ball
-      ctx.beginPath();
-      ctx.arc(ballX, ballY, ballSize / 2, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Request the next frame
-      animationFrameId = requestAnimationFrame(gameLoop);
-    };
-
-    // Start the game loop
-    animationFrameId = requestAnimationFrame(gameLoop);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [ballX, ballY, ballSpeedX, ballSpeedY, playerY, computerY]);
-
-  return <canvas ref={canvasRef} width={800} height={600} style={canvasStyle} />;
-};
-
-export default PongGame;
