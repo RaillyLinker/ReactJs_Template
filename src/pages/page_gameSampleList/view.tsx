@@ -118,33 +118,15 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <div className={styles.gameArea}>
-              {mainBusiness.isGameOver ? (
-                <div className={styles.gameOver}>
-                  <h2>Game Over</h2>
-                  <div className={styles.score}>Score : {mainBusiness.snake.length}</div>
-                  <button onClick={mainBusiness.resetGame}>Restart</button>
+            {mainBusiness.items.map(item => (
+              <div key={item.uid}>
+                <div id={styles.ListItem} onClick={item.onItemClicked}>
+                  <div id={styles.ListTitle} >{item.itemTitle}</div>
+                  <div id={styles.ListDescription}>{item.itemDescription}</div>
                 </div>
-              ) : (
-                <>
-                  {Array.from(Array(mainBusiness.GRID_SIZE)).map((_, row) => (
-                    <div key={row} className={styles.row}>
-                      {Array.from(Array(mainBusiness.GRID_SIZE)).map((_, col) => (
-                        <div
-                          key={col}
-                          className={`${styles.cell} ${mainBusiness.snake.some(segment => segment.x === col && segment.y === row)
-                            ? styles.snake
-                            : mainBusiness.food.x === col && mainBusiness.food.y === row
-                              ? styles.food
-                              : ''
-                            }`}
-                        ></div>
-                      ))}
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
+                <hr />
+              </div>
+            ))}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
@@ -157,12 +139,10 @@ const View: React.FC = () => {
   );
 };
 
-
 //----------------------------------------------------------------------------
 // [Path Parameter VO 클래스]
 export class PathParams implements PagePathParamBasic {
 }
-
 
 // [Query Parameter VO 클래스]
 export class QueryParams implements PageQueryParamBasic {

@@ -50,6 +50,7 @@ import PageSnakeGameSample from './pages/page_snakeGameSample/view';
 import PageMobileCameraSample from './pages/page_mobileCameraSample/view';
 import PageFilesToZipSample from './pages/page_filesToZipSample/view';
 import PageZipToFilesSample from './pages/page_zipToFilesSample/view';
+import PageGameSampleList from './pages/page_gameSampleList/view';
 
 
 // [라우터 클래스]
@@ -108,10 +109,12 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list/image-resizing-sample" element={<PageImageResizingSample />} />
       <Route path="/media-sample-list/mobile-camera-sample" element={<PageMobileCameraSample />} />
 
+      <Route path="/game-sample-list" element={<PageGameSampleList />} />
+      <Route path="/game-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
+
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
       <Route path="/etc-sample-list/three-dimension-sample" element={<PageThreeDimensionSample />} />
-      <Route path="/etc-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
       <Route path="/etc-sample-list/files-to-zip-sample" element={<PageFilesToZipSample />} />
       <Route path="/etc-sample-list/zip-to-files-sample" element={<PageZipToFilesSample />} />
     </Routes>

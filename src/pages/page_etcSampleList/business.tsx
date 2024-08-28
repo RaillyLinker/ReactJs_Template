@@ -61,14 +61,6 @@ class Business extends PageBusinessBasic {
       },
       {
         uid: 2,
-        itemTitle: "뱀 게임 샘플",
-        itemDescription: "기본 뱀 게임 구현 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/snake-game-sample");
-        }
-      },
-      {
-        uid: 3,
         itemTitle: "파일 압축 샘플",
         itemDescription: "파일들을 선택해서 압축하는 샘플",
         onItemClicked: (): void => {
@@ -76,7 +68,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 4,
+        uid: 3,
         itemTitle: "압축 풀기 샘플",
         itemDescription: "압축 파일을 선택해서 압축을 푸는 샘플",
         onItemClicked: (): void => {

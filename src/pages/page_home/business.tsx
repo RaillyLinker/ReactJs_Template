@@ -75,9 +75,17 @@ class Business extends PageBusinessBasic {
           this.navigate("/media-sample-list");
         }
       },
-      // todo
       {
         uid: 4,
+        itemTitle: "게임 샘플 리스트",
+        itemDescription: "게임 구현 샘플 리스트",
+        onItemClicked: (): void => {
+          this.navigate("/game-sample-list");
+        }
+      },
+      // todo
+      {
+        uid: 5,
         itemTitle: "기타 샘플 리스트",
         itemDescription: "기타 테스트 샘플을 모아둔 리스트",
         onItemClicked: (): void => {
