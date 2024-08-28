@@ -8,7 +8,6 @@
 - 미디어 샘플 : Gif 프레임 분리 -> 이미지 프레임 리스트를 Gif 로 합치기
 - 미디어 샘플 : webp 프레임 분리 -> 이미지 프레임 리스트를 webp 로 합치기
 - 미디어 샘플 : avif 프레임 분리 -> 이미지 프레임 리스트를 avif 로 합치기
-- 미디어 샘플 : 캠 영상 촬영 및 녹화
 - 기타 샘플 : 지도 샘플
 - 기타 샘플 : 게시판 글 작성(Draft.js, Quill, TinyMCE, CKEditor 중에 하나 고르기)
 
@@ -40,3 +39,159 @@
     예를 들어, HLS 스트리밍을 React에서 사용하려면 video.js나 hls.js와 같은 라이브러리를 사용할 수 있습니다.
 - 모바일 환경에서 확인하기 : 페이지 전부 반응형으로 만들기 및 CSS 개선
 - 게임 샘플 추가 : 테트리스, 리듬게임, 퐁, 벽돌깨기, 크롬 공룡게임, 지뢰찾기, 갤러그
+
+- 미디어 샘플 : 캠 영상 촬영 및 녹화
+(캠 샘플)
+import React, { useState, useRef, useEffect } from 'react';
+
+const App: React.FC = () => {
+  const [isCameraOn, setIsCameraOn] = useState(false);
+  const [isMirrored, setIsMirrored] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunks = useRef<Blob[]>([]);
+  let stream: MediaStream | null = null;
+
+  useEffect(() => {
+    if (isCameraOn) {
+      startCamera();
+    } else {
+      stopCamera();
+    }
+
+    // 페이지를 떠나거나 뒤로 가기 시 카메라 정리
+    return () => {
+      stopCamera();
+    };
+  }, [isCameraOn]);
+
+  const startCamera = async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setError(null);
+
+      stream.getTracks()[0].onended = () => {
+        handleCameraDisconnected();
+      };
+    } catch (err) {
+      setError('Cannot access the camera. Please check your device.');
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+    setIsRecording(false); // 녹화 상태를 초기화
+    setIsMirrored(false); // 좌우반전 상태를 초기화
+  };
+
+  const handleMirrorToggle = () => {
+    setIsMirrored(!isMirrored);
+  };
+
+  const handleCapture = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const context = canvas.getContext('2d');
+      if (context) {
+        if (isMirrored) {
+          context.translate(canvas.width, 0);
+          context.scale(-1, 1);
+        }
+        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'capture.png';
+        link.click();
+      }
+    }
+  };
+
+  const handleRecordToggle = () => {
+    if (isRecording) {
+      mediaRecorderRef.current?.stop();
+    } else {
+      startRecording();
+    }
+    setIsRecording(!isRecording);
+  };
+
+  const startRecording = () => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+      mediaRecorderRef.current.ondataavailable = event => {
+        if (event.data.size > 0) {
+          recordedChunks.current.push(event.data);
+        }
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const blob = new Blob(recordedChunks.current, { type: 'video/webm' });
+        recordedChunks.current = [];
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'recording.webm';
+        link.click();
+        URL.revokeObjectURL(url);
+      };
+
+      mediaRecorderRef.current.start();
+    }
+  };
+
+  const handleCameraDisconnected = () => {
+    setIsCameraOn(false);
+    setIsRecording(false);
+    setError('Camera has been disconnected.');
+  };
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <button onClick={() => setIsCameraOn(!isCameraOn)}>
+        {isCameraOn ? 'Camera Off' : 'Camera On'}
+      </button>
+
+      <div style={{ marginTop: '20px', width: '40rem', height: '40rem', border: '2px solid black', position: 'relative' }}>
+        {error && <div style={{ color: 'red', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{error}</div>}
+        <video
+          ref={videoRef}
+          style={{ width: '100%', height: '100%', transform: isMirrored ? 'scaleX(-1)' : 'none' }}
+          autoPlay
+          playsInline
+        />
+      </div>
+
+      {isCameraOn && !error && (
+        <div style={{ marginTop: '10px' }}>
+          <button onClick={handleMirrorToggle}>
+            {isMirrored ? 'Unmirror' : 'Mirror'}
+          </button>
+          <button onClick={handleCapture}>Capture</button>
+          <button onClick={handleRecordToggle}>
+            {isRecording ? 'Stop Recording' : 'Start Recording'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
