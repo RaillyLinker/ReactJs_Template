@@ -44,6 +44,8 @@ class Business extends PageBusinessBasic {
   INIT_DIRECTION: Point = { x: 1, y: 0 };
   // 초기 뱀 먹이 위치
   INIT_FOOD: Point = { x: 5, y: 5 };
+  // 프레임 딜레이 (몇 밀리초마다 한번 프레임이 돌아가는지)
+  frameDelay: number = 200;
 
   // (게임 상태)
   // 뱀 좌표
@@ -98,6 +100,7 @@ class Business extends PageBusinessBasic {
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
     // (키보드 핸들러 처리)
+    // 방향버튼에 따라 다음 이동 방향 설정
     this.handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowUp':
@@ -134,18 +137,22 @@ class Business extends PageBusinessBasic {
 
     // 1 프레임 마다 게임을 진행하는 코드
     const moveSnake = () => {
+      // 이전 뱀 위치 가져오기
       const newSnake = [...this.snake];
+      // 새 머리 위치 이동
       const head = {
         x: newSnake[0].x + this.direction.x,
         y: newSnake[0].y + this.direction.y,
       };
 
+      // 이번 뱀 머리가 게임판을 나갔는지 확인
       if (head.x < 0 || head.x >= this.GRID_SIZE || head.y < 0 || head.y >= this.GRID_SIZE) {
         this.isGameOver = true;
         this.reRender();
         return;
       }
 
+      // 이번 뱀 머리가 뱀 몸에 닿았는지 확인
       for (let i = 1; i < newSnake.length; i++) {
         if (newSnake[i].x === head.x && newSnake[i].y === head.y) {
           this.isGameOver = true;
@@ -154,25 +161,31 @@ class Business extends PageBusinessBasic {
         }
       }
 
+      // 뱀 머리를 리스트 앞에 추가
       newSnake.unshift(head);
 
+      // 먹이를 먹었는지 확인
       if (head.x === this.food.x && head.y === this.food.y) {
-        if (!this.generateFoodPosition()) {
+        // 먹이를 먹었다면 새로 생성
+        if (!this.generateFoodPosition(newSnake)) {
+          // 더이상 생성 불가시 게임 오버
           this.isGameOver = true;
           this.reRender();
           return;
         }
         this.reRender();
       } else {
+        // 먹이를 먹지 않았다면 기존 꼬리 제거
         newSnake.pop();
       }
 
+      // 새 뱀 위치를 화면에 표시하기
       this.snake = newSnake;
       this.reRender();
     };
 
     // 1 프레임마다 게임 진행을 반복
-    this.intervalId = setInterval(moveSnake, 200);
+    this.intervalId = setInterval(moveSnake, this.frameDelay);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -205,13 +218,14 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
-  private generateFoodPosition = (): Point | null => {
+  // (뱀 먹이 생성)
+  private generateFoodPosition = (newSnake: Point[]): Point | null => {
     const availablePositions: Point[] = [];
 
     for (let x = 0; x < this.GRID_SIZE; x++) {
       for (let y = 0; y < this.GRID_SIZE; y++) {
         const position: Point = { x, y };
-        const isOnSnake = this.snake.some(
+        const isOnSnake = newSnake.some(
           (segment) => segment.x === position.x && segment.y === position.y
         );
         if (!isOnSnake) {
