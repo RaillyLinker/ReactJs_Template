@@ -42,7 +42,7 @@ class Business extends PageBusinessBasic {
   // 공 크기
   ballSize: number = 10;
   // 공 속도
-  ballSpeed: number = 1;
+  ballSpeed: number = 1.5;
 
   // (게임 상황)
   // 플레이어 위치
