@@ -47,7 +47,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
         mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
       }
     };
-  });
+  }, [mainBusiness]);
 
 
   //----------------------------------------------------------------------------

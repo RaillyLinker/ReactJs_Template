@@ -98,6 +98,21 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+  }
+
+  // (컴포넌트가 마운트 해제되어 제거되기 직전)
+  // 컴포넌트가 마운트 해제되어 제거되기 직전에 호출됩니다. 
+  // 이 메서드 내에서 타이머 제거, 네트워크 요청 취소, componentDidMount() 내에서 생성된 구독 해제 등 필요한 모든 정리 작업을 수행하세요.
+  // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
+  // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
+  onComponentWillUnmount = () => {
+  }
+
+
+  //----------------------------------------------------------------------------
+  // [public 함수]
+  // (컴포넌트 실행 로직 For Pong)
+  onComponentDidMountForPong = () => {
     if (!this.canvasRef || !this.canvasRef.current) return;
     // canvas 객체 할당
     this.canvas = this.canvasRef.current;
@@ -109,15 +124,13 @@ class Business extends PageBusinessBasic {
     }
 
     // 게임 실행
+    // requestAnimationFrame 함수는 브라우저의 화면 새로 고침 주기에 맞춰 실행되므로, 애니메이션이 더 부드럽고 자원을 적게 소모하게 됩니다.
+    // 사용자의 화면 주사율(예: 60Hz, 120Hz)에 맞춰서 애니메이션이 자동으로 조정됩니다. 따라서 모든 화면에서 일관된 애니메이션이 보장됩니다.
     this.animationFrameId = requestAnimationFrame(this.gameLoop);
   }
 
-  // (컴포넌트가 마운트 해제되어 제거되기 직전)
-  // 컴포넌트가 마운트 해제되어 제거되기 직전에 호출됩니다. 
-  // 이 메서드 내에서 타이머 제거, 네트워크 요청 취소, componentDidMount() 내에서 생성된 구독 해제 등 필요한 모든 정리 작업을 수행하세요.
-  // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
-  // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
-  onComponentWillUnmount = () => {
+  // (컴포넌트 종료 로직 For Pong)
+  onComponentWillUnmountForPong = () => {
     // 게임 중지
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
@@ -130,9 +143,6 @@ class Business extends PageBusinessBasic {
     }
   }
 
-
-  //----------------------------------------------------------------------------
-  // [public 함수]
   // (마우스 움직임 조작)
   handleMouseMove = (e: MouseEvent) => {
     if (this.canvas) {
@@ -155,57 +165,60 @@ class Business extends PageBusinessBasic {
       const ctx = this.canvas.getContext('2d');
       if (!ctx) return;
 
+      // 공 속도에 따라 새로운 공 x 좌표 생성
       const newBallX = this.ballX + this.ballSpeedX;
+
+      // 새로운 공 x 좌표 검증
       if (newBallX <= this.paddleWidth) {
         if (this.ballY >= this.playerY && this.ballY <= this.playerY + this.paddleHeight) {
+          // 충돌시 운동방향 반전
           this.ballSpeedX = -this.ballSpeedX;
-          this.reRender();
         } else {
           this.ballX = 100;
           this.ballY = 100;
           this.ballSpeedX = this.ballSpeed;
           this.ballSpeedY = this.ballSpeed;
-          this.reRender();
         }
       } else if (newBallX >= this.canvas.width - this.ballSize) {
         this.ballSpeedX = -this.ballSpeedX;
-        this.reRender();
       }
 
+      // 공 x 좌표 할당
       this.ballX = newBallX;
 
+      // 공 속도에 따라 새로운 공 y 좌표 생성
       const newBallY = this.ballY + this.ballSpeedY;
-      if (newBallY <= 0 || newBallY >= this.canvas.height - this.ballSize) {
-        this.ballSpeedY = -this.ballSpeedY;
-        this.reRender();
-      }
-      this.ballY = newBallY;
-      this.reRender();
 
-      // Update computer paddle position
+      // 새로운 공 y 좌표 검증
+      if (newBallY <= 0 || newBallY >= this.canvas.height - this.ballSize) {
+        // 충돌시 운동방향 반전
+        this.ballSpeedY = -this.ballSpeedY;
+      }
+
+      // 공 y 좌표 할당
+      this.ballY = newBallY;
+
+      // 컴퓨터 패들 위치 조정
       const newComputerY = this.ballY - this.paddleHeight / 2;
       this.computerY = Math.max(0, Math.min(newComputerY, this.canvas.height - this.paddleHeight));
-      this.reRender();
 
-      // Clear canvas and redraw
+      // 캔버스 초기화
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Draw player paddle
+      // 플레이어 패들 그리기
       ctx.fillStyle = '#fff';
       ctx.fillRect(0, this.playerY, this.paddleWidth, this.paddleHeight);
 
-      // Draw computer paddle
+      // 컴퓨터 패들 그리기
       ctx.fillRect(this.canvas.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
 
-      // Draw ball
+      // 공 현재 위치 그리기
       ctx.beginPath();
       ctx.arc(this.ballX, this.ballY, this.ballSize / 2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Request the next frame
-      if (!this.animationFrameId) {
-        this.animationFrameId = requestAnimationFrame(this.gameLoop);
-      }
+      // 리랜더링
+      this.reRender();
     }
   };
 

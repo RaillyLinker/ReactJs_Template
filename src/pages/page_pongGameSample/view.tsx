@@ -62,7 +62,7 @@ const View: React.FC = () => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  });
+  }, [mainBusiness]);
 
   // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
   if (currentPageHistoryIdx.idx !== pageHistoryIdx &&
@@ -81,6 +81,13 @@ const View: React.FC = () => {
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
   mainBusiness.canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    mainBusiness.onComponentDidMountForPong();
+    return () => {
+      mainBusiness.onComponentWillUnmountForPong();
+    }
+  });
 
 
   //----------------------------------------------------------------------------
