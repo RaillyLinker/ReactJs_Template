@@ -3,6 +3,21 @@
 
 
 /* [Class .] */
+.Rows {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.Items {
+    flex: 0 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    min-width: 100px;
+    text-align: center;
+}
 
 
 /* [Id #] */

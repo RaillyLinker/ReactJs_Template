@@ -121,7 +121,17 @@ const View: React.FC = () => {
           <div id={styles.MainContent}>
             <ScrollSaverSpan business={mainBusiness.verticalScrollBusiness} id={styles.VerticalScroll}>
               {mainBusiness.scrollMatrix.map((row) => (
-                <ScrollableRow items={row} />
+                <ScrollSaverSpan
+                  className={styles.Rows}
+                  key={row.uid}
+                  business={row.horizontalScrollBusiness}
+                >
+                  {row.items.map((item, index) => (
+                    <div key={index} className={styles.Items}>
+                      {item}
+                    </div>
+                  ))}
+                </ScrollSaverSpan>
               ))}
             </ScrollSaverSpan>
           </div>
@@ -148,68 +158,3 @@ export class QueryParams implements PageQueryParamBasic {
 }
 
 export default View;
-
-// [스크롤 Row 컴포넌트]
-const ScrollableRow: React.FC<{ items: string[] }> = ({ items }) => {
-  // [변수]
-  const containerRef = useRef<HTMLDivElement>(null);
-  let isDragging = false;
-  let startX: number;
-  let scrollLeft: number;
-
-  // [함수]
-  const onMouseDown = (e: React.MouseEvent) => {
-    isDragging = true;
-    startX = e.pageX - (containerRef.current?.offsetLeft || 0);
-    scrollLeft = containerRef.current?.scrollLeft || 0;
-  };
-
-  const onMouseLeaveOrUp = () => {
-    isDragging = false;
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (containerRef.current?.offsetLeft || 0);
-    const walk = x - startX;
-    if (containerRef.current) {
-      containerRef.current.scrollLeft = scrollLeft - walk;
-    }
-  };
-
-  // [화면]
-  return (
-    <div
-      className="scrollable-row"
-      ref={containerRef}
-      onMouseDown={onMouseDown}
-      onMouseLeave={onMouseLeaveOrUp}
-      onMouseUp={onMouseLeaveOrUp}
-      onMouseMove={onMouseMove}
-      style={{
-        display: 'flex',
-        overflowX: 'auto',
-        cursor: 'grab',
-        whiteSpace: 'nowrap',
-        userSelect: 'none',
-      }}
-    >
-      {items.map((item, index) => (
-        <div
-          key={index}
-          style={{
-            flex: '0 0 auto',
-            padding: '10px',
-            border: '1px solid #ccc',
-            margin: '5px',
-            minWidth: '100px',
-            textAlign: 'center',
-          }}
-        >
-          {item}
-        </div>
-      ))}
-    </div>
-  );
-};

@@ -33,7 +33,7 @@ const View: React.FC<Props> = (props) => {
   //----------------------------------------------------------------------------
   // (컴포넌트 화면 구성 코드)
   return (
-    <span id={props.id} ref={mainBusiness.contentRef}>
+    <span id={props.id} className={props.className} ref={mainBusiness.contentRef}>
       {props.children}
     </span>
   );
@@ -45,6 +45,7 @@ const View: React.FC<Props> = (props) => {
 // !!!business, children 이외 필요한 Props 는 이곳에 선언!!!
 interface Props extends ComponentProps<Business> {
   id?: string;
+  className?: string;
 }
 
 export default View;
