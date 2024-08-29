@@ -84,10 +84,10 @@ const View: React.FC = () => {
 
   useEffect(() => {
     if (!mainBusiness.canvasRef) return;
-    mainBusiness.canvas = mainBusiness.canvasRef.current;
-    if (!mainBusiness.canvas) return;
+    if (!mainBusiness.canvasRef.current) return;
 
-    mainBusiness.canvas.addEventListener('mousemove', mainBusiness.handleMouseMove);
+    mainBusiness.canvasRef.current.removeEventListener('mousemove', mainBusiness.handleMouseMove);
+    mainBusiness.canvasRef.current.addEventListener('mousemove', mainBusiness.handleMouseMove);
 
     // Start the game loop
     if (!mainBusiness.animationFrameId) {
@@ -98,9 +98,6 @@ const View: React.FC = () => {
       if (mainBusiness.animationFrameId) {
         cancelAnimationFrame(mainBusiness.animationFrameId);
         mainBusiness.animationFrameId = null;
-      }
-      if (mainBusiness.canvas) {
-        mainBusiness.canvas.removeEventListener('mousemove', mainBusiness.handleMouseMove);
       }
     };
   }, [mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSpeedX, mainBusiness.ballSpeedY, mainBusiness.playerY, mainBusiness.computerY]);

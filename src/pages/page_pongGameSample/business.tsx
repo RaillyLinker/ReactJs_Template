@@ -48,7 +48,6 @@ class Business extends PageBusinessBasic {
   ballSpeedX: number = this.ballSpeed;
   ballSpeedY: number = this.ballSpeed;
   computerY: number = 0;
-  canvas: HTMLCanvasElement | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -103,8 +102,8 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (마우스 움직임 조작)
   handleMouseMove = (e: MouseEvent) => {
-    if (this.canvas) {
-      this.playerY = Math.max(0, Math.min(e.clientY - this.canvas.getBoundingClientRect().top - this.paddleHeight / 2, this.canvas.height - this.paddleHeight));
+    if (this.canvasRef && this.canvasRef.current) {
+      this.playerY = Math.max(0, Math.min(e.clientY - this.canvasRef.current.getBoundingClientRect().top - this.paddleHeight / 2, this.canvasRef.current.height - this.paddleHeight));
       this.reRender();
     }
   };
@@ -112,8 +111,8 @@ class Business extends PageBusinessBasic {
   gameLoop = () => {
 
     // Update ball position
-    if (this.canvas) {
-      const ctx = this.canvas.getContext('2d');
+    if (this.canvasRef && this.canvasRef.current) {
+      const ctx = this.canvasRef.current.getContext('2d');
       if (!ctx) return;
 
       const newBallX = this.ballX + this.ballSpeedX;
@@ -128,7 +127,7 @@ class Business extends PageBusinessBasic {
           this.ballSpeedY = this.ballSpeed;
           this.reRender();
         }
-      } else if (newBallX >= this.canvas.width - this.ballSize) {
+      } else if (newBallX >= this.canvasRef.current.width - this.ballSize) {
         this.ballSpeedX = -this.ballSpeedX;
         this.reRender();
       }
@@ -136,7 +135,7 @@ class Business extends PageBusinessBasic {
       this.ballX = newBallX;
 
       const newBallY = this.ballY + this.ballSpeedY;
-      if (newBallY <= 0 || newBallY >= this.canvas.height - this.ballSize) {
+      if (newBallY <= 0 || newBallY >= this.canvasRef.current.height - this.ballSize) {
         this.ballSpeedY = -this.ballSpeedY;
         this.reRender();
       }
@@ -145,18 +144,18 @@ class Business extends PageBusinessBasic {
 
       // Update computer paddle position
       const newComputerY = this.ballY - this.paddleHeight / 2;
-      this.computerY = Math.max(0, Math.min(newComputerY, this.canvas.height - this.paddleHeight));
+      this.computerY = Math.max(0, Math.min(newComputerY, this.canvasRef.current.height - this.paddleHeight));
       this.reRender();
 
       // Clear canvas and redraw
-      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
 
       // Draw player paddle
       ctx.fillStyle = '#fff';
       ctx.fillRect(0, this.playerY, this.paddleWidth, this.paddleHeight);
 
       // Draw computer paddle
-      ctx.fillRect(this.canvas.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
+      ctx.fillRect(this.canvasRef.current.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
 
       // Draw ball
       ctx.beginPath();
