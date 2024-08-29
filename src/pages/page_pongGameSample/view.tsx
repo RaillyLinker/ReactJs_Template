@@ -86,71 +86,12 @@ const View: React.FC = () => {
     if (!mainBusiness.canvasRef) return;
     mainBusiness.canvas = mainBusiness.canvasRef.current;
     if (!mainBusiness.canvas) return;
-    const ctx = mainBusiness.canvas.getContext('2d');
-    if (!ctx) return;
 
     mainBusiness.canvas.addEventListener('mousemove', mainBusiness.handleMouseMove);
 
-    const gameLoop = () => {
-      // Update ball position
-      if (mainBusiness.canvas) {
-        const newBallX = mainBusiness.ballX + mainBusiness.ballSpeedX;
-        if (newBallX <= mainBusiness.paddleWidth) {
-          if (mainBusiness.ballY >= mainBusiness.playerY && mainBusiness.ballY <= mainBusiness.playerY + mainBusiness.paddleHeight) {
-            mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
-            mainBusiness.reRender();
-          } else {
-            mainBusiness.ballX = 100;
-            mainBusiness.ballY = 100;
-            mainBusiness.ballSpeedX = mainBusiness.ballSpeed;
-            mainBusiness.ballSpeedY = mainBusiness.ballSpeed;
-            mainBusiness.reRender();
-          }
-        } else if (newBallX >= mainBusiness.canvas.width - mainBusiness.ballSize) {
-          mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
-          mainBusiness.reRender();
-        }
-
-        mainBusiness.ballX = newBallX;
-
-        const newBallY = mainBusiness.ballY + mainBusiness.ballSpeedY;
-        if (newBallY <= 0 || newBallY >= mainBusiness.canvas.height - mainBusiness.ballSize) {
-          mainBusiness.ballSpeedY = -mainBusiness.ballSpeedY;
-          mainBusiness.reRender();
-        }
-        mainBusiness.ballY = newBallY;
-        mainBusiness.reRender();
-
-        // Update computer paddle position
-        const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
-        mainBusiness.computerY = Math.max(0, Math.min(newComputerY, mainBusiness.canvas.height - mainBusiness.paddleHeight));
-        mainBusiness.reRender();
-
-        // Clear canvas and redraw
-        ctx.clearRect(0, 0, mainBusiness.canvas.width, mainBusiness.canvas.height);
-
-        // Draw player paddle
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, mainBusiness.playerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
-
-        // Draw computer paddle
-        ctx.fillRect(mainBusiness.canvas.width - mainBusiness.paddleWidth, mainBusiness.computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
-
-        // Draw ball
-        ctx.beginPath();
-        ctx.arc(mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Request the next frame
-        if (!mainBusiness.animationFrameId) {
-          mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
-        }
-      }
-    };
-
     // Start the game loop
     if (!mainBusiness.animationFrameId) {
-      mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
+      mainBusiness.animationFrameId = requestAnimationFrame(mainBusiness.gameLoop);
     }
 
     return () => {

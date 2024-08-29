@@ -109,6 +109,67 @@ class Business extends PageBusinessBasic {
     }
   };
 
+  gameLoop = () => {
+
+    // Update ball position
+    if (this.canvas) {
+      const ctx = this.canvas.getContext('2d');
+      if (!ctx) return;
+
+      const newBallX = this.ballX + this.ballSpeedX;
+      if (newBallX <= this.paddleWidth) {
+        if (this.ballY >= this.playerY && this.ballY <= this.playerY + this.paddleHeight) {
+          this.ballSpeedX = -this.ballSpeedX;
+          this.reRender();
+        } else {
+          this.ballX = 100;
+          this.ballY = 100;
+          this.ballSpeedX = this.ballSpeed;
+          this.ballSpeedY = this.ballSpeed;
+          this.reRender();
+        }
+      } else if (newBallX >= this.canvas.width - this.ballSize) {
+        this.ballSpeedX = -this.ballSpeedX;
+        this.reRender();
+      }
+
+      this.ballX = newBallX;
+
+      const newBallY = this.ballY + this.ballSpeedY;
+      if (newBallY <= 0 || newBallY >= this.canvas.height - this.ballSize) {
+        this.ballSpeedY = -this.ballSpeedY;
+        this.reRender();
+      }
+      this.ballY = newBallY;
+      this.reRender();
+
+      // Update computer paddle position
+      const newComputerY = this.ballY - this.paddleHeight / 2;
+      this.computerY = Math.max(0, Math.min(newComputerY, this.canvas.height - this.paddleHeight));
+      this.reRender();
+
+      // Clear canvas and redraw
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // Draw player paddle
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, this.playerY, this.paddleWidth, this.paddleHeight);
+
+      // Draw computer paddle
+      ctx.fillRect(this.canvas.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
+
+      // Draw ball
+      ctx.beginPath();
+      ctx.arc(this.ballX, this.ballY, this.ballSize / 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Request the next frame
+      if (!this.animationFrameId) {
+        this.animationFrameId = requestAnimationFrame(this.gameLoop);
+      }
+    }
+  };
+
 
   //----------------------------------------------------------------------------
   // [private 함수]
