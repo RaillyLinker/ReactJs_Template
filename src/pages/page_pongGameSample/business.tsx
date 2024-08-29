@@ -101,11 +101,10 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (마우스 움직임 조작)
   handleMouseMove = (e: MouseEvent) => {
     if (this.canvas) {
-      const rect = this.canvas.getBoundingClientRect();
-      const y = e.clientY - rect.top - this.paddleHeight / 2;
-      this.playerY = Math.max(0, Math.min(y, this.canvas.height - this.paddleHeight));
+      this.playerY = Math.max(0, Math.min(e.clientY - this.canvas.getBoundingClientRect().top - this.paddleHeight / 2, this.canvas.height - this.paddleHeight));
       this.reRender();
     }
   };
