@@ -63,7 +63,7 @@ const View: React.FC = () => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  }, [mainBusiness]);
+  });
 
   // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
   if (currentPageHistoryIdx.idx !== pageHistoryIdx &&

@@ -17,7 +17,7 @@ const View: React.FC<DialogProps<Business>> = (props) => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  }, [mainBusiness]);
+  });
 
   // State 할당
   [mainBusiness.screenFlag, mainBusiness.setScreenFlag] = React.useState<{}>(mainBusiness.screenFlag);
