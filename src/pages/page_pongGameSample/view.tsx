@@ -80,65 +80,58 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-  const paddleWidth = 10;
-  const paddleHeight = 100;
-  const ballSize = 10;
-  const ballSpeed = 1; // 공의 속도를 설정합니다.
-  const canvasRef: React.MutableRefObject<HTMLCanvasElement | null> = useRef<HTMLCanvasElement | null>(null);
-  const [playerY, setPlayerY] = useState<number>(0);
-  const [ballX, setBallX] = useState<number>(100);
-  const [ballY, setBallY] = useState<number>(100);
-  const [ballSpeedX, setBallSpeedX] = useState<number>(ballSpeed);
-  const [ballSpeedY, setBallSpeedY] = useState<number>(ballSpeed);
+  mainBusiness.canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [ballSpeedX, setBallSpeedX] = useState<number>(mainBusiness.ballSpeed);
+  const [ballSpeedY, setBallSpeedY] = useState<number>(mainBusiness.ballSpeed);
   const [computerY, setComputerY] = useState<number>(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    if (!mainBusiness.canvasRef) return;
+    const canvas = mainBusiness.canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const y = e.clientY - rect.top - paddleHeight / 2;
-      setPlayerY(Math.max(0, Math.min(y, canvas.height - paddleHeight)));
+      const y = e.clientY - rect.top - mainBusiness.paddleHeight / 2;
+      mainBusiness.playerY = Math.max(0, Math.min(y, canvas.height - mainBusiness.paddleHeight));
+      mainBusiness.reRender();
     };
 
     canvas.addEventListener('mousemove', handleMouseMove);
 
-    let animationFrameId: number;
-
     const gameLoop = () => {
       // Update ball position
-      setBallX((prevBallX) => {
-        const newBallX = prevBallX + ballSpeedX;
-        if (newBallX <= paddleWidth) {
-          if (ballY >= playerY && ballY <= playerY + paddleHeight) {
-            setBallSpeedX(-ballSpeedX);
-          } else {
-            setBallX(100);
-            setBallY(100);
-            setBallSpeedX(ballSpeed);
-            setBallSpeedY(ballSpeed);
-          }
-        } else if (newBallX >= canvas.width - ballSize) {
-          setBallSpeedX(-ballSpeedX);
-        }
-        return newBallX;
-      });
 
-      setBallY((prevBallY) => {
-        const newBallY = prevBallY + ballSpeedY;
-        if (newBallY <= 0 || newBallY >= canvas.height - ballSize) {
-          setBallSpeedY(-ballSpeedY);
+      const newBallX = mainBusiness.ballX + ballSpeedX;
+      if (newBallX <= mainBusiness.paddleWidth) {
+        if (mainBusiness.ballY >= mainBusiness.playerY && mainBusiness.ballY <= mainBusiness.playerY + mainBusiness.paddleHeight) {
+          setBallSpeedX(-ballSpeedX);
+        } else {
+          mainBusiness.ballX = 100;
+          mainBusiness.ballY = 100;
+          setBallSpeedX(mainBusiness.ballSpeed);
+          setBallSpeedY(mainBusiness.ballSpeed);
         }
-        return newBallY;
-      });
+      } else if (newBallX >= canvas.width - mainBusiness.ballSize) {
+        setBallSpeedX(-ballSpeedX);
+      }
+
+      mainBusiness.ballX = newBallX;
+
+      const newBallY = mainBusiness.ballY + ballSpeedY;
+      if (newBallY <= 0 || newBallY >= canvas.height - mainBusiness.ballSize) {
+        setBallSpeedY(-ballSpeedY);
+      }
+      mainBusiness.ballY = newBallY;
+      mainBusiness.reRender();
 
       // Update computer paddle position
       setComputerY((prevComputerY) => {
-        const newComputerY = ballY - paddleHeight / 2;
-        return Math.max(0, Math.min(newComputerY, canvas.height - paddleHeight));
+        const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
+        return Math.max(0, Math.min(newComputerY, canvas.height - mainBusiness.paddleHeight));
       });
 
       // Clear canvas and redraw
@@ -146,28 +139,35 @@ const View: React.FC = () => {
 
       // Draw player paddle
       ctx.fillStyle = '#fff';
-      ctx.fillRect(0, playerY, paddleWidth, paddleHeight);
+      ctx.fillRect(0, mainBusiness.playerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
       // Draw computer paddle
-      ctx.fillRect(canvas.width - paddleWidth, computerY, paddleWidth, paddleHeight);
+      ctx.fillRect(canvas.width - mainBusiness.paddleWidth, computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
       // Draw ball
       ctx.beginPath();
-      ctx.arc(ballX, ballY, ballSize / 2, 0, Math.PI * 2);
+      ctx.arc(mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSize / 2, 0, Math.PI * 2);
       ctx.fill();
 
       // Request the next frame
-      animationFrameId = requestAnimationFrame(gameLoop);
+      if (!mainBusiness.animationFrameId) {
+        mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
+      }
     };
 
     // Start the game loop
-    animationFrameId = requestAnimationFrame(gameLoop);
+    if (!mainBusiness.animationFrameId) {
+      mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
+    }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (mainBusiness.animationFrameId) {
+        cancelAnimationFrame(mainBusiness.animationFrameId);
+        mainBusiness.animationFrameId = null;
+      }
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [ballX, ballY, ballSpeedX, ballSpeedY, playerY, computerY]);
+  }, [mainBusiness.ballX, mainBusiness.ballY, ballSpeedX, ballSpeedY, mainBusiness.playerY, computerY]);
 
 
   //----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <canvas ref={canvasRef} width={800} height={600} style={{
+            <canvas ref={mainBusiness.canvasRef} width={800} height={600} style={{
               display: 'block',
               margin: '0 auto',
               background: '#000',

@@ -35,6 +35,17 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
+  //
+  paddleWidth: number = 10;
+  paddleHeight: number = 100;
+  ballSize: number = 10;
+  ballSpeed: number = 1; // 공의 속도를 설정합니다.
+  canvasRef: React.MutableRefObject<HTMLCanvasElement | null> | null = null;
+  playerY: number = 0;
+  ballX: number = 100;
+  ballY: number = 100;
+  animationFrameId: number | null = null;
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
