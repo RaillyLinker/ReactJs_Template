@@ -13,7 +13,7 @@ class Business extends ComponentBusinessBasic {
   headerTitle: string;
 
   // (ScrollSaverSpan 비즈니스)
-  scrollSaverSpanBusiness: ScrollSaverSpanBusiness = new ScrollSaverSpanBusiness(this, styles.Content);
+  scrollSaverSpanBusiness: ScrollSaverSpanBusiness = new ScrollSaverSpanBusiness(this);
 
 
   //----------------------------------------------------------------------------

@@ -5,7 +5,6 @@ import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_t
 class Business extends ComponentBusinessBasic {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-  tagId: string;
 
   // (화면 본문 레퍼런스)
   contentRef: React.RefObject<HTMLDivElement> | null = null;
@@ -22,11 +21,9 @@ class Business extends ComponentBusinessBasic {
   // (비즈니스 클래스 생성자)
   // 부모 컴포넌트에서 값을 받을 때는 이곳으로 받습니다.
   constructor(
-    parentComponentBusiness: BusinessBasic,
-    tagId: string
+    parentComponentBusiness: BusinessBasic
   ) {
     super(parentComponentBusiness);
-    this.tagId = tagId;
   }
 
   // (컴포넌트가 마운트된 직 후)

@@ -5,7 +5,7 @@ import { DialogProps } from '../../global_classes/gc_template_classes';
 
 
 // [뷰 함수]
-const View: React.FC<DialogProps<Business>> = (props) => {
+const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
   // 컴포넌트 Business 객체 = 비즈니스 객체는 컴포넌트를 사용하는 외부에서 받아와야만 합니다.
   const mainBusiness: Business = props.business;
@@ -37,5 +37,12 @@ const View: React.FC<DialogProps<Business>> = (props) => {
     </div>
   );
 };
+
+
+//----------------------------------------------------------------------------
+// [Props VO 클래스]
+// !!!business, children 이외 필요한 Props 는 이곳에 선언!!!
+interface Props extends DialogProps<Business> {
+}
 
 export default View;
