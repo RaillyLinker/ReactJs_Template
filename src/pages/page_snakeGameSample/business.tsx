@@ -47,6 +47,8 @@ class Business extends PageBusinessBasic {
   snake: Point[];
   // 뱀 진행 방향
   direction: Point;
+  // 1프레임 이전 뱀 진행 방향
+  beforeDirection: Point;
   // 뱀 먹이 좌표
   food: Point;
   // 게임 상태 코드 (0 : 일시중지, -1 : 게임오버, 1 : 진행중, 2 : 클리어)
@@ -91,6 +93,7 @@ class Business extends PageBusinessBasic {
     // (초기화)
     this.snake = [{ x: Math.round(this.AREA_WIDTH / 2), y: Math.round(this.AREA_HEIGHT / 2) }];
     this.direction = { x: 0, y: 0 };
+    this.beforeDirection = this.direction;
     this.food = this.generateFoodPosition(this.snake)!;
     this.gameStateCode = 0;
   }
@@ -107,6 +110,7 @@ class Business extends PageBusinessBasic {
         // 초기화
         this.snake = [{ x: Math.round(this.AREA_WIDTH / 2), y: Math.round(this.AREA_HEIGHT / 2) }];
         this.direction = { x: 0, y: 0 };
+        this.beforeDirection = this.direction;
         this.food = this.generateFoodPosition(this.snake)!;
         this.pauseGame();
       } else if (this.gameStateCode === 0) {
@@ -123,25 +127,25 @@ class Business extends PageBusinessBasic {
       //  방향키 처리 로직
       switch (e.key) {
         case 'ArrowUp':
-          if (this.direction.y === 0) {
+          if (this.beforeDirection.y === 0) {
             this.direction = { x: 0, y: -1 };
             this.reRender();
           }
           break;
         case 'ArrowDown':
-          if (this.direction.y === 0) {
+          if (this.beforeDirection.y === 0) {
             this.direction = { x: 0, y: 1 };
             this.reRender();
           }
           break;
         case 'ArrowLeft':
-          if (this.direction.x === 0) {
+          if (this.beforeDirection.x === 0) {
             this.direction = { x: -1, y: 0 };
             this.reRender();
           }
           break;
         case 'ArrowRight':
-          if (this.direction.x === 0) {
+          if (this.beforeDirection.x === 0) {
             this.direction = { x: 1, y: 0 };
             this.reRender();
           }
@@ -214,6 +218,8 @@ class Business extends PageBusinessBasic {
 
   // (게임 진행)
   moveSnake = () => {
+    this.beforeDirection = this.direction;
+
     // 기존 뱀 위치 가져오기
     const newSnake = [...this.snake];
     // 현재 설정된 방향으로 이동했을 때의 머리 위치
