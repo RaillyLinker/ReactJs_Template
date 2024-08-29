@@ -84,73 +84,67 @@ const View: React.FC = () => {
 
   useEffect(() => {
     if (!mainBusiness.canvasRef) return;
-    const canvas = mainBusiness.canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    mainBusiness.canvas = mainBusiness.canvasRef.current;
+    if (!mainBusiness.canvas) return;
+    const ctx = mainBusiness.canvas.getContext('2d');
     if (!ctx) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const y = e.clientY - rect.top - mainBusiness.paddleHeight / 2;
-      mainBusiness.playerY = Math.max(0, Math.min(y, canvas.height - mainBusiness.paddleHeight));
-      mainBusiness.reRender();
-    };
-
-    canvas.addEventListener('mousemove', handleMouseMove);
+    mainBusiness.canvas.addEventListener('mousemove', mainBusiness.handleMouseMove);
 
     const gameLoop = () => {
       // Update ball position
-
-      const newBallX = mainBusiness.ballX + mainBusiness.ballSpeedX;
-      if (newBallX <= mainBusiness.paddleWidth) {
-        if (mainBusiness.ballY >= mainBusiness.playerY && mainBusiness.ballY <= mainBusiness.playerY + mainBusiness.paddleHeight) {
+      if (mainBusiness.canvas) {
+        const newBallX = mainBusiness.ballX + mainBusiness.ballSpeedX;
+        if (newBallX <= mainBusiness.paddleWidth) {
+          if (mainBusiness.ballY >= mainBusiness.playerY && mainBusiness.ballY <= mainBusiness.playerY + mainBusiness.paddleHeight) {
+            mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
+            mainBusiness.reRender();
+          } else {
+            mainBusiness.ballX = 100;
+            mainBusiness.ballY = 100;
+            mainBusiness.ballSpeedX = mainBusiness.ballSpeed;
+            mainBusiness.ballSpeedY = mainBusiness.ballSpeed;
+            mainBusiness.reRender();
+          }
+        } else if (newBallX >= mainBusiness.canvas.width - mainBusiness.ballSize) {
           mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
           mainBusiness.reRender();
-        } else {
-          mainBusiness.ballX = 100;
-          mainBusiness.ballY = 100;
-          mainBusiness.ballSpeedX = mainBusiness.ballSpeed;
-          mainBusiness.ballSpeedY = mainBusiness.ballSpeed;
+        }
+
+        mainBusiness.ballX = newBallX;
+
+        const newBallY = mainBusiness.ballY + mainBusiness.ballSpeedY;
+        if (newBallY <= 0 || newBallY >= mainBusiness.canvas.height - mainBusiness.ballSize) {
+          mainBusiness.ballSpeedY = -mainBusiness.ballSpeedY;
           mainBusiness.reRender();
         }
-      } else if (newBallX >= canvas.width - mainBusiness.ballSize) {
-        mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
+        mainBusiness.ballY = newBallY;
         mainBusiness.reRender();
-      }
 
-      mainBusiness.ballX = newBallX;
-
-      const newBallY = mainBusiness.ballY + mainBusiness.ballSpeedY;
-      if (newBallY <= 0 || newBallY >= canvas.height - mainBusiness.ballSize) {
-        mainBusiness.ballSpeedY = -mainBusiness.ballSpeedY;
+        // Update computer paddle position
+        const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
+        mainBusiness.computerY = Math.max(0, Math.min(newComputerY, mainBusiness.canvas.height - mainBusiness.paddleHeight));
         mainBusiness.reRender();
-      }
-      mainBusiness.ballY = newBallY;
-      mainBusiness.reRender();
 
-      // Update computer paddle position
-      const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
-      mainBusiness.computerY = Math.max(0, Math.min(newComputerY, canvas.height - mainBusiness.paddleHeight));
-      mainBusiness.reRender();
+        // Clear canvas and redraw
+        ctx.clearRect(0, 0, mainBusiness.canvas.width, mainBusiness.canvas.height);
 
-      // Clear canvas and redraw
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw player paddle
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, mainBusiness.playerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
-      // Draw player paddle
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, mainBusiness.playerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
+        // Draw computer paddle
+        ctx.fillRect(mainBusiness.canvas.width - mainBusiness.paddleWidth, mainBusiness.computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
-      // Draw computer paddle
-      ctx.fillRect(canvas.width - mainBusiness.paddleWidth, mainBusiness.computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
+        // Draw ball
+        ctx.beginPath();
+        ctx.arc(mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSize / 2, 0, Math.PI * 2);
+        ctx.fill();
 
-      // Draw ball
-      ctx.beginPath();
-      ctx.arc(mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSize / 2, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Request the next frame
-      if (!mainBusiness.animationFrameId) {
-        mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
+        // Request the next frame
+        if (!mainBusiness.animationFrameId) {
+          mainBusiness.animationFrameId = requestAnimationFrame(gameLoop);
+        }
       }
     };
 
@@ -164,7 +158,9 @@ const View: React.FC = () => {
         cancelAnimationFrame(mainBusiness.animationFrameId);
         mainBusiness.animationFrameId = null;
       }
-      canvas.removeEventListener('mousemove', handleMouseMove);
+      if (mainBusiness.canvas) {
+        mainBusiness.canvas.removeEventListener('mousemove', mainBusiness.handleMouseMove);
+      }
     };
   }, [mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSpeedX, mainBusiness.ballSpeedY, mainBusiness.playerY, mainBusiness.computerY]);
 

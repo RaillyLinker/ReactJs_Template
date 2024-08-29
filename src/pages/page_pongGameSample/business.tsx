@@ -48,6 +48,7 @@ class Business extends PageBusinessBasic {
   ballSpeedX: number = this.ballSpeed;
   ballSpeedY: number = this.ballSpeed;
   computerY: number = 0;
+  canvas: HTMLCanvasElement | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -100,6 +101,14 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleMouseMove = (e: MouseEvent) => {
+    if (this.canvas) {
+      const rect = this.canvas.getBoundingClientRect();
+      const y = e.clientY - rect.top - this.paddleHeight / 2;
+      this.playerY = Math.max(0, Math.min(y, this.canvas.height - this.paddleHeight));
+      this.reRender();
+    }
+  };
 
 
   //----------------------------------------------------------------------------
