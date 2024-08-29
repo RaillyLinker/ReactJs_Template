@@ -1,6 +1,6 @@
 import { Route, Routes, NavigateFunction, useNavigate } from "react-router-dom";
 
-import PageTemplate from './a_template/page_template/view';
+import PageTemplate from './pages/page_complexScrollSample/view';
 import PageErrorNotExists from './pages/page_errorNotExists/view';
 import PageHome from './pages/page_home/view';
 import PageTemplateBasicFunctionSampleList from './pages/page_templateBasicFunctionSampleList/view';
@@ -52,6 +52,7 @@ import PageFilesToZipSample from './pages/page_filesToZipSample/view';
 import PageZipToFilesSample from './pages/page_zipToFilesSample/view';
 import PageGameSampleList from './pages/page_gameSampleList/view';
 import PagePongGameSample from './pages/page_pongGameSample/view';
+import PageComplexScrollSample from './pages/page_complexScrollSample/view';
 
 
 // [라우터 클래스]
@@ -80,6 +81,7 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/file-choice-sample" element={<PageFileChoiceSample />} />
       <Route path="/template-basic-function-sample-list/grid-sample" element={<PageGridSample />} />
       <Route path="/template-basic-function-sample-list/widget-animation-sample" element={<PageWidgetAnimationSample />} />
+      <Route path="/template-basic-function-sample-list/complex-scroll-sample" element={<PageComplexScrollSample />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />
