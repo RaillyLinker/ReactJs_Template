@@ -1,7 +1,6 @@
 import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
 import React from 'react';
 import ScrollSaverSpanBusiness from '../gco_scrollSaverSpan/business';
-import styles from './view.module.css';
 
 
 // [비즈니스 클래스]
