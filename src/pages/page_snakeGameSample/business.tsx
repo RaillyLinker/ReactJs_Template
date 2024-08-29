@@ -35,34 +35,26 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (초기 게임판 설정)
+  // (게임판 설정)
   // 게임판 크기
-  GRID_SIZE: number = 20;
-  // 초기 뱀 위치(사이즈 1개)
-  INIT_SNAKE: Point[] = [{ x: 8, y: 8 }];
-  // 초기 뱀 방향
-  INIT_DIRECTION: Point = { x: 1, y: 0 };
-  // 초기 뱀 먹이 위치
-  INIT_FOOD: Point = { x: 5, y: 5 };
+  AREA_WIDTH = 20;
+  AREA_HEIGHT = 20;
   // 프레임 딜레이 (몇 밀리초마다 한번 프레임이 돌아가는지)
   frameDelay: number = 200;
 
   // (게임 상태)
   // 뱀 좌표
-  snake: Point[] = this.INIT_SNAKE;
+  snake: Point[];
   // 뱀 진행 방향
-  direction: Point = this.INIT_DIRECTION;
+  direction: Point;
   // 뱀 먹이 좌표
-  food: Point = this.INIT_FOOD;
-  // 게임오버 여부
-  isGameOver: boolean = false;
+  food: Point;
+  // 게임 상태 코드 (0 : 일시중지, -1 : 게임오버, 1 : 진행중, 2 : 클리어)
+  gameStateCode: number;
 
   // (게임 엔진)
   handleKeyDown: (e: KeyboardEvent) => void = () => { };
   intervalId: NodeJS.Timer | null = null;
-
-  // (게임 상태)
-  isPaused: boolean = true; // 게임 시작 전에는 일시 정지 상태
 
 
   //----------------------------------------------------------------------------
@@ -95,6 +87,12 @@ class Business extends PageBusinessBasic {
     this.pathParams = {};
 
     this.queryParams = {};
+
+    // (초기화)
+    this.snake = [{ x: Math.round(this.AREA_WIDTH / 2), y: Math.round(this.AREA_HEIGHT / 2) }];
+    this.direction = { x: 0, y: 0 };
+    this.food = this.generateFoodPosition(this.snake)!;
+    this.gameStateCode = 0;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -102,57 +100,52 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // 키보드 설정
     this.handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (this.isGameOver) {
-          this.snake = this.INIT_SNAKE;
-          this.direction = this.INIT_DIRECTION;
-          this.food = this.INIT_FOOD;
-          this.isGameOver = false;
-          this.reRender();
-          this.startGame(); // 게임 시작
-        } else {
-          this.isPaused ? this.startGame() : this.pauseGame();
+      if (this.gameStateCode === -1 || this.gameStateCode === 2) {
+        // 게임오버 혹은 게임 클리어시 아무 버튼 클릭시
+        // 초기화
+        this.snake = [{ x: Math.round(this.AREA_WIDTH / 2), y: Math.round(this.AREA_HEIGHT / 2) }];
+        this.direction = { x: 0, y: 0 };
+        this.food = this.generateFoodPosition(this.snake)!;
+        this.pauseGame();
+      } else if (this.gameStateCode === 0) {
+        // 일시중지 상태
+        this.startGame(); // 게임 시작
+      } else if (this.gameStateCode === 1) {
+        // 게임 진행 상태
+        if (e.key === 'Escape') {
+          // ESC 로 일시정지
+          this.pauseGame();
         }
-      } else {
-        if (this.isPaused) {
-          this.startGame(); // 게임 시작
-        } else if (this.isGameOver) {
-          this.snake = this.INIT_SNAKE;
-          this.direction = this.INIT_DIRECTION;
-          this.food = this.INIT_FOOD;
-          this.isGameOver = false;
-          this.reRender();
-          this.startGame(); // 게임 시작
-        }
+      }
 
-        // 기존 방향키 처리 로직
-        switch (e.key) {
-          case 'ArrowUp':
-            if (this.direction.y === 0) {
-              this.direction = { x: 0, y: -1 };
-              this.reRender();
-            }
-            break;
-          case 'ArrowDown':
-            if (this.direction.y === 0) {
-              this.direction = { x: 0, y: 1 };
-              this.reRender();
-            }
-            break;
-          case 'ArrowLeft':
-            if (this.direction.x === 0) {
-              this.direction = { x: -1, y: 0 };
-              this.reRender();
-            }
-            break;
-          case 'ArrowRight':
-            if (this.direction.x === 0) {
-              this.direction = { x: 1, y: 0 };
-              this.reRender();
-            }
-            break;
-        }
+      //  방향키 처리 로직
+      switch (e.key) {
+        case 'ArrowUp':
+          if (this.direction.y === 0) {
+            this.direction = { x: 0, y: -1 };
+            this.reRender();
+          }
+          break;
+        case 'ArrowDown':
+          if (this.direction.y === 0) {
+            this.direction = { x: 0, y: 1 };
+            this.reRender();
+          }
+          break;
+        case 'ArrowLeft':
+          if (this.direction.x === 0) {
+            this.direction = { x: -1, y: 0 };
+            this.reRender();
+          }
+          break;
+        case 'ArrowRight':
+          if (this.direction.x === 0) {
+            this.direction = { x: 1, y: 0 };
+            this.reRender();
+          }
+          break;
       }
     };
 
@@ -167,25 +160,27 @@ class Business extends PageBusinessBasic {
   onComponentWillUnmount = () => {
     // 키보드 핸들러 지우기
     window.removeEventListener('keydown', this.handleKeyDown);
-    if (this.intervalId) {
-      // 게임 멈추기
-      clearInterval(this.intervalId);
+    if (this.gameStateCode !== -1 && this.gameStateCode !== 2) {
+      // 게임 멈춤 처리
+      this.pauseGame();
     }
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  // (게임 시작 및 일시 정지 관리)
+  // (게임 시작)
   startGame = () => {
-    if (this.isPaused) {
-      this.isPaused = false;
+    if (this.gameStateCode === 0) {
+      this.gameStateCode = 1;
       this.intervalId = setInterval(this.moveSnake, this.frameDelay);
+      this.reRender();
     }
   };
 
+  // (일시정지)
   pauseGame = () => {
-    this.isPaused = true;
+    this.gameStateCode = 0;
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
@@ -193,44 +188,71 @@ class Business extends PageBusinessBasic {
     this.reRender();
   };
 
+  // (게임오버)
+  gameOver = () => {
+    if (this.gameStateCode === 1) {
+      this.gameStateCode = -1;
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+      this.reRender();
+    }
+  };
+
+  // (게임 클리어)
+  gameClear = () => {
+    if (this.gameStateCode === 1) {
+      this.gameStateCode = 2;
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+      this.reRender();
+    }
+  };
+
   // (게임 진행)
   moveSnake = () => {
-    if (this.isPaused || this.isGameOver) return;
-
-    // 기존의 moveSnake 로직을 여기에 옮깁니다.
+    // 기존 뱀 위치 가져오기
     const newSnake = [...this.snake];
-    const head = {
+    // 현재 설정된 방향으로 이동했을 때의 머리 위치
+    const newHead = {
       x: newSnake[0].x + this.direction.x,
       y: newSnake[0].y + this.direction.y,
     };
 
-    if (head.x < 0 || head.x >= this.GRID_SIZE || head.y < 0 || head.y >= this.GRID_SIZE) {
-      this.isGameOver = true;
-      this.reRender();
+    // 머리 위치가 게임판 밖으로 나갔는지 확인
+    if (newHead.x < 0 || newHead.x >= this.AREA_WIDTH || newHead.y < 0 || newHead.y >= this.AREA_HEIGHT) {
+      this.gameOver();
       return;
     }
 
+    // 머리 위치가 뱀 몸통에 닿았는지 확인
     for (let i = 1; i < newSnake.length; i++) {
-      if (newSnake[i].x === head.x && newSnake[i].y === head.y) {
-        this.isGameOver = true;
-        this.reRender();
+      if (newSnake[i].x === newHead.x && newSnake[i].y === newHead.y) {
+        this.gameOver();
         return;
       }
     }
 
-    newSnake.unshift(head);
+    // 새 머리 위치를 앞쪽에 추가
+    newSnake.unshift(newHead);
 
-    if (head.x === this.food.x && head.y === this.food.y) {
+    // 머리가 먹이를 먹었는지 확인
+    if (newHead.x === this.food.x && newHead.y === this.food.y) {
       if (!this.generateFoodPosition(newSnake)) {
-        this.isGameOver = true;
-        this.reRender();
+        // 더이상 먹이를 생성할 공간이 없음 = 클리어
+        this.gameClear();
         return;
       }
       this.reRender();
     } else {
+      // 먹이를 먹지 않았다면 꼬리부분 제거
       newSnake.pop();
     }
 
+    // 뱀 상태를 새 뱀으로 치환
     this.snake = newSnake;
     this.reRender();
   };
@@ -239,11 +261,12 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [private 함수]
   // (뱀 먹이 생성)
+  // 뱀 몸통이 없는 곳에 무작위로 생성하고, 생성할 위치가 없다면 null 반환
   private generateFoodPosition = (newSnake: Point[]): Point | null => {
     const availablePositions: Point[] = [];
 
-    for (let x = 0; x < this.GRID_SIZE; x++) {
-      for (let y = 0; y < this.GRID_SIZE; y++) {
+    for (let x = 0; x < this.AREA_WIDTH; x++) {
+      for (let y = 0; y < this.AREA_HEIGHT; y++) {
         const position: Point = { x, y };
         const isOnSnake = newSnake.some(
           (segment) => segment.x === position.x && segment.y === position.y

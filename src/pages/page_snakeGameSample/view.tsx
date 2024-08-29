@@ -119,12 +119,14 @@ const View: React.FC = () => {
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness}>
           <div id={styles.MainContent}>
             <div className={styles.gameArea}>
-              {mainBusiness.isPaused && !mainBusiness.isGameOver && (
+
+              {(mainBusiness.gameStateCode === 0) && (
                 <div className={styles.pauseMessage}>
                   <p>Press any key to start</p>
                 </div>
               )}
-              {!mainBusiness.isPaused && mainBusiness.isGameOver && (
+
+              {(mainBusiness.gameStateCode === -1) && (
                 <div className={styles.pauseMessage}>
                   <h3>Game Over</h3>
                   <div className={styles.score}>Score : {mainBusiness.snake.length}</div>
@@ -132,11 +134,19 @@ const View: React.FC = () => {
                 </div>
               )}
 
+              {(mainBusiness.gameStateCode === 2) && (
+                <div className={styles.pauseMessage}>
+                  <h3>Game Clear</h3>
+                  <div className={styles.score}>Score : {mainBusiness.snake.length}</div>
+                  <div>Press any key to start</div>
+                </div>
+              )}
+
               {(
                 <>
-                  {Array.from(Array(mainBusiness.GRID_SIZE)).map((_, row) => (
+                  {Array.from(Array(mainBusiness.AREA_HEIGHT)).map((_, row) => (
                     <div key={row} className={styles.row}>
-                      {Array.from(Array(mainBusiness.GRID_SIZE)).map((_, col) => (
+                      {Array.from(Array(mainBusiness.AREA_WIDTH)).map((_, col) => (
                         <div
                           key={col}
                           className={`${styles.cell} ${mainBusiness.snake.some(segment => segment.x === col && segment.y === row)
