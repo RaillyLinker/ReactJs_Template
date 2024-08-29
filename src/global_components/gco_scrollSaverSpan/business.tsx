@@ -1,19 +1,18 @@
 import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_template_classes';
-import React from 'react';
-import ScrollSaverSpanBusiness from '../gco_scrollSaverSpan/business';
-import styles from './view.module.css';
 
 
 // [비즈니스 클래스]
 class Business extends ComponentBusinessBasic {
   // [멤버 변수 공간]
   // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
+  tagId: string;
 
-  // (헤더 타이틀)
-  headerTitle: string;
-
-  // (ScrollSaverSpan 비즈니스)
-  scrollSaverSpanBusiness: ScrollSaverSpanBusiness = new ScrollSaverSpanBusiness(this, styles.Content);
+  // (화면 본문 레퍼런스)
+  contentRef: React.RefObject<HTMLDivElement> | null = null;
+  // (content 스크롤 상하 위치)
+  contentScrollTop: number = 0;
+  // (content 스크롤 좌우 위치)
+  contentScrollLeft: number = 0;
 
 
   //----------------------------------------------------------------------------
@@ -22,10 +21,10 @@ class Business extends ComponentBusinessBasic {
   // 부모 컴포넌트에서 값을 받을 때는 이곳으로 받습니다.
   constructor(
     parentComponentBusiness: BusinessBasic,
-    headerTitle: string
+    tagId: string
   ) {
     super(parentComponentBusiness);
-    this.headerTitle = headerTitle;
+    this.tagId = tagId;
   }
 
   // (컴포넌트가 마운트된 직 후)
@@ -46,9 +45,6 @@ class Business extends ComponentBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  goToHome = () => {
-    this.navigate("/");
-  }
 
 
   //----------------------------------------------------------------------------
