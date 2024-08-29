@@ -119,11 +119,15 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <canvas ref={mainBusiness.canvasRef} width={800} height={600} style={{
-              display: 'block',
-              margin: '0 auto',
-              background: '#000',
-            }} />
+            <canvas
+              ref={mainBusiness.canvasRef}
+              width={800}
+              height={600}
+              style={{
+                display: 'block',
+                margin: '0 auto',
+                background: '#000',
+              }} />
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}

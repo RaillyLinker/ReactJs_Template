@@ -35,19 +35,30 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  //
+  // (게임 설정)
+  // 패들 크기
   paddleWidth: number = 10;
   paddleHeight: number = 100;
+  // 공 크기
   ballSize: number = 10;
-  ballSpeed: number = 1; // 공의 속도를 설정합니다.
-  canvasRef: React.MutableRefObject<HTMLCanvasElement | null> | null = null;
+  // 공 속도
+  ballSpeed: number = 1;
+
+  // (게임 상황)
+  // 플레이어 위치
   playerY: number = 0;
+  // 컴퓨터 위치
+  computerY: number = 0;
+  // 공 위치
   ballX: number = 100;
   ballY: number = 100;
-  animationFrameId: number | null = null;
+  // 공 속도
   ballSpeedX: number = this.ballSpeed;
   ballSpeedY: number = this.ballSpeed;
-  computerY: number = 0;
+  // 시스템 객체
+  animationFrameId: number | null = null;
+  canvasRef: React.MutableRefObject<HTMLCanvasElement | null> | null = null;
+  canvas: HTMLCanvasElement | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -87,16 +98,18 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    if (!this.canvasRef) return;
-    if (!this.canvasRef.current) return;
+    if (!this.canvasRef || !this.canvasRef.current) return;
+    // canvas 객체 할당
+    this.canvas = this.canvasRef.current;
+    // canvas 에 마우스 리스너 추가
+    this.canvas.addEventListener('mousemove', this.handleMouseMove);
 
-    this.canvasRef.current.removeEventListener('mousemove', this.handleMouseMove);
-    this.canvasRef.current.addEventListener('mousemove', this.handleMouseMove);
-
-    // Start the game loop
-    if (!this.animationFrameId) {
-      this.animationFrameId = requestAnimationFrame(this.gameLoop);
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
     }
+
+    // 게임 실행
+    this.animationFrameId = requestAnimationFrame(this.gameLoop);
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -105,9 +118,15 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    // 게임 중지
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
+    }
+
+    // 마우스 리스너 제거
+    if (this.canvas) {
+      this.canvas.removeEventListener('mousemove', this.handleMouseMove);
     }
   }
 
@@ -116,17 +135,24 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (마우스 움직임 조작)
   handleMouseMove = (e: MouseEvent) => {
-    if (this.canvasRef && this.canvasRef.current) {
-      this.playerY = Math.max(0, Math.min(e.clientY - this.canvasRef.current.getBoundingClientRect().top - this.paddleHeight / 2, this.canvasRef.current.height - this.paddleHeight));
+    if (this.canvas) {
+      // 마우스 움직임에 따라 player 패들 위치 조정
+      this.playerY =
+        Math.max(
+          0,
+          Math.min(
+            e.clientY - this.canvas.getBoundingClientRect().top - this.paddleHeight / 2,
+            this.canvas.height - this.paddleHeight
+          )
+        );
       this.reRender();
     }
   };
 
+  // (프레임당 게임 실행 로직)
   gameLoop = () => {
-
-    // Update ball position
-    if (this.canvasRef && this.canvasRef.current) {
-      const ctx = this.canvasRef.current.getContext('2d');
+    if (this.canvas) {
+      const ctx = this.canvas.getContext('2d');
       if (!ctx) return;
 
       const newBallX = this.ballX + this.ballSpeedX;
@@ -141,7 +167,7 @@ class Business extends PageBusinessBasic {
           this.ballSpeedY = this.ballSpeed;
           this.reRender();
         }
-      } else if (newBallX >= this.canvasRef.current.width - this.ballSize) {
+      } else if (newBallX >= this.canvas.width - this.ballSize) {
         this.ballSpeedX = -this.ballSpeedX;
         this.reRender();
       }
@@ -149,7 +175,7 @@ class Business extends PageBusinessBasic {
       this.ballX = newBallX;
 
       const newBallY = this.ballY + this.ballSpeedY;
-      if (newBallY <= 0 || newBallY >= this.canvasRef.current.height - this.ballSize) {
+      if (newBallY <= 0 || newBallY >= this.canvas.height - this.ballSize) {
         this.ballSpeedY = -this.ballSpeedY;
         this.reRender();
       }
@@ -158,18 +184,18 @@ class Business extends PageBusinessBasic {
 
       // Update computer paddle position
       const newComputerY = this.ballY - this.paddleHeight / 2;
-      this.computerY = Math.max(0, Math.min(newComputerY, this.canvasRef.current.height - this.paddleHeight));
+      this.computerY = Math.max(0, Math.min(newComputerY, this.canvas.height - this.paddleHeight));
       this.reRender();
 
       // Clear canvas and redraw
-      ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // Draw player paddle
       ctx.fillStyle = '#fff';
       ctx.fillRect(0, this.playerY, this.paddleWidth, this.paddleHeight);
 
       // Draw computer paddle
-      ctx.fillRect(this.canvasRef.current.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
+      ctx.fillRect(this.canvas.width - this.paddleWidth, this.computerY, this.paddleWidth, this.paddleHeight);
 
       // Draw ball
       ctx.beginPath();
