@@ -13,6 +13,8 @@ class Business extends ComponentBusinessBasic {
   contentScrollTop: number = 0;
   // (content 스크롤 좌우 위치)
   contentScrollLeft: number = 0;
+  // (스크롤 content 객체)
+  contentElement: HTMLDivElement | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -32,6 +34,13 @@ class Business extends ComponentBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    // 기존 스크롤 위치 적용 및 스크롤 리스너 설정
+    if (this.contentRef !== null && this.contentRef.current) {
+      this.contentElement = this.contentRef.current;
+      this.contentElement.scrollTop = this.contentScrollTop;
+      this.contentElement.scrollLeft = this.contentScrollLeft;
+      this.contentElement.addEventListener('scroll', this.handleScroll);
+    }
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -40,11 +49,24 @@ class Business extends ComponentBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    // 스크롤 리스너 제거
+    if (this.contentElement) {
+      this.contentElement.removeEventListener('scroll', this.handleScroll);
+      this.contentElement = null;
+    }
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (스크롤 핸들러)
+  // 스크롤 변경때마다 스크롤 위치 저장
+  handleScroll = () => {
+    if (this.contentElement) {
+      this.contentScrollTop = this.contentElement.scrollTop;
+      this.contentScrollLeft = this.contentElement.scrollLeft;
+    }
+  };
 
 
   //----------------------------------------------------------------------------

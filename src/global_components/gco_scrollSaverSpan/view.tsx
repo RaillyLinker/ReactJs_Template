@@ -27,28 +27,7 @@ const View: React.FC<ComponentProps<Business>> = (props) => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-
-  // 스크롤 위치 유지 처리 코드 뭉치
   mainBusiness.contentRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
-        mainBusiness.contentScrollTop = mainBusiness.contentRef.current.scrollTop;
-        mainBusiness.contentScrollLeft = mainBusiness.contentRef.current.scrollLeft;
-      }
-    };
-
-    if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
-      mainBusiness.contentRef.current.scrollTop = mainBusiness.contentScrollTop;
-      mainBusiness.contentRef.current.scrollLeft = mainBusiness.contentScrollLeft;
-      mainBusiness.contentRef.current.addEventListener('scroll', handleScroll);
-    }
-    return () => {
-      if (mainBusiness.contentRef !== null && mainBusiness.contentRef.current) {
-        mainBusiness.contentRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [mainBusiness]);
 
 
   //----------------------------------------------------------------------------
