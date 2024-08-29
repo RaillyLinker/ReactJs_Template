@@ -82,10 +82,6 @@ const View: React.FC = () => {
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
   mainBusiness.canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const [ballSpeedX, setBallSpeedX] = useState<number>(mainBusiness.ballSpeed);
-  const [ballSpeedY, setBallSpeedY] = useState<number>(mainBusiness.ballSpeed);
-  const [computerY, setComputerY] = useState<number>(0);
-
   useEffect(() => {
     if (!mainBusiness.canvasRef) return;
     const canvas = mainBusiness.canvasRef.current;
@@ -105,34 +101,37 @@ const View: React.FC = () => {
     const gameLoop = () => {
       // Update ball position
 
-      const newBallX = mainBusiness.ballX + ballSpeedX;
+      const newBallX = mainBusiness.ballX + mainBusiness.ballSpeedX;
       if (newBallX <= mainBusiness.paddleWidth) {
         if (mainBusiness.ballY >= mainBusiness.playerY && mainBusiness.ballY <= mainBusiness.playerY + mainBusiness.paddleHeight) {
-          setBallSpeedX(-ballSpeedX);
+          mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
+          mainBusiness.reRender();
         } else {
           mainBusiness.ballX = 100;
           mainBusiness.ballY = 100;
-          setBallSpeedX(mainBusiness.ballSpeed);
-          setBallSpeedY(mainBusiness.ballSpeed);
+          mainBusiness.ballSpeedX = mainBusiness.ballSpeed;
+          mainBusiness.ballSpeedY = mainBusiness.ballSpeed;
+          mainBusiness.reRender();
         }
       } else if (newBallX >= canvas.width - mainBusiness.ballSize) {
-        setBallSpeedX(-ballSpeedX);
+        mainBusiness.ballSpeedX = -mainBusiness.ballSpeedX;
+        mainBusiness.reRender();
       }
 
       mainBusiness.ballX = newBallX;
 
-      const newBallY = mainBusiness.ballY + ballSpeedY;
+      const newBallY = mainBusiness.ballY + mainBusiness.ballSpeedY;
       if (newBallY <= 0 || newBallY >= canvas.height - mainBusiness.ballSize) {
-        setBallSpeedY(-ballSpeedY);
+        mainBusiness.ballSpeedY = -mainBusiness.ballSpeedY;
+        mainBusiness.reRender();
       }
       mainBusiness.ballY = newBallY;
       mainBusiness.reRender();
 
       // Update computer paddle position
-      setComputerY((prevComputerY) => {
-        const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
-        return Math.max(0, Math.min(newComputerY, canvas.height - mainBusiness.paddleHeight));
-      });
+      const newComputerY = mainBusiness.ballY - mainBusiness.paddleHeight / 2;
+      mainBusiness.computerY = Math.max(0, Math.min(newComputerY, canvas.height - mainBusiness.paddleHeight));
+      mainBusiness.reRender();
 
       // Clear canvas and redraw
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -142,7 +141,7 @@ const View: React.FC = () => {
       ctx.fillRect(0, mainBusiness.playerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
       // Draw computer paddle
-      ctx.fillRect(canvas.width - mainBusiness.paddleWidth, computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
+      ctx.fillRect(canvas.width - mainBusiness.paddleWidth, mainBusiness.computerY, mainBusiness.paddleWidth, mainBusiness.paddleHeight);
 
       // Draw ball
       ctx.beginPath();
@@ -167,7 +166,7 @@ const View: React.FC = () => {
       }
       canvas.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [mainBusiness.ballX, mainBusiness.ballY, ballSpeedX, ballSpeedY, mainBusiness.playerY, computerY]);
+  }, [mainBusiness.ballX, mainBusiness.ballY, mainBusiness.ballSpeedX, mainBusiness.ballSpeedY, mainBusiness.playerY, mainBusiness.computerY]);
 
 
   //----------------------------------------------------------------------------

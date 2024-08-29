@@ -45,6 +45,9 @@ class Business extends PageBusinessBasic {
   ballX: number = 100;
   ballY: number = 100;
   animationFrameId: number | null = null;
+  ballSpeedX: number = this.ballSpeed;
+  ballSpeedY: number = this.ballSpeed;
+  computerY: number = 0;
 
 
   //----------------------------------------------------------------------------
