@@ -1,6 +1,6 @@
 import { Route, Routes, NavigateFunction, useNavigate } from "react-router-dom";
 
-import PageTemplate from './pages/page_complexScrollSample/view';
+import PageTemplate from './a_template/page_template/view';
 import PageErrorNotExists from './pages/page_errorNotExists/view';
 import PageHome from './pages/page_home/view';
 import PageTemplateBasicFunctionSampleList from './pages/page_templateBasicFunctionSampleList/view';
