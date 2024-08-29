@@ -149,7 +149,7 @@ const View: React.FC = () => {
                       {Array.from(Array(mainBusiness.AREA_WIDTH)).map((_, col) => (
                         <div
                           key={col}
-                          className={`${styles.cell} ${mainBusiness.snake.some(segment => segment.x === col && segment.y === row)
+                          className={`${styles.cell} ${(mainBusiness.snake[0].x === col && mainBusiness.snake[0].y === row) ? styles.snakeHead : mainBusiness.snake.some(segment => segment.x === col && segment.y === row)
                             ? styles.snake
                             : mainBusiness.food.x === col && mainBusiness.food.y === row
                               ? styles.food
