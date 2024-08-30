@@ -55,6 +55,7 @@ import PagePongGameSample from './pages/page_pongGameSample/view';
 import PageComplexScrollSample from './pages/page_complexScrollSample/view';
 import PageTooltipSample from './pages/page_tooltipSample/view';
 import PageCamSample from './pages/page_camSample/view';
+import PageEditorSample from './pages/page_editorSample/view';
 
 
 // [라우터 클래스]
@@ -125,6 +126,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/three-dimension-sample" element={<PageThreeDimensionSample />} />
       <Route path="/etc-sample-list/files-to-zip-sample" element={<PageFilesToZipSample />} />
       <Route path="/etc-sample-list/zip-to-files-sample" element={<PageZipToFilesSample />} />
+      <Route path="/etc-sample-list/editor-sample" element={<PageEditorSample />} />
     </Routes>
   );
 }

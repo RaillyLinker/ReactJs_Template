@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "에디터 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,56 +34,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "파일 압축 샘플",
-        itemDescription: "파일들을 선택해서 압축하는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/files-to-zip-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "압축 풀기 샘플",
-        itemDescription: "압축 파일을 선택해서 압축을 푸는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/zip-to-files-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "에디터 샘플",
-        itemDescription: "WYSIWYG 에디터 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/editor-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------
