@@ -48,3 +48,100 @@
 - 기타 샘플 : md to pdf(정식으로 - 개발 시간 오래 걸릴듯)
 - 지리 정보 샘플 : 네비게이션, 거리 계산기 등 추후 기능 추가
 - https://animista.net/ 이곳의 모든 샘플 공부 및 이식
+
+
+
+(gif to video)
+import React, { useState } from 'react';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { fetchFile } from '@ffmpeg/util';
+
+const App: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [videoURL, setVideoURL] = useState<string | null>(null);
+  const [downloadURL, setDownloadURL] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const ffmpeg = new FFmpeg();
+
+  const loadFFmpeg = async () => {
+    setLoading(true);
+    try {
+      await ffmpeg.load();
+    } catch (e) {
+      setError('FFmpeg failed to load');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Load FFmpeg if not already loaded
+      if (!ffmpeg.loaded) await loadFFmpeg();
+
+      // Read file into buffer
+      const fileData = await fetchFile(file);
+
+      // Set input file name and output file name
+      await ffmpeg.writeFile(file.name, fileData);
+
+      // Run FFmpeg command to convert the file
+      await ffmpeg.exec([
+        '-i', file.name,      // Input file
+        '-vf', 'scale=640:-1', // Example filter to scale video
+        '-c:v', 'libx264',    // Output codec
+        '-preset', 'fast',    // Encoding preset
+        'output.mp4'          // Output file name
+      ]);
+
+      // Read the result file
+      const data = await ffmpeg.readFile('output.mp4');
+
+      // Create a blob URL for the result
+      const videoBlob = new Blob([data], { type: 'video/mp4' });
+      const videoUrl = URL.createObjectURL(videoBlob);
+
+      // Create a download URL
+      const downloadUrl = URL.createObjectURL(videoBlob);
+
+      setVideoURL(videoUrl);
+      setDownloadURL(downloadUrl);
+    } catch (e) {
+      setError('Error occurred while converting the file');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <input type="file" accept=".gif,.webp,.avif" onChange={handleFileChange} />
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {videoURL && (
+        <div>
+          <h2>Converted Video:</h2>
+          <video controls width="640" autoPlay loop>
+            <source src={videoURL} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <br />
+          {downloadURL && (
+            <a href={downloadURL} download="output.mp4">
+              <button>Download Video</button>
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
