@@ -74,14 +74,6 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/etc-sample-list/zip-to-files-sample");
         }
-      },
-      {
-        uid: 4,
-        itemTitle: "에디터 샘플",
-        itemDescription: "WYSIWYG 에디터 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/editor-sample");
-        }
       }
     ];
 
