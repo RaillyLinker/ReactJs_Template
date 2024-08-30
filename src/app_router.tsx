@@ -53,6 +53,7 @@ import PageZipToFilesSample from './pages/page_zipToFilesSample/view';
 import PageGameSampleList from './pages/page_gameSampleList/view';
 import PagePongGameSample from './pages/page_pongGameSample/view';
 import PageComplexScrollSample from './pages/page_complexScrollSample/view';
+import PageTooltipSample from './pages/page_tooltipSample/view';
 
 
 // [라우터 클래스]
@@ -82,6 +83,7 @@ function AppRouter(): JSX.Element {
       <Route path="/template-basic-function-sample-list/grid-sample" element={<PageGridSample />} />
       <Route path="/template-basic-function-sample-list/widget-animation-sample" element={<PageWidgetAnimationSample />} />
       <Route path="/template-basic-function-sample-list/complex-scroll-sample" element={<PageComplexScrollSample />} />
+      <Route path="/template-basic-function-sample-list/tooltip-sample" element={<PageTooltipSample />} />
 
       <Route path="/dialog-example-list" element={<PageDialogExampleList />} />
       <Route path="/dialog-example-list/dialog-sample-list" element={<PageDialogSampleList />} />

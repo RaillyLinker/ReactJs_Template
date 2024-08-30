@@ -178,6 +178,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/template-basic-function-sample-list/complex-scroll-sample");
         }
+      },
+      {
+        uid: 17,
+        itemTitle: "툴팁 샘플",
+        itemDescription: "마우스 커서 위로 툴팁이 표시되는 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/template-basic-function-sample-list/tooltip-sample");
+        }
       }
     ];
 
