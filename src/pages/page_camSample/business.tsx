@@ -35,13 +35,21 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (카메라 정보)
-  isCameraOn: boolean = false;
-  isMirrored: boolean = false;
-  isRecording: boolean = false;
-  error: string | null = null;
-  stream: MediaStream | null = null;
+  // (vidio 태그 Ref)
   videoRef: React.RefObject<HTMLVideoElement> | null = null;
+
+  // (카메라 상태 정보)
+  // 카메라가 현재 실행중인지
+  isCameraOn: boolean = false;
+  // 카메라 동작 에러 문구
+  error: string | null = null;
+  // 카메라 스트림
+  cameraStream: MediaStream | null = null;
+  // 카메라 반전 여부
+  isMirrored: boolean = false;
+  // 녹화 여부
+  isRecording: boolean = false;
+
   mediaRecorderRef: React.MutableRefObject<MediaRecorder | null> | null = null;
   recordedChunks: React.MutableRefObject<Blob[]> | null = null;
 
@@ -92,57 +100,86 @@ class Business extends PageBusinessBasic {
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
     this.stopCamera();
-    this.isCameraOn = false;
-    this.isMirrored = false;
-    this.isRecording = false;
-    this.error = null;
-    this.stream = null;
-    this.videoRef = null;
-    this.mediaRecorderRef = null;
-    this.recordedChunks = null;
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  // (카메라 시작)
   startCamera = async () => {
+    if (this.isCameraOn) {
+      return;
+    }
+    this.isCameraOn = true;
+    this.reRender();
+
     try {
-      this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // 카메라 스트림 생성
+      this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (this.videoRef && this.videoRef.current) {
-        this.videoRef.current.srcObject = this.stream;
+        // video 태그에 카메라 스트림 입력
+        this.videoRef.current.srcObject = this.cameraStream;
       }
       this.error = null;
       this.reRender();
 
-      this.stream.getTracks()[0].onended = () => {
-        this.handleCameraDisconnected();
+      this.cameraStream.getTracks()[0].onended = () => {
+        // 카메라 연결이 끊겼을 때 처리
+        this.stopCamera();
+        this.error = '카메라 디바이스 연결이 끊겼습니다.';
+        this.reRender();
       };
     } catch (err) {
-      this.error = 'Cannot access the camera. Please check your device.';
+      // 카메라 디바이스 접근 불가
+      this.stopCamera();
+      this.error = '카메라 디바이스에 접근할 수 없습니다. 다시 시도해주세요.';
       this.reRender();
     }
   };
 
+  // (카메라 종료)
   stopCamera = () => {
-    if (this.videoRef && this.videoRef.current?.srcObject) {
+    if (!this.isCameraOn) {
+      return;
+    }
+    this.isCameraOn = false;
+    this.reRender();
+
+    // 녹화 중지
+    this.stopRecording();
+
+    // video 태그에서 카메라 스트림 분리
+    if (this.videoRef && this.videoRef.current) {
       this.videoRef.current.srcObject = null;
     }
-    if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop());
-      this.stream = null;
+
+    // 카메라 스트림 종료
+    if (this.cameraStream) {
+      this.cameraStream.getTracks().forEach(track => track.stop());
+      this.cameraStream = null;
     }
     this.isRecording = false;
-    this.isMirrored = false;
     this.reRender();
   };
 
+  // (카메라 on/off 토글 버튼 클릭)
+  onCameraButtonClick = async () => {
+    if (this.isCameraOn) {
+      this.stopCamera();
+    } else {
+      await this.startCamera();
+    }
+  }
+
+  // (카메라 반전 태그 클릭)
   handleMirrorToggle = () => {
     this.isMirrored = !this.isMirrored;
     this.reRender();
   };
 
+  // (캡쳐 버튼 클릭)
   handleCapture = () => {
-    if (this.videoRef && this.videoRef.current) {
+    if (this.isCameraOn && this.videoRef && this.videoRef.current) {
       const canvas = document.createElement('canvas');
       canvas.width = this.videoRef.current.videoWidth;
       canvas.height = this.videoRef.current.videoHeight;
@@ -162,19 +199,14 @@ class Business extends PageBusinessBasic {
     }
   };
 
-  handleRecordToggle = () => {
-    if (this.isRecording) {
-      if (this.mediaRecorderRef) {
-        this.mediaRecorderRef.current?.stop();
-      }
-    } else {
-      this.startRecording();
-    }
-    this.isRecording = !this.isRecording;
-    this.reRender();
-  };
-
+  // (녹화 시작)
   startRecording = () => {
+    if (this.isRecording) {
+      return;
+    }
+    this.isRecording = true;
+    this.reRender();
+
     if (this.videoRef && this.videoRef.current?.srcObject && this.mediaRecorderRef) {
       const stream = this.videoRef.current.srcObject as MediaStream;
       this.mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
@@ -202,23 +234,27 @@ class Business extends PageBusinessBasic {
     }
   };
 
-  handleCameraDisconnected = () => {
-    this.isCameraOn = false;
+  // (녹화 중지)
+  stopRecording = () => {
+    if (!this.isRecording) {
+      return;
+    }
     this.isRecording = false;
-    this.error = 'Camera has been disconnected.';
-    this.reRender();
-  };
-
-  onCameraButtonClick = () => {
-    this.isCameraOn = !this.isCameraOn;
     this.reRender();
 
-    if (this.isCameraOn) {
-      this.startCamera();
-    } else {
-      this.stopCamera();
+    if (this.mediaRecorderRef) {
+      this.mediaRecorderRef.current?.stop();
     }
   }
+
+  // (녹화하기 토글 버튼)
+  handleRecordToggle = () => {
+    if (this.isRecording) {
+      this.stopRecording();
+    } else {
+      this.startRecording();
+    }
+  };
 
 
   //----------------------------------------------------------------------------
