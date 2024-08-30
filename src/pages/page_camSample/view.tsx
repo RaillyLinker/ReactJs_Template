@@ -83,19 +83,7 @@ const View: React.FC = () => {
   mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
   mainBusiness.mediaRecorderRef = useRef<MediaRecorder | null>(null);
   mainBusiness.recordedChunks = useRef<Blob[]>([]);
-
-  useEffect(() => {
-    if (mainBusiness.isCameraOn) {
-      mainBusiness.startCamera();
-    } else {
-      mainBusiness.stopCamera();
-    }
-
-    // 페이지를 떠나거나 뒤로 가기 시 카메라 정리
-    return () => {
-      mainBusiness.stopCamera();
-    };
-  }, [mainBusiness.isCameraOn]);
+  useEffect(mainBusiness.isCameraHook, [mainBusiness.isCameraOn]);
 
 
   //----------------------------------------------------------------------------

@@ -202,6 +202,19 @@ class Business extends PageBusinessBasic {
     this.reRender();
   };
 
+  isCameraHook = () => {
+    if (this.isCameraOn) {
+      this.startCamera();
+    } else {
+      this.stopCamera();
+    }
+
+    // 페이지를 떠나거나 뒤로 가기 시 카메라 정리
+    return () => {
+      this.stopCamera();
+    };
+  }
+
 
   //----------------------------------------------------------------------------
   // [private 함수]
