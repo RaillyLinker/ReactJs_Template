@@ -25,7 +25,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "미디어 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비디오 프레임 캡쳐 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,72 +34,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/string-to-image-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "기본 그림판 샘플",
-        itemDescription: "마우스로 그림을 그리는 간단한 그림판 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/simple-draw-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "Component to Image 변환 샘플",
-        itemDescription: "HTML 의 특정 Component 를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/component-to-image-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "이미지 리사이징 샘플",
-        itemDescription: "이미지를 입력받아 리사이징 후 반환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/image-resizing-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "모바일 카메라 사용 샘플",
-        itemDescription: "모바일 환경에서 카메라로 이미지를 찍어오는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/mobile-camera-sample");
-        }
-      },
-      {
-        uid: 5,
-        itemTitle: "캠 사용 샘플",
-        itemDescription: "캠 디바이스 사용 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/cam-sample");
-        }
-      },
-      {
-        uid: 6,
-        itemTitle: "비디오 프레임 캡쳐 샘플",
-        itemDescription: "비디오 파일을 선택하고 입력한 시간 범위 내의 무작위 프레임을 추출하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/video-frame-capture-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------
