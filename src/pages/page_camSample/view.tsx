@@ -80,17 +80,12 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-  const [isCameraOn, setIsCameraOn] = useState(false);
-  const [isMirrored, setIsMirrored] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunks = useRef<Blob[]>([]);
-  let stream: MediaStream | null = null;
 
   useEffect(() => {
-    if (isCameraOn) {
+    if (mainBusiness.isCameraOn) {
       startCamera();
     } else {
       stopCamera();
@@ -100,21 +95,23 @@ const View: React.FC = () => {
     return () => {
       stopCamera();
     };
-  }, [isCameraOn]);
+  }, [mainBusiness.isCameraOn]);
 
   const startCamera = async () => {
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      mainBusiness.stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
-        videoRef.current.srcObject = stream;
+        videoRef.current.srcObject = mainBusiness.stream;
       }
-      setError(null);
+      mainBusiness.error = null;
+      mainBusiness.reRender();
 
-      stream.getTracks()[0].onended = () => {
+      mainBusiness.stream.getTracks()[0].onended = () => {
         handleCameraDisconnected();
       };
     } catch (err) {
-      setError('Cannot access the camera. Please check your device.');
+      mainBusiness.error = 'Cannot access the camera. Please check your device.';
+      mainBusiness.reRender();
     }
   };
 
@@ -124,16 +121,18 @@ const View: React.FC = () => {
       stream.getTracks().forEach(track => track.stop());
       videoRef.current.srcObject = null;
     }
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      stream = null;
+    if (mainBusiness.stream) {
+      mainBusiness.stream.getTracks().forEach(track => track.stop());
+      mainBusiness.stream = null;
     }
-    setIsRecording(false); // 녹화 상태를 초기화
-    setIsMirrored(false); // 좌우반전 상태를 초기화
+    mainBusiness.isRecording = false;
+    mainBusiness.isMirrored = false;
+    mainBusiness.reRender();
   };
 
   const handleMirrorToggle = () => {
-    setIsMirrored(!isMirrored);
+    mainBusiness.isMirrored = !mainBusiness.isMirrored;
+    mainBusiness.reRender();
   };
 
   const handleCapture = () => {
@@ -143,7 +142,7 @@ const View: React.FC = () => {
       canvas.height = videoRef.current.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
-        if (isMirrored) {
+        if (mainBusiness.isMirrored) {
           context.translate(canvas.width, 0);
           context.scale(-1, 1);
         }
@@ -158,12 +157,13 @@ const View: React.FC = () => {
   };
 
   const handleRecordToggle = () => {
-    if (isRecording) {
+    if (mainBusiness.isRecording) {
       mediaRecorderRef.current?.stop();
     } else {
       startRecording();
     }
-    setIsRecording(!isRecording);
+    mainBusiness.isRecording = !mainBusiness.isRecording;
+    mainBusiness.reRender();
   };
 
   const startRecording = () => {
@@ -193,9 +193,10 @@ const View: React.FC = () => {
   };
 
   const handleCameraDisconnected = () => {
-    setIsCameraOn(false);
-    setIsRecording(false);
-    setError('Camera has been disconnected.');
+    mainBusiness.isCameraOn = false;
+    mainBusiness.isRecording = false;
+    mainBusiness.error = 'Camera has been disconnected.';
+    mainBusiness.reRender();
   };
 
 
@@ -235,28 +236,28 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <button onClick={() => setIsCameraOn(!isCameraOn)}>
-              {isCameraOn ? 'Camera Off' : 'Camera On'}
+            <button onClick={() => { mainBusiness.isCameraOn = !mainBusiness.isCameraOn; mainBusiness.reRender(); }}>
+              {mainBusiness.isCameraOn ? 'Camera Off' : 'Camera On'}
             </button>
 
             <div style={{ marginTop: '20px', width: '40rem', height: '40rem', border: '2px solid black', position: 'relative' }}>
-              {error && <div style={{ color: 'red', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{error}</div>}
+              {mainBusiness.error && <div style={{ color: 'red', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{mainBusiness.error}</div>}
               <video
                 ref={videoRef}
-                style={{ width: '100%', height: '100%', transform: isMirrored ? 'scaleX(-1)' : 'none' }}
+                style={{ width: '100%', height: '100%', transform: mainBusiness.isMirrored ? 'scaleX(-1)' : 'none' }}
                 autoPlay
                 playsInline
               />
             </div>
 
-            {isCameraOn && !error && (
+            {mainBusiness.isCameraOn && !mainBusiness.error && (
               <div style={{ marginTop: '10px' }}>
                 <button onClick={handleMirrorToggle}>
-                  {isMirrored ? 'Unmirror' : 'Mirror'}
+                  {mainBusiness.isMirrored ? 'Unmirror' : 'Mirror'}
                 </button>
                 <button onClick={handleCapture}>Capture</button>
                 <button onClick={handleRecordToggle}>
-                  {isRecording ? 'Stop Recording' : 'Start Recording'}
+                  {mainBusiness.isRecording ? 'Stop Recording' : 'Start Recording'}
                 </button>
               </div>
             )}
