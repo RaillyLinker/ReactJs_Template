@@ -80,8 +80,8 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
+  mainBusiness.mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunks = useRef<Blob[]>([]);
 
   useEffect(() => {
@@ -100,8 +100,8 @@ const View: React.FC = () => {
   const startCamera = async () => {
     try {
       mainBusiness.stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = mainBusiness.stream;
+      if (mainBusiness.videoRef && mainBusiness.videoRef.current) {
+        mainBusiness.videoRef.current.srcObject = mainBusiness.stream;
       }
       mainBusiness.error = null;
       mainBusiness.reRender();
@@ -116,10 +116,10 @@ const View: React.FC = () => {
   };
 
   const stopCamera = () => {
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
+    if (mainBusiness.videoRef && mainBusiness.videoRef.current?.srcObject) {
+      const stream = mainBusiness.videoRef.current.srcObject as MediaStream;
       stream.getTracks().forEach(track => track.stop());
-      videoRef.current.srcObject = null;
+      mainBusiness.videoRef.current.srcObject = null;
     }
     if (mainBusiness.stream) {
       mainBusiness.stream.getTracks().forEach(track => track.stop());
@@ -136,17 +136,17 @@ const View: React.FC = () => {
   };
 
   const handleCapture = () => {
-    if (videoRef.current) {
+    if (mainBusiness.videoRef && mainBusiness.videoRef.current) {
       const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
+      canvas.width = mainBusiness.videoRef.current.videoWidth;
+      canvas.height = mainBusiness.videoRef.current.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
         if (mainBusiness.isMirrored) {
           context.translate(canvas.width, 0);
           context.scale(-1, 1);
         }
-        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        context.drawImage(mainBusiness.videoRef.current, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataUrl;
@@ -158,7 +158,9 @@ const View: React.FC = () => {
 
   const handleRecordToggle = () => {
     if (mainBusiness.isRecording) {
-      mediaRecorderRef.current?.stop();
+      if (mainBusiness.mediaRecorderRef) {
+        mainBusiness.mediaRecorderRef.current?.stop();
+      }
     } else {
       startRecording();
     }
@@ -167,17 +169,17 @@ const View: React.FC = () => {
   };
 
   const startRecording = () => {
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    if (mainBusiness.videoRef && mainBusiness.videoRef.current?.srcObject && mainBusiness.mediaRecorderRef) {
+      const stream = mainBusiness.videoRef.current.srcObject as MediaStream;
+      mainBusiness.mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
 
-      mediaRecorderRef.current.ondataavailable = event => {
+      mainBusiness.mediaRecorderRef.current.ondataavailable = event => {
         if (event.data.size > 0) {
           recordedChunks.current.push(event.data);
         }
       };
 
-      mediaRecorderRef.current.onstop = () => {
+      mainBusiness.mediaRecorderRef.current.onstop = () => {
         const blob = new Blob(recordedChunks.current, { type: 'video/webm' });
         recordedChunks.current = [];
         const url = URL.createObjectURL(blob);
@@ -188,7 +190,7 @@ const View: React.FC = () => {
         URL.revokeObjectURL(url);
       };
 
-      mediaRecorderRef.current.start();
+      mainBusiness.mediaRecorderRef.current.start();
     }
   };
 
@@ -243,7 +245,7 @@ const View: React.FC = () => {
             <div style={{ marginTop: '20px', width: '40rem', height: '40rem', border: '2px solid black', position: 'relative' }}>
               {mainBusiness.error && <div style={{ color: 'red', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{mainBusiness.error}</div>}
               <video
-                ref={videoRef}
+                ref={mainBusiness.videoRef}
                 style={{ width: '100%', height: '100%', transform: mainBusiness.isMirrored ? 'scaleX(-1)' : 'none' }}
                 autoPlay
                 playsInline

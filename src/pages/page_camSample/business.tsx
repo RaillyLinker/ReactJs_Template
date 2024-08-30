@@ -41,6 +41,8 @@ class Business extends PageBusinessBasic {
   isRecording: boolean = false;
   error: string | null = null;
   stream: MediaStream | null = null;
+  videoRef: React.RefObject<HTMLVideoElement> | null = null;
+  mediaRecorderRef: React.MutableRefObject<MediaRecorder | null> | null = null;
 
 
   //----------------------------------------------------------------------------
