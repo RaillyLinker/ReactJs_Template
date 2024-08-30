@@ -83,7 +83,6 @@ const View: React.FC = () => {
   mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
   mainBusiness.mediaRecorderRef = useRef<MediaRecorder | null>(null);
   mainBusiness.recordedChunks = useRef<Blob[]>([]);
-  useEffect(mainBusiness.isCameraHook, [mainBusiness.isCameraOn]);
 
 
   //----------------------------------------------------------------------------
@@ -122,7 +121,7 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            <button onClick={() => { mainBusiness.isCameraOn = !mainBusiness.isCameraOn; mainBusiness.reRender(); }}>
+            <button onClick={mainBusiness.onCameraButtonClick}>
               {mainBusiness.isCameraOn ? 'Camera Off' : 'Camera On'}
             </button>
 

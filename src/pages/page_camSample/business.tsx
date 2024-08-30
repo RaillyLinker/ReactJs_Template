@@ -91,24 +91,20 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    this.stopCamera();
+    this.isCameraOn = false;
+    this.isMirrored = false;
+    this.isRecording = false;
+    this.error = null;
+    this.stream = null;
+    this.videoRef = null;
+    this.mediaRecorderRef = null;
+    this.recordedChunks = null;
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
-  isCameraHook = () => {
-    if (this.isCameraOn) {
-      this.startCamera();
-    } else {
-      this.stopCamera();
-    }
-
-    // 페이지를 떠나거나 뒤로 가기 시 카메라 정리
-    return () => {
-      this.stopCamera();
-    };
-  }
-
   startCamera = async () => {
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -129,8 +125,6 @@ class Business extends PageBusinessBasic {
 
   stopCamera = () => {
     if (this.videoRef && this.videoRef.current?.srcObject) {
-      const stream = this.videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
       this.videoRef.current.srcObject = null;
     }
     if (this.stream) {
@@ -214,6 +208,17 @@ class Business extends PageBusinessBasic {
     this.error = 'Camera has been disconnected.';
     this.reRender();
   };
+
+  onCameraButtonClick = () => {
+    this.isCameraOn = !this.isCameraOn;
+    this.reRender();
+
+    if (this.isCameraOn) {
+      this.startCamera();
+    } else {
+      this.stopCamera();
+    }
+  }
 
 
   //----------------------------------------------------------------------------
