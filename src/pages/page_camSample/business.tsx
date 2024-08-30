@@ -43,6 +43,7 @@ class Business extends PageBusinessBasic {
   stream: MediaStream | null = null;
   videoRef: React.RefObject<HTMLVideoElement> | null = null;
   mediaRecorderRef: React.MutableRefObject<MediaRecorder | null> | null = null;
+  recordedChunks: React.MutableRefObject<Blob[]> | null = null;
 
 
   //----------------------------------------------------------------------------

@@ -82,7 +82,7 @@ const View: React.FC = () => {
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
   mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
   mainBusiness.mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const recordedChunks = useRef<Blob[]>([]);
+  mainBusiness.recordedChunks = useRef<Blob[]>([]);
 
   useEffect(() => {
     if (mainBusiness.isCameraOn) {
@@ -174,20 +174,22 @@ const View: React.FC = () => {
       mainBusiness.mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
 
       mainBusiness.mediaRecorderRef.current.ondataavailable = event => {
-        if (event.data.size > 0) {
-          recordedChunks.current.push(event.data);
+        if (event.data.size > 0 && mainBusiness.recordedChunks) {
+          mainBusiness.recordedChunks.current.push(event.data);
         }
       };
 
       mainBusiness.mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(recordedChunks.current, { type: 'video/webm' });
-        recordedChunks.current = [];
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'recording.webm';
-        link.click();
-        URL.revokeObjectURL(url);
+        if (mainBusiness.recordedChunks) {
+          const blob = new Blob(mainBusiness.recordedChunks.current, { type: 'video/webm' });
+          mainBusiness.recordedChunks.current = [];
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'recording.webm';
+          link.click();
+          URL.revokeObjectURL(url);
+        }
       };
 
       mainBusiness.mediaRecorderRef.current.start();
