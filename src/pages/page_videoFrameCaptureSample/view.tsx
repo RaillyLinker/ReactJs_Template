@@ -9,8 +9,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import GcoOuterFrame from '../../global_components/gco_outerFrame/view';
-import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { fetchFile } from "@ffmpeg/util";
 
 
 // [뷰 함수]
@@ -82,65 +80,7 @@ const View: React.FC = () => {
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [startTime, setStartTime] = useState<number>(0);
-  const [endTime, setEndTime] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
-  const ffmpeg = new FFmpeg();
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setVideoFile(e.target.files[0]);
-    }
-  };
-
-  const captureFrame = async () => {
-    if (!videoFile || !videoRef.current) return;
-    if (startTime < 0 || endTime < 0) {
-      alert("Start time and end time must be non-negative.");
-      return;
-    }
-    if (endTime <= startTime) {
-      alert("End time must be greater than start time.");
-      return;
-    }
-
-    setLoading(true);
-
-    // FFmpeg.js 초기화
-    await ffmpeg.load();
-    await ffmpeg.writeFile(videoFile.name, await fetchFile(videoFile));
-
-    // 영상 길이 확인
-    const duration = videoRef.current.duration * 1000;
-    const actualEndTime = Math.min(endTime, duration);
-
-    // 무작위 프레임 선정
-    const randomTime = Math.floor(Math.random() * (actualEndTime - startTime)) + startTime;
-
-    // 무작위 프레임 추출
-    const outputFilename = `frame-${randomTime}.jpg`;
-    await ffmpeg.exec([
-      "-i", videoFile.name,
-      "-ss", (randomTime / 1000).toFixed(2),
-      "-vframes", "1",
-      outputFilename,
-    ]);
-
-    const data = await ffmpeg.readFile(outputFilename);
-    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
-
-    // 이미지 다운로드
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `frame-${randomTime}.jpg`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    setLoading(false);
-  };
+  mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
 
 
   //----------------------------------------------------------------------------
@@ -180,35 +120,35 @@ const View: React.FC = () => {
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
             <h2>캡쳐할 동영상 파일 선택</h2>
-            <input type="file" accept="video/*" onChange={handleFileChange} />
+            <input type="file" accept="video/*" onChange={mainBusiness.handleFileChange} />
             <br />
             <input
               type="number"
               placeholder="Start time (ms)"
-              onChange={(e) => setStartTime(parseInt(e.target.value))}
+              onChange={(e) => { mainBusiness.startTime = parseInt(e.target.value); mainBusiness.reRender(); }}
               min={0}
             />
             <input
               type="number"
               placeholder="End time (ms)"
-              onChange={(e) => setEndTime(parseInt(e.target.value))}
+              onChange={(e) => { mainBusiness.endTime = parseInt(e.target.value); mainBusiness.reRender(); }}
               min={0}
             />
-            {videoFile && (
+            {mainBusiness.videoFile && (
               <div id={styles.VideoSample}>
                 <video
-                  ref={videoRef}
-                  src={URL.createObjectURL(videoFile)}
+                  ref={mainBusiness.videoRef}
+                  src={URL.createObjectURL(mainBusiness.videoFile)}
                   controls
                   width="600px"
                   height="400px"
                 />
-                <button onClick={captureFrame} disabled={loading} style={{ marginTop: "10px" }}>
+                <button onClick={mainBusiness.captureFrame} disabled={mainBusiness.loading} style={{ marginTop: "10px" }}>
                   Capture Frame
                 </button>
               </div>
             )}
-            {loading && <p>Capturing frame...</p>}
+            {mainBusiness.loading && <p>Capturing frame...</p>}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}

@@ -5,6 +5,8 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { fetchFile } from "@ffmpeg/util";
 
 
 // [비즈니스 클래스]
@@ -34,6 +36,14 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
+
+  //
+  videoRef: React.RefObject<HTMLVideoElement> | null = null;
+  videoFile: File | null = null;
+  startTime: number = 0;
+  endTime: number = 0;
+  loading: boolean = false;
+  ffmpeg = new FFmpeg();
 
 
   //----------------------------------------------------------------------------
@@ -86,6 +96,61 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      this.videoFile = e.target.files[0];
+      this.reRender();
+    }
+  };
+
+  captureFrame = async () => {
+    if (!this.videoFile || !this.videoRef || !this.videoRef.current) return;
+    if (this.startTime < 0 || this.endTime < 0) {
+      alert("Start time 과 end time 은 음수일 수 없습니다.");
+      return;
+    }
+    if (this.endTime <= this.startTime) {
+      alert("End time 은 반드시 start time 보다 커야합니다.");
+      return;
+    }
+
+    this.loading = true;
+    this.reRender();
+
+    // FFmpeg.js 초기화
+    await this.ffmpeg.load();
+    await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
+
+    // 영상 길이 확인
+    const duration = this.videoRef.current.duration * 1000;
+    const actualEndTime = Math.min(this.endTime, duration);
+
+    // 무작위 프레임 선정
+    const randomTime = Math.floor(Math.random() * (actualEndTime - this.startTime)) + this.startTime;
+
+    // 무작위 프레임 추출
+    const outputFilename = `frame-${randomTime}.jpg`;
+    await this.ffmpeg.exec([
+      "-i", this.videoFile.name,
+      "-ss", (randomTime / 1000).toFixed(2),
+      "-vframes", "1",
+      outputFilename,
+    ]);
+
+    const data = await this.ffmpeg.readFile(outputFilename);
+    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
+
+    // 이미지 다운로드
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `frame-${randomTime}.jpg`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    this.loading = false;
+    this.reRender();
+  };
 
 
   //----------------------------------------------------------------------------
