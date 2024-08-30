@@ -96,6 +96,111 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  startCamera = async () => {
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (this.videoRef && this.videoRef.current) {
+        this.videoRef.current.srcObject = this.stream;
+      }
+      this.error = null;
+      this.reRender();
+
+      this.stream.getTracks()[0].onended = () => {
+        this.handleCameraDisconnected();
+      };
+    } catch (err) {
+      this.error = 'Cannot access the camera. Please check your device.';
+      this.reRender();
+    }
+  };
+
+  stopCamera = () => {
+    if (this.videoRef && this.videoRef.current?.srcObject) {
+      const stream = this.videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      this.videoRef.current.srcObject = null;
+    }
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+      this.stream = null;
+    }
+    this.isRecording = false;
+    this.isMirrored = false;
+    this.reRender();
+  };
+
+  handleMirrorToggle = () => {
+    this.isMirrored = !this.isMirrored;
+    this.reRender();
+  };
+
+  handleCapture = () => {
+    if (this.videoRef && this.videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = this.videoRef.current.videoWidth;
+      canvas.height = this.videoRef.current.videoHeight;
+      const context = canvas.getContext('2d');
+      if (context) {
+        if (this.isMirrored) {
+          context.translate(canvas.width, 0);
+          context.scale(-1, 1);
+        }
+        context.drawImage(this.videoRef.current, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'capture.png';
+        link.click();
+      }
+    }
+  };
+
+  handleRecordToggle = () => {
+    if (this.isRecording) {
+      if (this.mediaRecorderRef) {
+        this.mediaRecorderRef.current?.stop();
+      }
+    } else {
+      this.startRecording();
+    }
+    this.isRecording = !this.isRecording;
+    this.reRender();
+  };
+
+  startRecording = () => {
+    if (this.videoRef && this.videoRef.current?.srcObject && this.mediaRecorderRef) {
+      const stream = this.videoRef.current.srcObject as MediaStream;
+      this.mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+      this.mediaRecorderRef.current.ondataavailable = event => {
+        if (event.data.size > 0 && this.recordedChunks) {
+          this.recordedChunks.current.push(event.data);
+        }
+      };
+
+      this.mediaRecorderRef.current.onstop = () => {
+        if (this.recordedChunks) {
+          const blob = new Blob(this.recordedChunks.current, { type: 'video/webm' });
+          this.recordedChunks.current = [];
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'recording.webm';
+          link.click();
+          URL.revokeObjectURL(url);
+        }
+      };
+
+      this.mediaRecorderRef.current.start();
+    }
+  };
+
+  handleCameraDisconnected = () => {
+    this.isCameraOn = false;
+    this.isRecording = false;
+    this.error = 'Camera has been disconnected.';
+    this.reRender();
+  };
 
 
   //----------------------------------------------------------------------------

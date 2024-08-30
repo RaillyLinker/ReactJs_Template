@@ -86,122 +86,16 @@ const View: React.FC = () => {
 
   useEffect(() => {
     if (mainBusiness.isCameraOn) {
-      startCamera();
+      mainBusiness.startCamera();
     } else {
-      stopCamera();
+      mainBusiness.stopCamera();
     }
 
     // 페이지를 떠나거나 뒤로 가기 시 카메라 정리
     return () => {
-      stopCamera();
+      mainBusiness.stopCamera();
     };
   }, [mainBusiness.isCameraOn]);
-
-  const startCamera = async () => {
-    try {
-      mainBusiness.stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (mainBusiness.videoRef && mainBusiness.videoRef.current) {
-        mainBusiness.videoRef.current.srcObject = mainBusiness.stream;
-      }
-      mainBusiness.error = null;
-      mainBusiness.reRender();
-
-      mainBusiness.stream.getTracks()[0].onended = () => {
-        handleCameraDisconnected();
-      };
-    } catch (err) {
-      mainBusiness.error = 'Cannot access the camera. Please check your device.';
-      mainBusiness.reRender();
-    }
-  };
-
-  const stopCamera = () => {
-    if (mainBusiness.videoRef && mainBusiness.videoRef.current?.srcObject) {
-      const stream = mainBusiness.videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
-      mainBusiness.videoRef.current.srcObject = null;
-    }
-    if (mainBusiness.stream) {
-      mainBusiness.stream.getTracks().forEach(track => track.stop());
-      mainBusiness.stream = null;
-    }
-    mainBusiness.isRecording = false;
-    mainBusiness.isMirrored = false;
-    mainBusiness.reRender();
-  };
-
-  const handleMirrorToggle = () => {
-    mainBusiness.isMirrored = !mainBusiness.isMirrored;
-    mainBusiness.reRender();
-  };
-
-  const handleCapture = () => {
-    if (mainBusiness.videoRef && mainBusiness.videoRef.current) {
-      const canvas = document.createElement('canvas');
-      canvas.width = mainBusiness.videoRef.current.videoWidth;
-      canvas.height = mainBusiness.videoRef.current.videoHeight;
-      const context = canvas.getContext('2d');
-      if (context) {
-        if (mainBusiness.isMirrored) {
-          context.translate(canvas.width, 0);
-          context.scale(-1, 1);
-        }
-        context.drawImage(mainBusiness.videoRef.current, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = 'capture.png';
-        link.click();
-      }
-    }
-  };
-
-  const handleRecordToggle = () => {
-    if (mainBusiness.isRecording) {
-      if (mainBusiness.mediaRecorderRef) {
-        mainBusiness.mediaRecorderRef.current?.stop();
-      }
-    } else {
-      startRecording();
-    }
-    mainBusiness.isRecording = !mainBusiness.isRecording;
-    mainBusiness.reRender();
-  };
-
-  const startRecording = () => {
-    if (mainBusiness.videoRef && mainBusiness.videoRef.current?.srcObject && mainBusiness.mediaRecorderRef) {
-      const stream = mainBusiness.videoRef.current.srcObject as MediaStream;
-      mainBusiness.mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'video/webm' });
-
-      mainBusiness.mediaRecorderRef.current.ondataavailable = event => {
-        if (event.data.size > 0 && mainBusiness.recordedChunks) {
-          mainBusiness.recordedChunks.current.push(event.data);
-        }
-      };
-
-      mainBusiness.mediaRecorderRef.current.onstop = () => {
-        if (mainBusiness.recordedChunks) {
-          const blob = new Blob(mainBusiness.recordedChunks.current, { type: 'video/webm' });
-          mainBusiness.recordedChunks.current = [];
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'recording.webm';
-          link.click();
-          URL.revokeObjectURL(url);
-        }
-      };
-
-      mainBusiness.mediaRecorderRef.current.start();
-    }
-  };
-
-  const handleCameraDisconnected = () => {
-    mainBusiness.isCameraOn = false;
-    mainBusiness.isRecording = false;
-    mainBusiness.error = 'Camera has been disconnected.';
-    mainBusiness.reRender();
-  };
 
 
   //----------------------------------------------------------------------------
@@ -256,11 +150,11 @@ const View: React.FC = () => {
 
             {mainBusiness.isCameraOn && !mainBusiness.error && (
               <div style={{ marginTop: '10px' }}>
-                <button onClick={handleMirrorToggle}>
+                <button onClick={mainBusiness.handleMirrorToggle}>
                   {mainBusiness.isMirrored ? 'Unmirror' : 'Mirror'}
                 </button>
-                <button onClick={handleCapture}>Capture</button>
-                <button onClick={handleRecordToggle}>
+                <button onClick={mainBusiness.handleCapture}>Capture</button>
+                <button onClick={mainBusiness.handleRecordToggle}>
                   {mainBusiness.isRecording ? 'Stop Recording' : 'Start Recording'}
                 </button>
               </div>
