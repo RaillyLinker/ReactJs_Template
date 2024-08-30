@@ -11,6 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import GcoOuterFrame from '../../global_components/gco_outerFrame/view';
 
 
+// 주의사항 : onComponentDidMount 에서 카메라를 시작하면 뒤로가기 시에 카메라가 종료되지 않습니다.
+//     index.tsx 에서 StrictMode 를 지우면 해결되는 문제입니다.
+
 // [뷰 함수]
 const View: React.FC = () => {
   // (보일러 플레이트 코드)
