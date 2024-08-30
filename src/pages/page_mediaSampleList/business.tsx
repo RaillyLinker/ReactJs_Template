@@ -82,6 +82,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/media-sample-list/mobile-camera-sample");
         }
+      },
+      {
+        uid: 5,
+        itemTitle: "캠 사용 샘플",
+        itemDescription: "캠 디바이스 사용 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/media-sample-list/cam-sample");
+        }
       }
     ];
 

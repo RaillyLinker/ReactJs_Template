@@ -54,6 +54,7 @@ import PageGameSampleList from './pages/page_gameSampleList/view';
 import PagePongGameSample from './pages/page_pongGameSample/view';
 import PageComplexScrollSample from './pages/page_complexScrollSample/view';
 import PageTooltipSample from './pages/page_tooltipSample/view';
+import PageCamSample from './pages/page_camSample/view';
 
 
 // [라우터 클래스]
@@ -113,6 +114,7 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list/component-to-image-sample" element={<PageComponentToImageSample />} />
       <Route path="/media-sample-list/image-resizing-sample" element={<PageImageResizingSample />} />
       <Route path="/media-sample-list/mobile-camera-sample" element={<PageMobileCameraSample />} />
+      <Route path="/media-sample-list/cam-sample" element={<PageCamSample />} />
 
       <Route path="/game-sample-list" element={<PageGameSampleList />} />
       <Route path="/game-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
