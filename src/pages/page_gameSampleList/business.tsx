@@ -50,14 +50,6 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/game-sample-list/snake-game-sample");
         }
-      },
-      {
-        uid: 1,
-        itemTitle: "Pong 게임 샘플",
-        itemDescription: "기본 Pong 게임 구현 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/game-sample-list/pong-game-sample");
-        }
       }
     ];
 
