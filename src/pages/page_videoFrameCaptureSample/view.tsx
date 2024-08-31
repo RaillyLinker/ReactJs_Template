@@ -81,6 +81,7 @@ const View: React.FC = () => {
   // (컴포넌트에서만 실행 가능한 함수 사용)
   // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
   mainBusiness.videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(mainBusiness.videoFileChange, [mainBusiness.videoFile]);
 
 
   //----------------------------------------------------------------------------
@@ -138,7 +139,7 @@ const View: React.FC = () => {
               <div id={styles.VideoSample}>
                 <video
                   ref={mainBusiness.videoRef}
-                  src={URL.createObjectURL(mainBusiness.videoFile)}
+                  src={mainBusiness.videoUrl || undefined}
                   controls
                   width="600px"
                   height="400px"

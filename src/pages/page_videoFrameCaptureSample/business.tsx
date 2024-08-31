@@ -44,6 +44,7 @@ class Business extends PageBusinessBasic {
   endTime: number = 0;
   loading: boolean = false;
   ffmpeg = new FFmpeg();
+  videoUrl: string | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -151,6 +152,18 @@ class Business extends PageBusinessBasic {
     this.loading = false;
     this.reRender();
   };
+
+  videoFileChange = () => {
+    if (this.videoFile) {
+      const url = URL.createObjectURL(this.videoFile);
+      this.videoUrl = url;
+      this.reRender();
+
+      return () => {
+        if (this.videoUrl) URL.revokeObjectURL(this.videoUrl);
+      };
+    }
+  }
 
 
   //----------------------------------------------------------------------------
