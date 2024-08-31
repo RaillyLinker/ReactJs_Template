@@ -1,6 +1,15 @@
 [TODO]
 (0단계)
-- 전체 리펙토링 + 모바일 환경에서 확인하기 : 페이지 전부 반응형으로 만들기 및 CSS 개선
+- 전체 리펙토링 + 모바일 환경에서 확인하기 : 페이지 전부 반응형으로 만들기 및 CSS 개선(파일 선택 샘플까지 완료)
+- 파일 선택 옵션 모바일에서 선택 잘 되도록(모든 파일, 이미지 파일 선택시 카메라)
+            <input
+              type="file"
+              accept="image/*"
+              // 모바일 환경에서 카메라를 사용 (user : 전면 카메라, environment : 후면 카메라)
+              capture="environment"
+              onChange={mainBusiness.handleCapture}
+              style={{ display: 'block', margin: '20px auto' }}
+            />
 
 (1단계)
 - 지리 정보 샘플 : 주소 검색 샘플

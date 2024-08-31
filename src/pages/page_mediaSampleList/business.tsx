@@ -76,14 +76,6 @@ class Business extends PageBusinessBasic {
       },
       {
         uid: 4,
-        itemTitle: "모바일 카메라 사용 샘플",
-        itemDescription: "모바일 환경에서 카메라로 이미지를 찍어오는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/mobile-camera-sample");
-        }
-      },
-      {
-        uid: 5,
         itemTitle: "캠 사용 샘플",
         itemDescription: "캠 디바이스 사용 샘플입니다.",
         onItemClicked: (): void => {
@@ -91,7 +83,7 @@ class Business extends PageBusinessBasic {
         }
       },
       {
-        uid: 6,
+        uid: 5,
         itemTitle: "비디오 프레임 캡쳐 샘플",
         itemDescription: "비디오 파일을 선택하고 입력한 시간 범위 내의 무작위 프레임을 추출하는 샘플입니다.",
         onItemClicked: (): void => {
