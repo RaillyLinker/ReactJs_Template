@@ -4,6 +4,7 @@ import Business from './business';
 import { ComponentProps } from '../../global_classes/gc_template_classes';
 import ScrollSaverSpan from '../gco_scrollSaverSpan/view';
 
+
 // [뷰 함수]
 const View: React.FC<Props> = (props) => {
   // (보일러 플레이트 코드)
