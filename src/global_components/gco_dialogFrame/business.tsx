@@ -2,14 +2,11 @@ import { DialogProps, DialogBusinessBasic } from '../../global_classes/gc_templa
 import React from 'react';
 import { ComponentBusinessBasic, BusinessBasic, VoidDialogBusinessBasic } from '../../global_classes/gc_template_classes';
 
-import styles from './view.module.css';
-
 
 // [비즈니스 클래스]
+// 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 class Business extends ComponentBusinessBasic {
   // [멤버 변수 공간]
-  // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-
   // (다이얼로그 레퍼런스 객체)
   dialogRef: React.RefObject<HTMLDialogElement> | null = null;
   // (다이얼로그 외곽을 클릭시 다이얼로그를 종료할지 여부)

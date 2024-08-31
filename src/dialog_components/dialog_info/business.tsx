@@ -3,10 +3,9 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 
 
 // [비즈니스 클래스]
+// 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 class Business extends DialogBusinessBasic {
   // [멤버 변수 공간]
-  // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-
   // (타이틀)
   title: string
 

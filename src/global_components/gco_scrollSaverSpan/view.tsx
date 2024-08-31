@@ -26,7 +26,7 @@ const View: React.FC<Props> = (props) => {
   // !!!아래부터 코딩!!!
   //----------------------------------------------------------------------------
   // (컴포넌트에서만 실행 가능한 함수 사용)
-  // useRef, useState 와 같은 컴포넌트 전용 함수를 사용하세요.
+  // useRef, useState, useEffect 와 같은 컴포넌트 전용 함수를 사용하세요.
   mainBusiness.contentRef = useRef<HTMLDivElement>(null);
 
 

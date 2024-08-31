@@ -2,10 +2,9 @@ import { ComponentBusinessBasic, BusinessBasic } from '../../global_classes/gc_t
 
 
 // [비즈니스 클래스]
+// 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 class Business extends ComponentBusinessBasic {
   // [멤버 변수 공간]
-  // 멤버 변수는 비즈니스 클래스를 지닌 부모 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-
   // (화면 본문 레퍼런스)
   contentRef: React.RefObject<HTMLDivElement> | null = null;
   // (content 스크롤 상하 위치)

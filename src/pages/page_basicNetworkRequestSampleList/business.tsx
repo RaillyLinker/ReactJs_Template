@@ -12,6 +12,7 @@ import { postService1TkV1RequestTestGenerateErrorAsync, getService1TkV1RequestTe
 
 
 // [비즈니스 클래스]
+// 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 class Business extends PageBusinessBasic {
   // (페이지 파라미터)
   // null 이라면 잘못된 진입
@@ -23,8 +24,6 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [멤버 변수 공간]
-  // 멤버 변수는 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
-
   // (다이얼로그 프레임 비즈니스)
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
