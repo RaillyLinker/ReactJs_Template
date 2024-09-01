@@ -128,11 +128,11 @@ const View: React.FC = () => {
               {mainBusiness.isCameraOn ? 'Camera Off' : 'Camera On'}
             </button>
 
-            <div style={{ marginTop: '20px', width: '40rem', height: '40rem', border: '2px solid black', position: 'relative' }}>
+            <div style={{ marginTop: '20px', width: '80%', height: '80%', border: '2px solid black', position: 'relative' }}>
               {mainBusiness.error && <div style={{ color: 'red', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>{mainBusiness.error}</div>}
               <video
                 ref={mainBusiness.videoRef}
-                style={{ width: '100%', height: '100%', transform: mainBusiness.isMirrored ? 'scaleX(-1)' : 'none' }}
+                style={{ transform: mainBusiness.isMirrored ? 'scaleX(-1)' : 'none' }}
                 autoPlay
                 playsInline
               />
