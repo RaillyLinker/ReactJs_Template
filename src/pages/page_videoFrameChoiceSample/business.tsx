@@ -5,6 +5,8 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { fetchFile } from "@ffmpeg/util";
 
 
 // [비즈니스 클래스]
@@ -24,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "미디어 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비디오 프레임 선택 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,71 +36,12 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "String to Image 변환 샘플",
-        itemDescription: "서명 생성과 같이, 입력받은 String 변수를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/string-to-image-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "기본 그림판 샘플",
-        itemDescription: "마우스로 그림을 그리는 간단한 그림판 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/simple-draw-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "Component to Image 변환 샘플",
-        itemDescription: "HTML 의 특정 Component 를 이미지로 변환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/component-to-image-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "이미지 리사이징 샘플",
-        itemDescription: "이미지를 입력받아 리사이징 후 반환하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/image-resizing-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "캠 사용 샘플",
-        itemDescription: "캠 디바이스 사용 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/cam-sample");
-        }
-      },
-      {
-        uid: 5,
-        itemTitle: "비디오 프레임 캡쳐 샘플",
-        itemDescription: "비디오 파일을 선택하고 입력한 시간 범위 내의 무작위 프레임을 추출하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/video-frame-capture-sample");
-        }
-      },
-      {
-        uid: 6,
-        itemTitle: "비디오 프레임 선택 샘플",
-        itemDescription: "비디오 파일을 선택하고 현재 재생 시간의 프레임을 추출하는 샘플입니다.",
-        onItemClicked: (): void => {
-          this.navigate("/media-sample-list/video-frame-choice-sample");
-        }
-      }
-    ];
+  //
+  videoRef: React.RefObject<HTMLVideoElement> | null = null;
+  videoFile: File | null = null;
+  loading: boolean = false;
+  ffmpeg = new FFmpeg();
+  videoUrl: string | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -151,6 +94,62 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      this.videoFile = e.target.files[0];
+      this.reRender();
+    }
+  };
+
+  captureFrame = async () => {
+    if (!this.videoFile || !this.videoRef || !this.videoRef.current) return;
+
+    this.loading = true;
+    this.reRender();
+
+    // FFmpeg.js 초기화
+    await this.ffmpeg.load();
+    await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
+
+    // 현재 비디오의 시간 가져오기
+    const currentTime = this.videoRef.current.currentTime;
+    const duration = this.videoRef.current.duration * 1000;
+
+    // 무작위 프레임 추출
+    const outputFilename = `frame-${Math.floor(currentTime * 1000)}.jpg`;
+    await this.ffmpeg.exec([
+      "-i", this.videoFile.name,
+      "-ss", currentTime.toFixed(2),
+      "-vframes", "1",
+      outputFilename,
+    ]);
+
+    const data = await this.ffmpeg.readFile(outputFilename);
+    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
+
+    // 이미지 다운로드
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = outputFilename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    this.loading = false;
+    this.reRender();
+  };
+
+  videoFileChange = () => {
+    if (this.videoFile) {
+      const url = URL.createObjectURL(this.videoFile);
+      this.videoUrl = url;
+      this.reRender();
+
+      return () => {
+        if (this.videoUrl) URL.revokeObjectURL(this.videoUrl);
+      };
+    }
+  }
 
 
   //----------------------------------------------------------------------------
