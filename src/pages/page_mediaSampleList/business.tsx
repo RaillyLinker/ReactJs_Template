@@ -85,7 +85,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 5,
         itemTitle: "비디오 프레임 캡쳐 샘플",
-        itemDescription: "비디오 파일을 선택하고 입력한 시간 범위 내의 무작위 프레임을 추출하는 샘플입니다.",
+        itemDescription: "비디오 파일을 선택하고 입력한 시간 범위 내의 무작위 프레임을 추출하는 샘플입니다. (FFMPEG)",
         onItemClicked: (): void => {
           this.navigate("/media-sample-list/video-frame-capture-sample");
         }
@@ -93,7 +93,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 6,
         itemTitle: "비디오 프레임 선택 샘플",
-        itemDescription: "비디오 파일을 선택하고 현재 재생 시간의 프레임을 추출하는 샘플입니다.",
+        itemDescription: "비디오 파일을 선택하고 현재 재생 시간의 프레임을 추출하는 샘플입니다. (FFMPEG)",
         onItemClicked: (): void => {
           this.navigate("/media-sample-list/video-frame-choice-sample");
         }
@@ -101,7 +101,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 7,
         itemTitle: "비디오 잘라내기 샘플",
-        itemDescription: "비디오 파일을 선택하고 특정 구간을 잘라내는 샘플입니다.",
+        itemDescription: "비디오 파일을 선택하고 특정 구간을 잘라내는 샘플입니다. (FFMPEG)",
         onItemClicked: (): void => {
           this.navigate("/media-sample-list/video-cropper-sample");
         }
