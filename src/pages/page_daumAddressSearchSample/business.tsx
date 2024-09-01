@@ -34,6 +34,12 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
+  //
+  isModalOpen: boolean = false;
+  zonecode: string = "";
+  address: string = "";
+  detailAddress: string = "";
+
 
   //----------------------------------------------------------------------------
   // [생명주기 함수]
@@ -85,10 +91,49 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [public 함수]
+  handleComplete = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    this.zonecode = data.zonecode;
+    this.address = fullAddress;
+    this.isModalOpen = false;
+    this.reRender();
+  };
+
+  handleClickSearch = () => {
+    this.isModalOpen = true;
+    this.reRender();
+  };
+
+  handleClickSubmit = () => {
+    if (!this.zonecode || !this.address) {
+      alert('주소 검색을 해주세요.');
+    } else if (!this.detailAddress) {
+      alert('상세 주소를 입력해주세요.');
+    } else {
+      alert(`(${this.zonecode}) ${this.address} ${this.detailAddress}`);
+    }
+  };
 
 
   //----------------------------------------------------------------------------
   // [private 함수]
+}
+
+interface AddressData {
+  address: string;
+  zonecode: string;
 }
 
 export default Business;

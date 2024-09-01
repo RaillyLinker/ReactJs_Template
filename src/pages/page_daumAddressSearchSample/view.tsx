@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import GcoOuterFrame from '../../global_components/gco_outerFrame/view';
+import DaumPostcode from 'react-daum-postcode';
 
 
 // [뷰 함수]
@@ -118,7 +119,66 @@ const View: React.FC = () => {
       <GcoDialogFrame business={mainBusiness.gcoDialogFrameBusiness}>
         <GcoOuterFrame business={mainBusiness.gcoOuterFrameBusiness} >
           <div id={styles.MainContent}>
-            템플릿 페이지
+            <div style={{ width: '300px', margin: '20px auto' }}>
+              <label>주소</label>
+              <input
+                type="text"
+                value={mainBusiness.zonecode}
+                placeholder="우편번호"
+                disabled
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <input
+                type="text"
+                value={mainBusiness.address}
+                placeholder="기본 주소"
+                disabled
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <button onClick={mainBusiness.handleClickSearch} style={{ width: '100%', marginBottom: '10px' }}>
+                주소 검색
+              </button>
+              <input
+                type="text"
+                value={mainBusiness.detailAddress}
+                onChange={(e) => { mainBusiness.detailAddress = e.target.value; mainBusiness.reRender(); }}
+                placeholder="상세 주소"
+                style={{ width: '100%', marginBottom: '10px' }}
+              />
+              <button onClick={mainBusiness.handleClickSubmit} style={{ width: '100%' }}>
+                주소 입력
+              </button>
+
+              {mainBusiness.isModalOpen && (
+                <div
+                  style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '400px',
+                      padding: '20px',
+                      backgroundColor: 'white',
+                      borderRadius: '8px',
+                    }}
+                  >
+                    <DaumPostcode onComplete={mainBusiness.handleComplete} submitMode={false} />
+                    <button onClick={() => { mainBusiness.isModalOpen = false; mainBusiness.reRender(); }} style={{ marginTop: '10px' }}>
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}
