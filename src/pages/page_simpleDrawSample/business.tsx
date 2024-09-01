@@ -202,19 +202,17 @@ class Business extends PageBusinessBasic {
     const canvas = this.canvasRef.current;
     const container = canvas?.parentElement;
     if (canvas && container) {
-      const containerWidth = container.clientWidth * 0.8;
-      const containerHeight = container.clientHeight * 0.8;
+      const containerWidth = container.clientWidth * 0.7;
+      const containerHeight = container.clientHeight * 0.7;
+      const containerHeightForRatio = containerWidth * (4 / 3);
 
       // 4:3 비율에 맞게 크기 조정
-      const widthBasedHeight = containerWidth;
-      const heightBasedWidth = containerHeight * (4 / 3);
+      canvas.width = containerWidth;
 
-      if (widthBasedHeight <= containerHeight) {
-        canvas.width = containerWidth;
-        canvas.height = widthBasedHeight;
-      } else {
-        canvas.width = heightBasedWidth;
+      if (containerHeight < containerHeightForRatio) {
         canvas.height = containerHeight;
+      } else {
+        canvas.height = containerHeightForRatio;
       }
     }
   };
