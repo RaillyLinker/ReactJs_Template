@@ -62,7 +62,7 @@ const View: React.FC = () => {
     return () => {
       mainBusiness.onComponentWillUnmount();
     }
-  }, [mainBusiness]);
+  }, []);
 
   // 이전 페이지 비즈니스 객체 저장 및 현재 페이지 인덱스를 전역 변수에 저장
   if (currentPageHistoryIdx.idx !== pageHistoryIdx &&
@@ -121,12 +121,16 @@ const View: React.FC = () => {
           <div id={styles.MainContent}>
             <h1>그림판 캔버스</h1>
             <canvas
-              id={styles.Canvas}
               ref={mainBusiness.canvasRef}
+              style={{ border: '1px solid #000', touchAction: 'none', maxWidth: '100%', maxHeight: '100%' }}
               onMouseDown={mainBusiness.startDrawing}
               onMouseMove={mainBusiness.draw}
               onMouseUp={mainBusiness.stopDrawing}
               onMouseLeave={mainBusiness.stopDrawing}
+              onTouchStart={mainBusiness.startDrawing}
+              onTouchMove={mainBusiness.draw}
+              onTouchEnd={mainBusiness.stopDrawing}
+              onTouchCancel={mainBusiness.stopDrawing}
             />
             <br />
             <button onClick={mainBusiness.saveDrawing}>그림 저장</button>

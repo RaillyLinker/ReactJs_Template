@@ -79,18 +79,8 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    if (this.canvasRef === null) return;
-    const canvas = this.canvasRef.current;
-    if (canvas) {
-      canvas.width = 800;
-      canvas.height = 600;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.lineWidth = 5;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = 'black';
-      }
-    }
+    this.resizeCanvas(); // 초기 사이즈 설정
+    window.addEventListener('resize', this.resizeCanvas); // 윈도우 리사이즈 이벤트 핸들러 등록
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -99,44 +89,54 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
+    window.removeEventListener('resize', this.resizeCanvas); // 클린업
   }
 
 
   //----------------------------------------------------------------------------
   // [public 함수]
   // (캔버스 콜백)
-  // onMouseDown = 마우스 누를 때 = 그림 그리기 시작
-  startDrawing = (e: MouseEvent<HTMLCanvasElement>) => {
-    if (this.canvasRef === null) return;
+  startDrawing = (event: React.MouseEvent | React.TouchEvent) => {
+    if (!this.canvasRef) return;
     const canvas = this.canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.beginPath();
-      ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-    }
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    const { offsetX, offsetY } = this.getEventCoordinates(event, canvas);
+
+    context.beginPath();
+    context.moveTo(offsetX, offsetY);
     this.isDrawing = true;
     this.reRender();
   };
 
-  // onMouseMove = 마우스 이동시 = 그림 그리는 중
-  draw = (e: MouseEvent<HTMLCanvasElement>) => {
-    // 마우스를 누르지 않고 움직이면 무시하기
-    if (!this.isDrawing) return;
-    if (this.canvasRef === null) return;
+  draw = (event: React.MouseEvent | React.TouchEvent) => {
+    if (!this.isDrawing || !this.canvasRef) return;
+
     const canvas = this.canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-      ctx.stroke();
-    }
+    const context = canvas.getContext('2d');
+    if (!context) return;
+
+    const { offsetX, offsetY } = this.getEventCoordinates(event, canvas);
+
+    context.lineTo(offsetX, offsetY);
+    context.stroke();
   };
 
-  // onMouseUp = 마우스 떼기 = 그림 그리기 종료
   stopDrawing = () => {
+    if (!this.isDrawing || !this.canvasRef) return;
+
+    const canvas = this.canvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext('2d');
+    if (context) {
+      context.closePath();
+    }
     this.isDrawing = false;
     this.reRender();
   };
@@ -178,6 +178,46 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
+  // 이벤트에서 캔버스 좌표를 가져오는 함수
+  getEventCoordinates = (event: React.MouseEvent | React.TouchEvent, canvas: HTMLCanvasElement) => {
+    const rect = canvas.getBoundingClientRect();
+    let clientX, clientY;
+
+    if ('touches' in event) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
+
+    return {
+      offsetX: clientX - rect.left,
+      offsetY: clientY - rect.top,
+    };
+  };
+
+  resizeCanvas = () => {
+    if (!this.canvasRef) { return; }
+    const canvas = this.canvasRef.current;
+    const container = canvas?.parentElement;
+    if (canvas && container) {
+      const containerWidth = container.clientWidth * 0.8;
+      const containerHeight = container.clientHeight * 0.8;
+
+      // 4:3 비율에 맞게 크기 조정
+      const widthBasedHeight = containerWidth;
+      const heightBasedWidth = containerHeight * (4 / 3);
+
+      if (widthBasedHeight <= containerHeight) {
+        canvas.width = containerWidth;
+        canvas.height = widthBasedHeight;
+      } else {
+        canvas.width = heightBasedWidth;
+        canvas.height = containerHeight;
+      }
+    }
+  };
 }
 
 export default Business;
