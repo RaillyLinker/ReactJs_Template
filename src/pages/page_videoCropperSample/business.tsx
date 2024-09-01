@@ -26,7 +26,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비디오 프레임 선택 샘플");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "비디오 잘라내기 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -39,6 +39,8 @@ class Business extends PageBusinessBasic {
   //
   videoRef: React.RefObject<HTMLVideoElement> | null = null;
   videoFile: File | null = null;
+  startTime: number = 0;
+  endTime: number = 0;
   loading: boolean = false;
   ffmpeg = new FFmpeg();
   videoUrl: string | null = null;
@@ -101,36 +103,53 @@ class Business extends PageBusinessBasic {
     }
   };
 
-  captureFrame = async () => {
+  setStartTimeFromVideoTime = () => {
+    if (this.videoRef && this.videoRef.current) {
+      this.startTime = this.videoRef.current.currentTime;
+      this.reRender();
+    }
+  };
+
+  setEndTimeFromVideoTime = () => {
+    if (this.videoRef && this.videoRef.current) {
+      this.endTime = this.videoRef.current.currentTime;
+      this.reRender();
+    }
+  };
+
+  cropVideo = async () => {
     if (!this.videoFile || !this.videoRef || !this.videoRef.current) return;
+    if (this.startTime < 0 || this.endTime < 0) {
+      alert("Start time and end time cannot be negative.");
+      return;
+    }
+    if (this.endTime <= this.startTime) {
+      alert("End time must be greater than start time.");
+      return;
+    }
 
     this.loading = true;
     this.reRender();
 
-    // FFmpeg.js 초기화
     await this.ffmpeg.load();
     await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
 
-    // 현재 비디오의 시간 가져오기
-    const currentTime = this.videoRef.current.currentTime;
-    const duration = this.videoRef.current.duration * 1000;
-
-    // 무작위 프레임 추출
-    const outputFilename = `frame-${Math.floor(currentTime * 1000)}.jpg`;
+    // ss 를 i 뒷부분에 두면 앞부분 영상이 멈추는 현상이 있습니다.
     await this.ffmpeg.exec([
-      "-ss", currentTime.toFixed(2),
+      "-ss", (this.startTime).toFixed(2),
+      "-to", (this.endTime).toFixed(2),
       "-i", this.videoFile.name,
-      "-vframes", "1",
-      outputFilename,
+      "-vcodec", "copy",
+      "-acodec", "copy",
+      "output.mp4",
     ]);
 
-    const data = await this.ffmpeg.readFile(outputFilename);
-    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
+    const data = await this.ffmpeg.readFile("output.mp4");
+    const url = URL.createObjectURL(new Blob([data], { type: "video/mp4" }));
 
-    // 이미지 다운로드
     const a = document.createElement("a");
     a.href = url;
-    a.download = outputFilename;
+    a.download = "cropped_video.mp4";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -131,8 +131,8 @@ class Business extends PageBusinessBasic {
     // 무작위 프레임 추출
     const outputFilename = `frame-${randomTime}.jpg`;
     await this.ffmpeg.exec([
-      "-i", this.videoFile.name,
       "-ss", (randomTime / 1000).toFixed(2),
+      "-i", this.videoFile.name,
       "-vframes", "1",
       outputFilename,
     ]);

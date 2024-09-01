@@ -97,6 +97,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/media-sample-list/video-frame-choice-sample");
         }
+      },
+      {
+        uid: 7,
+        itemTitle: "비디오 잘라내기 샘플",
+        itemDescription: "비디오 파일을 선택하고 특정 구간을 잘라내는 샘플입니다.",
+        onItemClicked: (): void => {
+          this.navigate("/media-sample-list/video-cropper-sample");
+        }
       }
     ];
 

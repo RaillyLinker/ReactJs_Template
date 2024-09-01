@@ -55,6 +55,7 @@ import PageTooltipSample from './pages/page_tooltipSample/view';
 import PageCamSample from './pages/page_camSample/view';
 import PageVideoFrameCaptureSample from './pages/page_videoFrameCaptureSample/view';
 import PageVideoFrameChoiceSample from './pages/page_videoFrameChoiceSample/view';
+import PageVideoCropperSample from './pages/page_videoCropperSample/view';
 
 
 // [라우터 클래스]
@@ -116,6 +117,7 @@ function AppRouter(): JSX.Element {
       <Route path="/media-sample-list/cam-sample" element={<PageCamSample />} />
       <Route path="/media-sample-list/video-frame-capture-sample" element={<PageVideoFrameCaptureSample />} />
       <Route path="/media-sample-list/video-frame-choice-sample" element={<PageVideoFrameChoiceSample />} />
+      <Route path="/media-sample-list/video-cropper-sample" element={<PageVideoCropperSample />} />
 
       <Route path="/game-sample-list" element={<PageGameSampleList />} />
       <Route path="/game-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
