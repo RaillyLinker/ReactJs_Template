@@ -1,0 +1,28 @@
+/* !!!페이지 뷰에 적용할 CSS 작성!!! */
+/* [Tag] */
+
+
+/* [Class .] */
+
+
+/* [Id #] */
+#MainView {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+#MainContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#ChartContent{
+    width: 30%;
+    height: 100%;
+}

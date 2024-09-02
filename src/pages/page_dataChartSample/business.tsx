@@ -24,7 +24,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "데이터 차트 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,55 +34,90 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
+  //
+  // 막대 그래프 데이터
+  barData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
       {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
+        label: 'Sales',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
       },
+    ],
+  };
+
+  // 선 그래프 데이터
+  lineData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
       {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
+        label: 'Visitors',
+        data: [45, 39, 60, 71, 66, 65, 50],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
       },
+    ],
+  };
+
+  // 원 그래프 데이터
+  pieData = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
       {
-        uid: 2,
-        itemTitle: "파일 압축 샘플",
-        itemDescription: "파일들을 선택해서 압축하는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/files-to-zip-sample");
-        }
+        label: 'Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
       },
+    ],
+  };
+
+  // 도넛 차트 데이터
+  doughnutData = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
       {
-        uid: 3,
-        itemTitle: "압축 풀기 샘플",
-        itemDescription: "압축 파일을 선택해서 압축을 푸는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/zip-to-files-sample");
-        }
+        label: 'My First Dataset',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
       },
-      {
-        uid: 4,
-        itemTitle: "데이터 차트 샘플",
-        itemDescription: "데이터를 시각화 하여 차트로 나타내는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/data-chart-sample");
-        }
-      }
-    ];
+    ],
+  };
 
 
   //----------------------------------------------------------------------------

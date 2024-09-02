@@ -58,6 +58,7 @@ import PageVideoFrameChoiceSample from './pages/page_videoFrameChoiceSample/view
 import PageVideoCropperSample from './pages/page_videoCropperSample/view';
 import PageGeoSampleList from './pages/page_geoSampleList/view';
 import PageDaumAddressSearchSample from './pages/page_daumAddressSearchSample/view';
+import PageDataChartSample from './pages/page_dataChartSample/view';
 
 
 // [라우터 클래스]
@@ -132,6 +133,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/three-dimension-sample" element={<PageThreeDimensionSample />} />
       <Route path="/etc-sample-list/files-to-zip-sample" element={<PageFilesToZipSample />} />
       <Route path="/etc-sample-list/zip-to-files-sample" element={<PageZipToFilesSample />} />
+      <Route path="/etc-sample-list/data-chart-sample" element={<PageDataChartSample />} />
     </Routes>
   );
 }
