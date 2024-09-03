@@ -24,7 +24,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "Half Pong 게임 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -33,32 +33,6 @@ class Business extends PageBusinessBasic {
   toastRightToLeftLayout = false;
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
-
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "뱀 게임 샘플",
-        itemDescription: "기본 뱀 게임 구현 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/game-sample-list/snake-game-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "Half Pong 게임 샘플",
-        itemDescription: "1인용 Pong 게임 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/game-sample-list/half-pong-game-sample");
-        }
-      }
-    ];
 
 
   //----------------------------------------------------------------------------

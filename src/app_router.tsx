@@ -59,6 +59,7 @@ import PageVideoCropperSample from './pages/page_videoCropperSample/view';
 import PageGeoSampleList from './pages/page_geoSampleList/view';
 import PageDaumAddressSearchSample from './pages/page_daumAddressSearchSample/view';
 import PageDataChartSample from './pages/page_dataChartSample/view';
+import PageHalfPongGameSample from './pages/page_halfPongGameSample/view';
 
 
 // [라우터 클래스]
@@ -124,6 +125,7 @@ function AppRouter(): JSX.Element {
 
       <Route path="/game-sample-list" element={<PageGameSampleList />} />
       <Route path="/game-sample-list/snake-game-sample" element={<PageSnakeGameSample />} />
+      <Route path="/game-sample-list/half-pong-game-sample" element={<PageHalfPongGameSample />} />
 
       <Route path="/geo-sample-list" element={<PageGeoSampleList />} />
       <Route path="/geo-sample-list/daum-address-search-sample" element={<PageDaumAddressSearchSample />} />
