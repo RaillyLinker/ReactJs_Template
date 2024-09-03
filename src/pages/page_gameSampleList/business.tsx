@@ -24,7 +24,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "게임 샘플 리스트");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -53,7 +53,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 1,
         itemTitle: "Half Pong 게임 샘플",
-        itemDescription: "1인용 Pong 게임 샘플 (게임 상태 연산과 GPU 그래픽 표현을 분리하는 방법을 사용)",
+        itemDescription: "1인용 Pong 게임 샘플 (canvas 사용, 게임 상태 연산과 GPU 그래픽 표현을 분리하는 방법을 사용)",
         onItemClicked: (): void => {
           this.navigate("/game-sample-list/half-pong-game-sample");
         }
