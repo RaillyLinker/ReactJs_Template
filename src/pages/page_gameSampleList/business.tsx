@@ -53,7 +53,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 1,
         itemTitle: "Half Pong 게임 샘플",
-        itemDescription: "1인용 Pong 게임 샘플",
+        itemDescription: "1인용 Pong 게임 샘플 (게임 상태 연산과 GPU 그래픽 표현을 분리하는 방법을 사용)",
         onItemClicked: (): void => {
           this.navigate("/game-sample-list/half-pong-game-sample");
         }
