@@ -104,12 +104,13 @@ const View: React.FC = () => {
     // 공 Y 좌표 (초기에는 canvas 중간)
     let ballY = canvas.height / 2;
     // X 축 공 속도
-    let ballSpeedX = 5;
+    let ballSpeedX = 10;
     // Y 축 공 속도
-    let ballSpeedY = 3;
+    let ballSpeedY = 5;
 
     // 공 최소 속도
-    const minSpeed = 5;
+    const minSpeedX = 10;
+    const minSpeedY = 5;
     // 패들에 부딪쳤을 때의 공 가속
     const speedIncrement = 0.1;
 
@@ -151,8 +152,8 @@ const View: React.FC = () => {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
         // 공 속도 초기화 및 방향 변경
-        ballSpeedX = ballSpeedX > 0 ? -minSpeed : minSpeed;
-        ballSpeedY = 3;
+        ballSpeedX = ballSpeedX > 0 ? -minSpeedX : minSpeedX;
+        ballSpeedY = minSpeedY;
       }
     };
 
