@@ -45,7 +45,7 @@ class Business extends PageBusinessBasic {
       {
         uid: 0,
         itemTitle: "템플릿 기본 기능 샘플 리스트",
-        itemDescription: "템플릿의 기본 필수 기능에 대한 샘플 리스트",
+        itemDescription: "웹 개발에 사용되는 기본 필수 기능에 대한 샘플 리스트",
         onItemClicked: (): void => {
           this.navigate("/template-basic-function-sample-list");
         }
