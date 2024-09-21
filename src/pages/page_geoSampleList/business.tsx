@@ -49,6 +49,14 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/geo-sample-list/daum-address-search-sample");
         }
+      },
+      {
+        uid: 1,
+        itemTitle: "브라우저 GPS 샘플",
+        itemDescription: "브라우저 GPS 정보를 가져오는 샘플",
+        onItemClicked: (): void => {
+          this.navigate("/geo-sample-list/browser-gps-sample");
+        }
       }
     ];
 

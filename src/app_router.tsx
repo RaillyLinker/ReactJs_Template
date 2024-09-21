@@ -60,6 +60,7 @@ import PageGeoSampleList from './pages/page_geoSampleList/view';
 import PageDaumAddressSearchSample from './pages/page_daumAddressSearchSample/view';
 import PageDataChartSample from './pages/page_dataChartSample/view';
 import PageHalfPongGameSample from './pages/page_halfPongGameSample/view';
+import PageBrowserGpsSample from './pages/page_browserGpsSample/view';
 
 
 // [라우터 클래스]
@@ -129,6 +130,7 @@ function AppRouter(): JSX.Element {
 
       <Route path="/geo-sample-list" element={<PageGeoSampleList />} />
       <Route path="/geo-sample-list/daum-address-search-sample" element={<PageDaumAddressSearchSample />} />
+      <Route path="/geo-sample-list/browser-gps-sample" element={<PageBrowserGpsSample />} />
 
       <Route path="/etc-sample-list" element={<PageEtcSampleList />} />
       <Route path="/etc-sample-list/crypt-sample" element={<PageCryptSample />} />
