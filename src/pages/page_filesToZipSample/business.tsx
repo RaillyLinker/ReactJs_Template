@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import JSZip from 'jszip';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -90,21 +92,26 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [public 함수]
   handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.files = event.target.files;
-    this.reRender();
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      this.files = event.target.files;
+      this.reRender();
 
-    if (!this.files) return;
+      if (!this.files) return;
 
-    const zip = new JSZip();
-    Array.from(this.files).forEach((file) => {
-      zip.file(file.name, file);
-    });
+      const zip = new JSZip();
+      Array.from(this.files).forEach((file) => {
+        zip.file(file.name, file);
+      });
 
-    const content = await zip.generateAsync({ type: 'blob' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(content);
-    link.download = 'files.zip';
-    link.click();
+      const content = await zip.generateAsync({ type: 'blob' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(content);
+      link.download = 'files.zip';
+      link.click();
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
   };
 
 

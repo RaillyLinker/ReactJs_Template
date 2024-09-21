@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { resizeImage } from '../../global_functions/gf_mediaFunction';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -114,6 +116,7 @@ class Business extends PageBusinessBasic {
 
   onResize = async () => {
     if (this.selectedFile) {
+      this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
       try {
         const resized = await resizeImage(this.selectedFile, this.width, this.height, this.format, this.quality);
         const link = document.createElement('a');
@@ -122,6 +125,8 @@ class Business extends PageBusinessBasic {
         link.click();
       } catch (error) {
         console.error('Error resizing image:', error);
+      } finally {
+        this.gcoDialogFrameBusiness.closeDialog();
       }
     }
   };

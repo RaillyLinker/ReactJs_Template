@@ -144,12 +144,11 @@ const View: React.FC = () => {
                   width="600px"
                   height="400px"
                 />
-                <button onClick={mainBusiness.captureFrame} disabled={mainBusiness.loading} style={{ marginTop: "10px" }}>
-                  Capture Frame
+                <button onClick={mainBusiness.captureFrame} style={{ marginTop: "10px" }}>
+                  프레임 캡쳐
                 </button>
               </div>
             )}
-            {mainBusiness.loading && <p>Capturing frame...</p>}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}

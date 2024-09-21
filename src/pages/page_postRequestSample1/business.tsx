@@ -8,6 +8,8 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/busine
 import { postService1TkV1RequestTestPostRequestApplicationJsonAsync } from '../../repositories/network/apis/api_mainServer';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -104,11 +106,13 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (네트워크 요청 버튼 클릭)
   onClickRequest = async () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
     const requestResult = await postService1TkV1RequestTestPostRequestApplicationJsonAsync(
       {},
       {},
       this.requestBody
     );
+    this.gcoDialogFrameBusiness.closeDialog();
 
     if (requestResult.responseOk === null) {
       this.gcoDialogFrameBusiness.showDialog(

@@ -196,7 +196,7 @@ const View: React.FC = () => {
               </label>
             </div>
             <button onClick={mainBusiness.onResize} style={{ margin: '1rem' }}>
-              Resize Image
+              이미지 리사이징
             </button>
           </div>
           <ToastContainer

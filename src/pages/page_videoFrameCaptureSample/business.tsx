@@ -7,6 +7,8 @@ import { Bounce, toast } from 'react-toastify';
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -41,7 +43,6 @@ class Business extends PageBusinessBasic {
   videoFile: File | null = null;
   startTime: number = 0;
   endTime: number = 0;
-  loading: boolean = false;
   ffmpeg = new FFmpeg();
   videoUrl: string | null = null;
 
@@ -114,42 +115,41 @@ class Business extends PageBusinessBasic {
       return;
     }
 
-    this.loading = true;
-    this.reRender();
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      // FFmpeg.js 초기화
+      await this.ffmpeg.load();
+      await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
 
-    // FFmpeg.js 초기화
-    await this.ffmpeg.load();
-    await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
+      // 영상 길이 확인
+      const duration = this.videoRef.current.duration * 1000;
+      const actualEndTime = Math.min(this.endTime, duration);
 
-    // 영상 길이 확인
-    const duration = this.videoRef.current.duration * 1000;
-    const actualEndTime = Math.min(this.endTime, duration);
+      // 무작위 프레임 선정
+      const randomTime = Math.floor(Math.random() * (actualEndTime - this.startTime)) + this.startTime;
 
-    // 무작위 프레임 선정
-    const randomTime = Math.floor(Math.random() * (actualEndTime - this.startTime)) + this.startTime;
+      // 무작위 프레임 추출
+      const outputFilename = `frame-${randomTime}.jpg`;
+      await this.ffmpeg.exec([
+        "-ss", (randomTime / 1000).toFixed(2),
+        "-i", this.videoFile.name,
+        "-vframes", "1",
+        outputFilename,
+      ]);
 
-    // 무작위 프레임 추출
-    const outputFilename = `frame-${randomTime}.jpg`;
-    await this.ffmpeg.exec([
-      "-ss", (randomTime / 1000).toFixed(2),
-      "-i", this.videoFile.name,
-      "-vframes", "1",
-      outputFilename,
-    ]);
+      const data = await this.ffmpeg.readFile(outputFilename);
+      const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
 
-    const data = await this.ffmpeg.readFile(outputFilename);
-    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
-
-    // 이미지 다운로드
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `frame-${randomTime}.jpg`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    this.loading = false;
-    this.reRender();
+      // 이미지 다운로드
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `frame-${randomTime}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
   };
 
   videoFileChange = () => {

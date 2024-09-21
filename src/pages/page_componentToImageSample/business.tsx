@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import html2canvas from 'html2canvas';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -91,15 +93,19 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [public 함수]
   // (캡쳐 영역을 캡쳐)
-  captureAndDownload = () => {
+  captureAndDownload = async () => {
     if (this.captureRef !== null && this.captureRef.current) {
-      html2canvas(this.captureRef.current, { useCORS: true }).then((canvas) => {
+      this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+      try {
+        let canvas = await html2canvas(this.captureRef.current, { useCORS: true })
         const imgData = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = imgData;
         link.download = 'captured-image.png';
         link.click();
-      });
+      } finally {
+        this.gcoDialogFrameBusiness.closeDialog();
+      }
     }
   };
 

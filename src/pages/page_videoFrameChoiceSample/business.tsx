@@ -7,6 +7,8 @@ import { Bounce, toast } from 'react-toastify';
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -39,7 +41,6 @@ class Business extends PageBusinessBasic {
   //
   videoRef: React.RefObject<HTMLVideoElement> | null = null;
   videoFile: File | null = null;
-  loading: boolean = false;
   ffmpeg = new FFmpeg();
   videoUrl: string | null = null;
 
@@ -104,39 +105,38 @@ class Business extends PageBusinessBasic {
   captureFrame = async () => {
     if (!this.videoFile || !this.videoRef || !this.videoRef.current) return;
 
-    this.loading = true;
-    this.reRender();
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      // FFmpeg.js 초기화
+      await this.ffmpeg.load();
+      await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
 
-    // FFmpeg.js 초기화
-    await this.ffmpeg.load();
-    await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
+      // 현재 비디오의 시간 가져오기
+      const currentTime = this.videoRef.current.currentTime;
+      const duration = this.videoRef.current.duration * 1000;
 
-    // 현재 비디오의 시간 가져오기
-    const currentTime = this.videoRef.current.currentTime;
-    const duration = this.videoRef.current.duration * 1000;
+      // 무작위 프레임 추출
+      const outputFilename = `frame-${Math.floor(currentTime * 1000)}.jpg`;
+      await this.ffmpeg.exec([
+        "-ss", currentTime.toFixed(2),
+        "-i", this.videoFile.name,
+        "-vframes", "1",
+        outputFilename,
+      ]);
 
-    // 무작위 프레임 추출
-    const outputFilename = `frame-${Math.floor(currentTime * 1000)}.jpg`;
-    await this.ffmpeg.exec([
-      "-ss", currentTime.toFixed(2),
-      "-i", this.videoFile.name,
-      "-vframes", "1",
-      outputFilename,
-    ]);
+      const data = await this.ffmpeg.readFile(outputFilename);
+      const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
 
-    const data = await this.ffmpeg.readFile(outputFilename);
-    const url = URL.createObjectURL(new Blob([data], { type: "image/jpeg" }));
-
-    // 이미지 다운로드
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = outputFilename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    this.loading = false;
-    this.reRender();
+      // 이미지 다운로드
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = outputFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
   };
 
   videoFileChange = () => {

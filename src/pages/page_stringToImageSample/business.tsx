@@ -5,6 +5,8 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -96,64 +98,70 @@ class Business extends PageBusinessBasic {
 
   // (서명 생성)
   handleGenerateSignature = () => {
-    // 설정 데이터
-    const fontSize = 24;
-    const fontFamily = 'Cursive';
-    const fontColorConfig = 'black';
-    const canvasColorConfig = 'rgba(255, 255, 255, 0)';
-    const widthMargin = 20;
-    const heightMargin = 10;
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
 
-    // 이미지 생성 시작
-    const fontConfig = `${fontSize}px ${fontFamily}`;
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+    try {
+      // 설정 데이터
+      const fontSize = 24;
+      const fontFamily = 'Cursive';
+      const fontColorConfig = 'black';
+      const canvasColorConfig = 'rgba(255, 255, 255, 0)';
+      const widthMargin = 20;
+      const heightMargin = 10;
 
-    if (context) {
-      context.font = fontConfig;
+      // 이미지 생성 시작
+      const fontConfig = `${fontSize}px ${fontFamily}`;
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
 
-      // 폰트 크기에 비례한 캔버스 높이 설정
-      const lineHeight = fontSize * 1.2; // 폰트 크기에 따른 라인 높이
-      canvas.width = context.measureText(this.srcText).width + widthMargin; // 여백 포함
-      canvas.height = lineHeight + heightMargin; // 위아래 여백 포함
+      if (context) {
+        context.font = fontConfig;
 
-      // 캔버스 배경 색상 설정
-      context.fillStyle = canvasColorConfig;
-      context.fillRect(0, 0, canvas.width, canvas.height);
+        // 폰트 크기에 비례한 캔버스 높이 설정
+        const lineHeight = fontSize * 1.2; // 폰트 크기에 따른 라인 높이
+        canvas.width = context.measureText(this.srcText).width + widthMargin; // 여백 포함
+        canvas.height = lineHeight + heightMargin; // 위아래 여백 포함
 
-      // 텍스트 그리기
-      context.fillStyle = fontColorConfig;
-      context.font = fontConfig;
-      // 텍스트 위치 중앙 조정
-      context.fillText(this.srcText, 10, lineHeight);
+        // 캔버스 배경 색상 설정
+        context.fillStyle = canvasColorConfig;
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
-      // // 이미지를 네트워크 전송
-      // canvas.toBlob(async (blob) => {
-      //   if (blob) {
-      //     // Blob을 FormData에 추가
-      //     const formData = new FormData();
-      //     formData.append('signature', blob, 'signature.png');
+        // 텍스트 그리기
+        context.fillStyle = fontColorConfig;
+        context.font = fontConfig;
+        // 텍스트 위치 중앙 조정
+        context.fillText(this.srcText, 10, lineHeight);
 
-      //     try {
-      //       // POST 요청 보내기
-      //       const response = await ky.post('https://example.com/upload', {
-      //         body: formData,
-      //       });
+        // // 이미지를 네트워크 전송
+        // canvas.toBlob(async (blob) => {
+        //   if (blob) {
+        //     // Blob을 FormData에 추가
+        //     const formData = new FormData();
+        //     formData.append('signature', blob, 'signature.png');
 
-      //       // 서버의 응답 처리
-      //       console.log('Image uploaded successfully', await response.json());
-      //     } catch (error) {
-      //       console.error('Error uploading image:', error);
-      //     }
-      //   }
-      // }, 'image/png');
+        //     try {
+        //       // POST 요청 보내기
+        //       const response = await ky.post('https://example.com/upload', {
+        //         body: formData,
+        //       });
 
-      // 이미지 다운로드
-      const dataURL = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.href = dataURL;
-      link.download = 'signature.png';
-      link.click();
+        //       // 서버의 응답 처리
+        //       console.log('Image uploaded successfully', await response.json());
+        //     } catch (error) {
+        //       console.error('Error uploading image:', error);
+        //     }
+        //   }
+        // }, 'image/png');
+
+        // 이미지 다운로드
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'signature.png';
+        link.click();
+      }
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
     }
   };
 

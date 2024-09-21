@@ -9,6 +9,8 @@ import { downloadFile } from '../../global_functions/gf_my_functions';
 import DialogInfo from '../../dialog_components/dialog_info/view';
 import DialogInfoBusiness from '../../dialog_components/dialog_info/business';
 import { postService1TkV1RequestTestGenerateErrorAsync, getService1TkV1RequestTestReturnTextStringAsync, getService1TkV1RequestTestReturnTextHtmlAsync } from '../../repositories/network/apis/api_mainServer';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -115,11 +117,13 @@ class Business extends PageBusinessBasic {
         itemTitle: "네트워크 요청 에러 발생 테스트",
         itemDescription: "네트워크 요청에 500 에러가 발생했을 시에 대한 테스트",
         onItemClicked: async () => {
+          this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
           const requestResult = await postService1TkV1RequestTestGenerateErrorAsync(
             {},
             {},
             {}
           );
+          this.gcoDialogFrameBusiness.closeDialog();
 
           if (requestResult.responseOk === null) {
             this.gcoDialogFrameBusiness.showDialog(
@@ -157,10 +161,12 @@ class Business extends PageBusinessBasic {
         itemTitle: "String 타입 응답 테스트",
         itemDescription: "text/string 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: async () => {
+          this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
           const requestResult = await getService1TkV1RequestTestReturnTextStringAsync(
             {},
             {}
           );
+          this.gcoDialogFrameBusiness.closeDialog();
 
           if (requestResult.responseOk === null) {
             this.gcoDialogFrameBusiness.showDialog(
@@ -198,10 +204,12 @@ class Business extends PageBusinessBasic {
         itemTitle: "HTML 타입 응답 테스트",
         itemDescription: "text/html 타입의 응답값을 반환하는 API 에 대한 테스트",
         onItemClicked: async () => {
+          this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
           const requestResult = await getService1TkV1RequestTestReturnTextHtmlAsync(
             {},
             {}
           );
+          this.gcoDialogFrameBusiness.closeDialog();
 
           if (requestResult.responseOk === null) {
             this.gcoDialogFrameBusiness.showDialog(
@@ -238,8 +246,10 @@ class Business extends PageBusinessBasic {
         uid: 11,
         itemTitle: "네트워크 파일 다운로드 테스트",
         itemDescription: "네트워크 파일 다운로드 테스트",
-        onItemClicked: (): void => {
-          downloadFile("http://127.0.0.1:8080/favicon.ico", "favicon.ico");
+        onItemClicked: async () => {
+          this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+          await downloadFile("http://127.0.0.1:8080/favicon.ico", "favicon.ico");
+          this.gcoDialogFrameBusiness.closeDialog();
         }
       }
     ];

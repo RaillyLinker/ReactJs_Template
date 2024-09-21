@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import JSZip from 'jszip';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -94,6 +96,7 @@ class Business extends PageBusinessBasic {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
 
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
     try {
       const zip = new JSZip();
       const zipContent = await zip.loadAsync(selectedFile);
@@ -114,6 +117,8 @@ class Business extends PageBusinessBasic {
       this.files = [];
       this.error = 'Failed to unzip the file.';
       this.reRender();
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
     }
   };
 

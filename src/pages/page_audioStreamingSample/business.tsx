@@ -115,7 +115,7 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [public 함수]
   // (오디오 정보 핸들러)
-  // 재생 시간 병경시 호출
+  // 재생 시간 변경시 호출
   audioTimeUpdateHandler = () => {
     if (this.audioRef != null && this.audioRef.current) {
       this.audioCurrentTime = this.audioRef.current.currentTime;

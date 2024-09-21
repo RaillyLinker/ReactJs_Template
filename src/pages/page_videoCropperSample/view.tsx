@@ -142,12 +142,11 @@ const View: React.FC = () => {
                   width="600px"
                   height="400px"
                 />
-                <button onClick={mainBusiness.cropVideo} disabled={mainBusiness.loading} style={{ marginTop: "10px" }}>
+                <button onClick={mainBusiness.cropVideo} style={{ marginTop: "10px" }}>
                   Crop Video
                 </button>
               </div>
             )}
-            {mainBusiness.loading && <p>Processing video...</p>}
           </div>
           <ToastContainer
             newestOnTop={mainBusiness.toastNewestOnTop}

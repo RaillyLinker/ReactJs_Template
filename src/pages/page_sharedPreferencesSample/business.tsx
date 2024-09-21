@@ -8,6 +8,8 @@ import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/busine
 import { SpwTemplate, SpwTemplateVo } from '../../a_template/spw_template';
 import { SpwTest, SpwTestVo } from '../../repositories/spws/spw_test';
 import { isNumber } from '../../global_functions/gf_my_functions';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -112,29 +114,37 @@ class Business extends PageBusinessBasic {
   // [public 함수]
   // (SpwTemplate 값 저장)
   saveSpwTemplate = () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
     SpwTemplate.set({ "sampleString": this.SpwTemplateInputValue });
     this.getSpwTemplateValue();
+    this.gcoDialogFrameBusiness.closeDialog();
 
   }
 
   // (SpwTemplate 값 삭제)
   deleteSpwTemplate = () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
     SpwTemplate.set(null);
     this.getSpwTemplateValue();
+    this.gcoDialogFrameBusiness.closeDialog();
   }
 
   // (SpwTest 값 저장)
   saveSpwTest = () => {
     if (isNumber(this.SpwTestInputValue)) {
+      this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
       SpwTest.set({ "testNumber": Number(this.SpwTestInputValue) });
       this.getSpwTestValue();
+      this.gcoDialogFrameBusiness.closeDialog();
     }
   }
 
-  // (SpwTemplate 값 삭제)
+  // (SpwTest 값 삭제)
   deleteSpwTest = () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
     SpwTest.set(null);
     this.getSpwTestValue();
+    this.gcoDialogFrameBusiness.closeDialog();
   }
 
 

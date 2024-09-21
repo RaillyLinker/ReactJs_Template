@@ -7,6 +7,8 @@ import { Bounce, toast } from 'react-toastify';
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -41,7 +43,6 @@ class Business extends PageBusinessBasic {
   videoFile: File | null = null;
   startTime: number = 0;
   endTime: number = 0;
-  loading: boolean = false;
   ffmpeg = new FFmpeg();
   videoUrl: string | null = null;
 
@@ -128,34 +129,33 @@ class Business extends PageBusinessBasic {
       return;
     }
 
-    this.loading = true;
-    this.reRender();
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      await this.ffmpeg.load();
+      await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
 
-    await this.ffmpeg.load();
-    await this.ffmpeg.writeFile(this.videoFile.name, await fetchFile(this.videoFile));
+      // ss 를 i 뒷부분에 두면 앞부분 영상이 멈추는 현상이 있습니다.
+      await this.ffmpeg.exec([
+        "-ss", (this.startTime).toFixed(2),
+        "-to", (this.endTime).toFixed(2),
+        "-i", this.videoFile.name,
+        "-vcodec", "copy",
+        "-acodec", "copy",
+        "output.mp4",
+      ]);
 
-    // ss 를 i 뒷부분에 두면 앞부분 영상이 멈추는 현상이 있습니다.
-    await this.ffmpeg.exec([
-      "-ss", (this.startTime).toFixed(2),
-      "-to", (this.endTime).toFixed(2),
-      "-i", this.videoFile.name,
-      "-vcodec", "copy",
-      "-acodec", "copy",
-      "output.mp4",
-    ]);
+      const data = await this.ffmpeg.readFile("output.mp4");
+      const url = URL.createObjectURL(new Blob([data], { type: "video/mp4" }));
 
-    const data = await this.ffmpeg.readFile("output.mp4");
-    const url = URL.createObjectURL(new Blob([data], { type: "video/mp4" }));
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "cropped_video.mp4";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    this.loading = false;
-    this.reRender();
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cropped_video.mp4";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
   };
 
   videoFileChange = () => {

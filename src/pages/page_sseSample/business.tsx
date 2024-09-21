@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 import axios from 'axios';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -128,32 +130,37 @@ class Business extends PageBusinessBasic {
   //----------------------------------------------------------------------------
   // [private 함수]
   // (SSE 구독 및 설정 함수)
-  private sseSubscribe = () => {
-    // SSE 연결 설정
-    const eventSource = new EventSource("http://localhost:8080/service1/tk/v1/request-test/sse-test/subscribe");
+  private sseSubscribe = async () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      // SSE 연결 설정
+      const eventSource = new EventSource("http://localhost:8080/service1/tk/v1/request-test/sse-test/subscribe");
 
-    // SSE 이벤트 수신 리스너 (event type : system)
-    eventSource.addEventListener('system', (e: MessageEvent) => {
-      const receivedData = e.data;
-      if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
-        const p = document.createElement("p");
-        p.innerText = receivedData;
-        this.sseEventLogRef.current.prepend(p);
-      }
-    });
+      // SSE 이벤트 수신 리스너 (event type : system)
+      eventSource.addEventListener('system', (e: MessageEvent) => {
+        const receivedData = e.data;
+        if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
+          const p = document.createElement("p");
+          p.innerText = receivedData;
+          this.sseEventLogRef.current.prepend(p);
+        }
+      });
 
-    // SSE 이벤트 수신 리스너 (event type : triggerTest)
-    eventSource.addEventListener('triggerTest', (e: MessageEvent) => {
-      const receivedData = e.data;
-      if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
-        const p = document.createElement("p");
-        p.innerText = receivedData;
-        this.sseEventLogRef.current.prepend(p);
-      }
-    });
+      // SSE 이벤트 수신 리스너 (event type : triggerTest)
+      eventSource.addEventListener('triggerTest', (e: MessageEvent) => {
+        const receivedData = e.data;
+        if (this.sseEventLogRef !== null && this.sseEventLogRef.current) {
+          const p = document.createElement("p");
+          p.innerText = receivedData;
+          this.sseEventLogRef.current.prepend(p);
+        }
+      });
 
-    this.sse = eventSource;
-    this.reRender();
+      this.sse = eventSource;
+      this.reRender();
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
   };
 }
 
