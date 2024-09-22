@@ -79,7 +79,6 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
-    // 권한 상태를 감지
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" }).then((permissionStatus) => {
         // 권한 상태 변화를 감지
@@ -106,7 +105,7 @@ class Business extends PageBusinessBasic {
   // 이제 컴포넌트는 다시 렌더링되지 않으므로, componentWillUnmount() 내에서 setState()를 호출하면 안 됩니다. 
   // 컴포넌트 인스턴스가 마운트 해제되고 나면, 절대로 다시 마운트되지 않습니다.
   onComponentWillUnmount = () => {
-    if (this.watchId !== null) {
+    if (this.watchId !== null && "geolocation" in navigator) {
       navigator.geolocation.clearWatch(this.watchId);
     }
   }
@@ -134,19 +133,19 @@ class Business extends PageBusinessBasic {
         (err) => {
           switch (err.code) {
             case err.PERMISSION_DENIED:
-              this.error = "위치 정보 사용 권한이 거부되었습니다.";
+              this.error = "requestLocation : 위치 정보 사용 권한이 거부되었습니다.";
               this.reRender();
               break;
             case err.POSITION_UNAVAILABLE:
-              this.error = "위치 정보를 사용할 수 없습니다.";
+              this.error = "requestLocation : 위치 정보를 사용할 수 없습니다.";
               this.reRender();
               break;
             case err.TIMEOUT:
-              this.error = "위치 정보를 가져오는 시간이 초과되었습니다.";
+              this.error = "requestLocation : 위치 정보를 가져오는 시간이 초과되었습니다.";
               this.reRender();
               break;
             default:
-              this.error = "알 수 없는 오류가 발생했습니다.";
+              this.error = "requestLocation : 알 수 없는 오류가 발생했습니다.";
               this.reRender();
           }
         },
@@ -175,15 +174,15 @@ class Business extends PageBusinessBasic {
         (err) => {
           switch (err.code) {
             case err.PERMISSION_DENIED:
-              this.error = "위치 정보 사용 권한이 거부되었습니다.";
+              this.error = "watchLocation : 위치 정보 사용 권한이 거부되었습니다.";
               this.reRender();
               break;
             case err.POSITION_UNAVAILABLE:
-              this.error = "위치 정보를 사용할 수 없습니다.";
+              this.error = "watchLocation : 위치 정보를 사용할 수 없습니다.";
               this.reRender();
               break;
             case err.TIMEOUT:
-              this.error = "위치 정보를 가져오는 시간이 초과되었습니다.";
+              this.error = "watchLocation : 위치 정보를 가져오는 시간이 초과되었습니다.";
               this.reRender();
               break;
             default:
