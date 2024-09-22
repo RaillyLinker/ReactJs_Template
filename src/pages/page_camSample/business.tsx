@@ -114,7 +114,7 @@ class Business extends PageBusinessBasic {
 
     try {
       // 카메라 스트림 생성
-      this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      this.cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       if (this.videoRef && this.videoRef.current) {
         // video 태그에 카메라 스트림 입력
         this.videoRef.current.srcObject = this.cameraStream;
