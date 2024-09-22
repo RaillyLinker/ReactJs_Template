@@ -5,6 +5,9 @@ import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/busi
 import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
+import axios from 'axios';
+import DialogLoadingSpinner from '../../dialog_components/dialog_loadingSpinner/view';
+import DialogLoadingSpinnerBusiness from '../../dialog_components/dialog_loadingSpinner/business';
 
 
 // [비즈니스 클래스]
@@ -24,7 +27,7 @@ class Business extends PageBusinessBasic {
   gcoDialogFrameBusiness: GcoDialogFrameBusiness = new GcoDialogFrameBusiness(this);
 
   // (페이지 외곽 프레임 비즈니스)
-  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "기타 샘플 리스트");
+  gcoOuterFrameBusiness: GcoOuterFrameBusiness = new GcoOuterFrameBusiness(this, "접속자 IP 가져오기 샘플");
 
   // (토스트 컨테이너 설정)
   // 새로운 토스트를 위에서 나타내게 하기(bottom 토스트에 좋습니다.)
@@ -34,63 +37,8 @@ class Business extends PageBusinessBasic {
   // 포커스 해제시 멈춤
   toastPauseOnFocusLoss = true;
 
-  // (메인 리스트)
-  items: {
-    uid: number,
-    itemTitle: string;
-    itemDescription: string;
-    onItemClicked: () => void;
-  }[] =
-    [
-      {
-        uid: 0,
-        itemTitle: "암/복호화 샘플",
-        itemDescription: "암호화, 복호화 적용 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/crypt-sample");
-        }
-      },
-      {
-        uid: 1,
-        itemTitle: "3차원 그래픽 샘플",
-        itemDescription: "3차원 그래픽을 다루는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/three-dimension-sample");
-        }
-      },
-      {
-        uid: 2,
-        itemTitle: "파일 압축 샘플",
-        itemDescription: "파일들을 선택해서 압축하는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/files-to-zip-sample");
-        }
-      },
-      {
-        uid: 3,
-        itemTitle: "압축 풀기 샘플",
-        itemDescription: "압축 파일을 선택해서 압축을 푸는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/zip-to-files-sample");
-        }
-      },
-      {
-        uid: 4,
-        itemTitle: "데이터 차트 샘플",
-        itemDescription: "데이터를 시각화 하여 차트로 나타내는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/data-chart-sample");
-        }
-      },
-      {
-        uid: 5,
-        itemTitle: "접속자 IP 가져오기 샘플",
-        itemDescription: "접속자의 퍼블릭 IP 를 가져와서 화면에 나타내는 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/etc-sample-list/get-my-ip-address-sample");
-        }
-      }
-    ];
+  // (IP 주소)
+  ipAddress: String | null = null;
 
 
   //----------------------------------------------------------------------------
@@ -130,6 +78,7 @@ class Business extends PageBusinessBasic {
   // DOM 노드가 있어야 하는 초기화 작업은 이 메서드에서 이루어지면 됩니다.
   // 외부에서 데이터를 불러와야 한다면 네트워크 요청을 보내기 적절한 위치라고 할 수 있습니다.
   onComponentDidMount = (firstMount: boolean) => {
+    this.fetchIpAddress();
   }
 
   // (컴포넌트가 마운트 해제되어 제거되기 직전)
@@ -147,6 +96,19 @@ class Business extends PageBusinessBasic {
 
   //----------------------------------------------------------------------------
   // [private 함수]
+  private fetchIpAddress = async () => {
+    this.gcoDialogFrameBusiness.showDialog(false, DialogLoadingSpinner, new DialogLoadingSpinnerBusiness(this.gcoDialogFrameBusiness, this));
+    try {
+      const response = await axios.get('https://api64.ipify.org?format=json');
+      const myPublicIp = response.data.ip;
+      this.ipAddress = myPublicIp;
+      this.reRender();
+    } catch (error) {
+      console.error('Error fetching the IP address:', error);
+    } finally {
+      this.gcoDialogFrameBusiness.closeDialog();
+    }
+  };
 }
 
 export default Business;

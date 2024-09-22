@@ -61,6 +61,7 @@ import PageDaumAddressSearchSample from './pages/page_daumAddressSearchSample/vi
 import PageDataChartSample from './pages/page_dataChartSample/view';
 import PageHalfPongGameSample from './pages/page_halfPongGameSample/view';
 import PageBrowserGpsSample from './pages/page_browserGpsSample/view';
+import PageGetMyIpAddressSample from './pages/page_getMyIpAddressSample/view';
 
 
 // [라우터 클래스]
@@ -138,6 +139,7 @@ function AppRouter(): JSX.Element {
       <Route path="/etc-sample-list/files-to-zip-sample" element={<PageFilesToZipSample />} />
       <Route path="/etc-sample-list/zip-to-files-sample" element={<PageZipToFilesSample />} />
       <Route path="/etc-sample-list/data-chart-sample" element={<PageDataChartSample />} />
+      <Route path="/etc-sample-list/get-my-ip-address-sample" element={<PageGetMyIpAddressSample />} />
     </Routes>
   );
 }
