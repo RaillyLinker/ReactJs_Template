@@ -62,7 +62,6 @@ import PageDataChartSample from './pages/page_dataChartSample/view';
 import PageHalfPongGameSample from './pages/page_halfPongGameSample/view';
 import PageBrowserGpsSample from './pages/page_browserGpsSample/view';
 import PageGetMyIpAddressSample from './pages/page_getMyIpAddressSample/view';
-import PageWebRtcSample from './pages/page_webRtcSample/view';
 
 
 // [라우터 클래스]
@@ -115,7 +114,6 @@ function AppRouter(): JSX.Element {
       <Route path="/network-sample-list/socket-sample-list" element={<PageSocketSampleList />} />
       <Route path="/network-sample-list/socket-sample-list/sock-js-sample" element={<PageSockJsSample />} />
       <Route path="/network-sample-list/socket-sample-list/stomp-sample" element={<PageStompSample />} />
-      <Route path="/network-sample-list/web-rtc-sample" element={<PageWebRtcSample />} />
 
       <Route path="/media-sample-list" element={<PageMediaSampleList />} />
       <Route path="/media-sample-list/string-to-image-sample" element={<PageStringToImageSample />} />

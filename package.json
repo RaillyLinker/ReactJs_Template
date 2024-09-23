@@ -31,7 +31,6 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
     "react-window": "^1.8.10",
-    "simple-peer": "^9.11.1",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "three": "^0.167.1",
@@ -65,7 +64,6 @@
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/react-window": "^1.8.8",
-    "@types/simple-peer": "^9.11.8",
     "@types/sockjs-client": "^1.5.4"
   }
 }

@@ -73,14 +73,6 @@ class Business extends PageBusinessBasic {
         onItemClicked: (): void => {
           this.navigate("/network-sample-list/socket-sample-list");
         }
-      },
-      {
-        uid: 4,
-        itemTitle: "WebRTC 샘플",
-        itemDescription: "WebRTC 를 사용한 양방향 화상 통신 샘플",
-        onItemClicked: (): void => {
-          this.navigate("/network-sample-list/web-rtc-sample");
-        }
       }
     ];
 
