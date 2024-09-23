@@ -7,6 +7,8 @@ import { Bounce, toast } from 'react-toastify';
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 
 
+// localhost 에서는 문제가 없지만, 192.168.0.x 와 같이 localhost 가 아닌 ip 로 접근시에는 보안으로 인해 https 연결이 아닌 이상 카메라 사용이 불가능합니다.
+// todo : https 시의 동작 테스트 필요
 // [비즈니스 클래스]
 // 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
 class Business extends PageBusinessBasic {
