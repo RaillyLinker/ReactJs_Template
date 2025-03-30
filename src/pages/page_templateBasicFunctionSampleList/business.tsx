@@ -6,6 +6,8 @@ import { Bounce, toast } from 'react-toastify';
 
 import GcoOuterFrameBusiness from '../../global_components/gco_outerFrame/business';
 
+import { PageOutputVo as PageInputAndOutputTestOutput } from '../../pages/page_inputAndOutputTest/view';
+
 
 // [비즈니스 클래스]
 // 비즈니스 클래스 객체는 이를 소유한 부모 페이지 컴포넌트가 히스토리에서 삭제될 때까지 유지됩니다.
@@ -63,6 +65,13 @@ class Business extends PageBusinessBasic {
         itemTitle: "페이지 입/출력 테스트",
         itemDescription: "페이지 이동시 전달하는 입력값, 복귀시 반환하는 출력값 테스트",
         onItemClicked: (): void => {
+          // 페이지 복귀 콜백 설정(이동한 페이지에서 현 페이지로 결과를 던져주고 싶을 때 이것을 실행시키면 됩니다.)
+          this.onPageReturn =
+            (pageOutputVo) => {
+              if (pageOutputVo instanceof PageInputAndOutputTestOutput) {
+                this.items[2].itemTitle += pageOutputVo.addChar;
+              }
+            }
           this.navigate("/template-basic-function-sample-list/input-and-output-test/pathParamTest?queryParam=queryParamTest");
         }
       },

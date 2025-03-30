@@ -1,6 +1,6 @@
 import { Params } from 'react-router-dom';
 import { PageBusinessBasic } from '../../global_classes/gc_template_classes';
-import { PathParams, QueryParams } from './view';
+import { PathParams, QueryParams, PageOutputVo } from './view';
 import GcoDialogFrameBusiness from '../../global_components/gco_dialogFrame/business';
 import { Bounce, toast } from 'react-toastify';
 
@@ -98,9 +98,9 @@ class Business extends PageBusinessBasic {
   // (이전 화면으로 이동 버튼을 눌렀을 때)
   onClickPrevPageChange = () => {
     if (this.prevPageBusiness !== null && this.prevPageBusiness instanceof PagePageAndRouterSampleListBusiness) {
-      // business 의 변수 값만 변경해도 해당 페이지로 복귀시 리렌더링 후 적용됩니다.
-      this.prevPageBusiness.items[2].itemTitle += "+";
+      // 이전 페이지 복귀 후 리턴 콜백 실행
       this.navigate(-1);
+      this.prevPageBusiness.onPageReturn(new PageOutputVo("+"));
     }
   }
 

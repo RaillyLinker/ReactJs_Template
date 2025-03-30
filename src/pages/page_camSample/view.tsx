@@ -3,7 +3,7 @@ import styles from './view.module.css';
 import { useParams, useSearchParams, Params } from 'react-router-dom';
 import Business from './business';
 import { pageHistoryDict, currentPageHistoryIdx } from '../../global_data/gd_template_data';
-import { PagePathParamBasic, PageQueryParamBasic } from '../../global_classes/gc_template_classes';
+import { PagePathParamBasic, PageQueryParamBasic, PageOutputBasic } from '../../global_classes/gc_template_classes';
 import GcoDialogFrame from '../../global_components/gco_dialogFrame/view';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -170,6 +170,10 @@ export class PathParams implements PagePathParamBasic {
 
 // [Query Parameter VO 클래스]
 export class QueryParams implements PageQueryParamBasic {
+}
+
+// [Page Output VO 클래스]
+export class PageOutputVo implements PageOutputBasic {
 }
 
 export default View;

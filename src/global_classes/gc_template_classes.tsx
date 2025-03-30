@@ -59,6 +59,9 @@ export abstract class PageBusinessBasic extends BusinessBasic {
   // Query Parameter 로 받은 값
   abstract queryParams: PageQueryParamBasic | null;
 
+  // 페이지 이동 후 복귀시점 콜백
+  onPageReturn: (pageOutputBasic: PageOutputBasic) => void = () => { };
+
   // (생성자)
   constructor(historyIdx: number, historyKey: string) {
     super();
@@ -73,6 +76,10 @@ export interface PagePathParamBasic {
 
 // (페이지 Query Parameter 인터페이스)
 export interface PageQueryParamBasic {
+}
+
+// (페이지 Output 인터페이스)
+export interface PageOutputBasic {
 }
 
 // (컴포넌트 Business 클래스 기본타입)
